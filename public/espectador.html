@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoPop - Reproductor</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>VideoPop</h1>
+        <div class="video-container">
+            <video id="videoPlayer" controls>
+                <source id="videoSource" src="" type="video/mp4">
+                Tu navegador no soporta el reproductor de video.
+            </video>
+            <a id="smartLink" href="#" target="_blank" class="smart-link">Visitar SmartLink</a>
+            <button id="nextButton">Siguiente</button>
+            <div id="popunder" style="display: none;"></div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
+    <script src="/js/espectador.js"></script>
+</body>
+</html>
