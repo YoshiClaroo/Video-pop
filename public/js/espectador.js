@@ -7,6 +7,30 @@ const SMART_LINK = 'https://www.profitableratecpm.com/mvh7pt5g?key=07703abc2b91e
 // Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop();
 
+// Variable para rastrear el tiempo de la última ejecución del popunder
+let lastPopunderTime = 0;
+const POPUNDER_DELAY = 8000; // 8 segundos en milisegundos
+
+// Función para ejecutar el popunder
+function triggerPopunder(smartLink) {
+    const currentTime = Date.now();
+    if (currentTime - lastPopunderTime < POPUNDER_DELAY) {
+        console.log('Popunder bloqueado: espera', POPUNDER_DELAY / 1000, 'segundos');
+        return;
+    }
+    try {
+        console.log('Ejecutando popunder con:', smartLink || SMART_LINK);
+        if (typeof window['c79f89cf83cc0c9791096572f5636faa']?.popunder === 'function') {
+            window['c79f89cf83cc0c9791096572f5636faa'].popunder(smartLink || SMART_LINK);
+            lastPopunderTime = currentTime;
+        } else {
+            console.warn('Función popunder no disponible');
+        }
+    } catch (popunderError) {
+        console.error('Error al ejecutar popunder:', popunderError);
+    }
+}
+
 // Función para cargar un video
 async function loadVideo(shortId) {
     try {
@@ -20,17 +44,6 @@ async function loadVideo(shortId) {
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink || '';
-            // Ejecutar popunder al cargar la página
-            try {
-                console.log('Ejecutando popunder con:', smartLink || SMART_LINK);
-                if (typeof window['c79f89cf83cc0c9791096572f5636faa']?.popunder === 'function') {
-                    window['c79f89cf83cc0c9791096572f5636faa'].popunder(smartLink || SMART_LINK);
-                } else {
-                    console.warn('Función popunder no disponible');
-                }
-            } catch (popunderError) {
-                console.error('Error al ejecutar popunder:', popunderError);
-            }
             // Redirigir al SmartLink al terminar el video
             if (smartLink) {
                 videoPlayer.onended = () => {
@@ -39,6 +52,14 @@ async function loadVideo(shortId) {
             } else {
                 videoPlayer.onended = null;
             }
+            // Añadir event listeners para interacciones (clic y toque)
+            const interactionHandler = () => triggerPopunder(smartLink);
+            // Limpiar listeners anteriores para evitar duplicados
+            document.removeEventListener('click', interactionHandler);
+            document.removeEventListener('touchstart', interactionHandler);
+            // Añadir nuevos listeners
+            document.addEventListener('click', interactionHandler);
+            document.addEventListener('touchstart', interactionHandler);
             window.history.replaceState(null, '', `/${shortId}`);
         } else {
             console.warn('Documento no encontrado para shortId:', shortId);
