@@ -18,10 +18,8 @@ async function loadVideo(shortId) {
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink || '';
-            document.getElementById('popunderButton').style.display = smartLink ? 'inline-block' : 'none';
-            document.getElementById('popunderButton').onclick = () => {
-                window[n.slice(0, 16) + n.slice(0, 16)]?.popunder?.(smartLink || SMART_LINK);
-            };
+            // Ejecutar popunder al cargar la página
+            window[s.slice(0, 16) + s.slice(0, 16)]?.popunder?.(smartLink || SMART_LINK);
             // Redirigir al SmartLink al terminar el video
             if (smartLink) {
                 videoPlayer.onended = () => {
