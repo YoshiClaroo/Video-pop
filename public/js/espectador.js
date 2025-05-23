@@ -1,6 +1,9 @@
 import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
+// SmartLink fijo
+const SMART_LINK = 'https://www.profitableratecpm.com/mvh7pt5g?key=07703abc2b91e6b793816f68a5afc2a5';
+
 // Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop();
 
@@ -15,11 +18,9 @@ async function loadVideo(shortId) {
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink || '';
-            document.getElementById('smartLink').href = smartLink;
-            document.getElementById('smartLink').style.display = smartLink ? 'inline-block' : 'none';
             document.getElementById('popunderButton').style.display = smartLink ? 'inline-block' : 'none';
             document.getElementById('popunderButton').onclick = () => {
-                window[n.slice(0, 16) + n.slice(0, 16)]?.popunder?.(smartLink || 'https://example.com');
+                window[n.slice(0, 16) + n.slice(0, 16)]?.popunder?.(smartLink || SMART_LINK);
             };
             // Redirigir al SmartLink al terminar el video
             if (smartLink) {
@@ -54,6 +55,9 @@ async function getRandomVideo() {
         const randomIndex = Math.floor(Math.random() * docs.length);
         const randomDoc = docs[randomIndex];
         const newShortId = randomDoc.id;
+        // Abrir el SmartLink en una nueva pestaña
+        window.open(SMART_LINK, '_blank', 'noopener,noreferrer');
+        // Cargar el nuevo video
         loadVideo(newShortId);
     } catch (error) {
         console.error('Error al obtener video aleatorio:', error);
