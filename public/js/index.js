@@ -1,5 +1,6 @@
-import { db } from './firebase.js';
+import { db, auth } from './firebase.js';
 import { collection, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+import { signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js';
 
 // Validar que la URL use HTTPS
 function isValidHttpsUrl(url) {
@@ -15,6 +16,16 @@ function generateShortId() {
     }
     return result;
 }
+
+// Iniciar sesión anónima al cargar la página
+signInAnonymously(auth)
+    .then(() => {
+        console.log('Usuario anónimo autenticado');
+    })
+    .catch((error) => {
+        console.error('Error en autenticación anónima:', error);
+        document.getElementById('result').textContent = `Error de autenticación: ${error.message}`;
+    });
 
 // Manejar el formulario
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
