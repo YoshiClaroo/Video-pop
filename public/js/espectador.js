@@ -10,16 +10,27 @@ const shortId = window.location.pathname.split('/').pop();
 // Función para cargar un video
 async function loadVideo(shortId) {
     try {
+        console.log('Cargando video para shortId:', shortId);
         const docRef = doc(db, 'links', shortId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
+            console.log('Datos del documento:', data);
             const videoPlayer = document.getElementById('videoPlayer');
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink || '';
             // Ejecutar popunder al cargar la página
-            window[s.slice(0, 16) + s.slice(0, 16)]?.popunder?.(smartLink || SMART_LINK);
+            try {
+                console.log('Ejecutando popunder con:', smartLink || SMART_LINK);
+                if (typeof window['c79f89cf83cc0c9791096572f5636faa']?.popunder === 'function') {
+                    window['c79f89cf83cc0c9791096572f5636faa'].popunder(smartLink || SMART_LINK);
+                } else {
+                    console.warn('Función popunder no disponible');
+                }
+            } catch (popunderError) {
+                console.error('Error al ejecutar popunder:', popunderError);
+            }
             // Redirigir al SmartLink al terminar el video
             if (smartLink) {
                 videoPlayer.onended = () => {
@@ -30,10 +41,11 @@ async function loadVideo(shortId) {
             }
             window.history.replaceState(null, '', `/${shortId}`);
         } else {
+            console.warn('Documento no encontrado para shortId:', shortId);
             window.location.href = '/404.html';
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error en loadVideo:', error);
         window.location.href = '/404.html';
     }
 }
@@ -44,15 +56,18 @@ loadVideo(shortId);
 // Función para obtener un video aleatorio
 async function getRandomVideo() {
     try {
+        console.log('Obteniendo video aleatorio');
         const snapshot = await getDocs(collection(db, 'links'));
         const docs = snapshot.docs;
         if (docs.length === 0) {
+            console.warn('No hay videos disponibles');
             alert('No hay más videos disponibles.');
             return;
         }
         const randomIndex = Math.floor(Math.random() * docs.length);
         const randomDoc = docs[randomIndex];
         const newShortId = randomDoc.id;
+        console.log('Video aleatorio seleccionado:', newShortId);
         // Abrir el SmartLink en una nueva pestaña
         window.open(SMART_LINK, '_blank', 'noopener,noreferrer');
         // Cargar el nuevo video
