@@ -18,7 +18,10 @@
                 <input type="url" id="smartLink">
                 <button type="submit">Generar Enlace</button>
             </form>
-            <p id="result"></p>
+            <div id="result" style="margin-top: 20px;">
+                <p id="generatedUrl"></p>
+                <button id="copyButton" style="display: none;">Copiar</button>
+            </div>
         </div>
     </div>
     <script type="module" src="/js/firebase.js"></script>
