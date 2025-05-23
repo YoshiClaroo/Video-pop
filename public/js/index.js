@@ -24,18 +24,18 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
 
     // Validar URLs
     if (!isValidHttpsUrl(videoUrl)) {
-        document.getElementById('result').textContent = 'Error: La URL del video debe usar HTTPS.';
+        document.getElementById('generatedUrl').textContent = 'Error: La URL del video debe usar HTTPS.';
         return;
     }
     if (smartLink && !isValidHttpsUrl(smartLink)) {
-        document.getElementById('result').textContent = 'Error: El SmartLink debe usar HTTPS.';
+        document.getElementById('generatedUrl').textContent = 'Error: El SmartLink debe usar HTTPS.';
         return;
     }
 
     const shortId = generateShortId();
 
     try {
-        console.log('Intentando escribir en Firestore:', { shortId, videoUrl, smartLink });
+        console.log('Intentando escribir:', { shortId, videoUrl, smartLink });
         await setDoc(doc(collection(db, 'links'), shortId), {
             videoUrl,
             smartLink,
@@ -43,9 +43,22 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
         });
         console.log('Escritura exitosa');
         const result = `https://videopop.netlify.app/${shortId}`;
-        document.getElementById('result').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
+        document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
+        document.getElementById('copyButton').style.display = 'inline-block';
+        document.getElementById('copyButton').onclick = () => {
+            navigator.clipboard.writeText(result).then(() => {
+                alert('Enlace copiado al portapapeles');
+            }).catch((err) => {
+                console.error('Error al copiar:', err);
+            });
+        };
+        // Eliminar la URL generada y el botón después de 30 segundos
+        setTimeout(() => {
+            document.getElementById('generatedUrl').textContent = '';
+            document.getElementById('copyButton').style.display = 'none';
+        }, 30000);
     } catch (error) {
-        console.error('Error al escribir en Firestore:', error);
-        document.getElementById('result').textContent = `Error: ${error.message}`;
+        console.error('Error al escribir:', error);
+        document.getElementById('generatedUrl').textContent = `Error: ${error.message}`;
     }
 });
