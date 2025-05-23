@@ -35,14 +35,17 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
     const shortId = generateShortId();
 
     try {
+        console.log('Intentando escribir en Firestore:', { shortId, videoUrl, smartLink });
         await setDoc(doc(collection(db, 'links'), shortId), {
             videoUrl,
             smartLink,
             createdAt: serverTimestamp()
         });
+        console.log('Escritura exitosa');
         const result = `https://videopop.netlify.app/${shortId}`;
         document.getElementById('result').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
     } catch (error) {
+        console.error('Error al escribir en Firestore:', error);
         document.getElementById('result').textContent = `Error: ${error.message}`;
     }
 });
