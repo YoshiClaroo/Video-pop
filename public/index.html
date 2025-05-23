@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoPop - Generar Enlace</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>VideoPop</h1>
+        <div class="form-container">
+            <h2>Generar Enlace de Video</h2>
+            <form id="linkForm">
+                <label for="videoUrl">URL del Video (.mp4):</label>
+                <input type="url" id="videoUrl" required>
+                <label for="smartLink">SmartLink de Redirección (opcional):</label>
+                <input type="url" id="smartLink">
+                <button type="submit">Generar Enlace</button>
+            </form>
+            <p id="result"></p>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+</html>
