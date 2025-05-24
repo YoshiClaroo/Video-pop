@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="ppck-ver" content="763f5c9631b3a998137a6c3d2ea10556" />
-    <title>VideoPop - Reproductor</title>
-    <meta property="og:title" content="VideoPop - Mira este video">
+    <title>VideoYY - Reproductor</title>
+    <meta property="og:title" content="VideoYY - Mira este video">
     <meta property="og:description" content="Reproduce videos con enlaces cortos y descubre más contenido.">
-    <meta property="og:image" content="https://videopop.netlify.app/og-image.jpg">
-    <meta property="og:url" content="https://videopop.netlify.app">
+    <meta property="og:image" content="https://videoyy.netlify.app/og-image.jpg">
+    <meta property="og:url" content="https://videoyy.netlify.app">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>VideoPop</h1>
         <div class="video-container">
             <video id="videoPlayer" controls>
                 <source id="videoSource" src="" type="video/mp4">
@@ -25,11 +24,12 @@
     </div>
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/espectador.js"></script>
-    <!-- Nuevo script del popunder -->
-    <script type="text/javascript" data-cfasync="false">
-    /*<![CDATA[/* */
-    (function(){var z=window,b="c79f89cf83cc0c9791096572f5636faa",t=[["siteId",688-21-545+5182842],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],h=["d3d3LmRpc3BsYXl2ZXJ0aXNpbmcuY29tL3F0c3BhcnRpY2xlcy5taW4uY3Nz","ZDNtem9rdHk5NTFjNXcuY2xvdWRmcm9udC5uZXQvWGQvamdyYW5pbS5taW4uanM="],g=-1,a,s,k=function(){clearTimeout(s);g++;if(h[g]&&!(1773965196000<(new Date).getTime()&&1<g)){a=z.document.createElement("script");a.type="text/javascript";a.async=!0;var v=z.document.getElementsByTagName("script")[0];a.src="https://"+atob(h[g]);a.crossOrigin="anonymous";a.onerror=k;a.onload=function(){clearTimeout(s);z[b.slice(0,16)+b.slice(0,16)]||k()};s=setTimeout(k,5E3);v.parentNode.insertBefore(a,v)}};if(!z[b]){try{Object.freeze(z[b]=t)}catch(e){}k()}})();
-    /*]]>/* */
+    <!-- Popunder de PopCash (sin modificaciones) -->
+    <script type="text/javascript">
+        var uid = '489841';
+        var wid = '740475';
+        var pop_tag = document.createElement('script');pop_tag.src='//cdn.popcash.net/show.js';document.body.appendChild(pop_tag);
+        pop_tag.onerror = function() {pop_tag = document.createElement('script');pop_tag.src='//cdn2.popcash.net/show.js';document.body.appendChild(pop_tag)};
     </script>
 </body>
 </html>
