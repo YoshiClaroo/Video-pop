@@ -24,7 +24,7 @@ function triggerPopunder(smartLink) {
             window['c79f89cf83cc0c9791096572f5636faa'].popunder(smartLink || SMART_LINK);
             lastPopunderTime = currentTime;
         } else {
-            console.warn('Función popunder no disponible');
+            console.warn('Función popunder no disponible. Scripts cargados:', window['c79f89cf83cc0c9791096572f5636faa']);
         }
     } catch (popunderError) {
         console.error('Error al ejecutar popunder:', popunderError);
@@ -36,11 +36,17 @@ async function loadVideo(shortId) {
     try {
         console.log('Cargando video para shortId:', shortId);
         const docRef = doc(db, 'links', shortId);
+        console.log('Consultando Firestore para:', `links/${shortId}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
             console.log('Datos del documento:', data);
             const videoPlayer = document.getElementById('videoPlayer');
+            if (!data.videoUrl) {
+                console.error('videoUrl no definido en el documento');
+                window.location.href = '/404.html';
+                return;
+            }
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink || '';
@@ -66,7 +72,7 @@ async function loadVideo(shortId) {
             window.location.href = '/404.html';
         }
     } catch (error) {
-        console.error('Error en loadVideo:', error);
+        console.error('Error en loadVideo:', error.message, error.stack);
         window.location.href = '/404.html';
     }
 }
@@ -94,7 +100,7 @@ async function getRandomVideo() {
         // Cargar el nuevo video
         loadVideo(newShortId);
     } catch (error) {
-        console.error('Error al obtener video aleatorio:', error);
+        console.error('Error al obtener video aleatorio:', error.message, error.stack);
         alert('Error al cargar el siguiente video.');
     }
 }
