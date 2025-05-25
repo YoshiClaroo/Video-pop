@@ -2,7 +2,7 @@ import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
 // SmartLink fijo de Adsterra
-const SMART_LINK = 'https://lakns.com/link?z=9377267&var={SOURCE_ID}&ymid={CLICK_ID}';
+const SMART_LINK = 'https://www.juicyads.rocks';
 
 // Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop() || '';
