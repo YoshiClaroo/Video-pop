@@ -2,7 +2,7 @@ import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
 // SmartLink fijo de Adsterra
-const SMART_LINK = 'https://www.profitableratecpm.com/mvh7pt5g?key=07703abc2b91e6b793816f68a5afc2a5';
+const SMART_LINK = 'https://www.profitableratecpm.com/hey0gfbfv?key=9549b58290394cb3e76aa6dc80d847fe';
 
 // Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop() || '';
