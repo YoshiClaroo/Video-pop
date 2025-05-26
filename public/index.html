@@ -3,62 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoPop - Generador de Enlaces Adultos</title>
+    <meta name="mnd-ver" content="xh856joiqbgo6m8g0zdha" />
+    <meta name="juicyads-site-verification" content="040ba182cdc15f4a0628303b4536d2f1">
+    <title>VideoPop - Generar Enlace</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #d32f2f;
-            text-align: center;
-        }
-        .form-container {
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        input[type="url"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin-top: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #b71c1c;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 4px;
-        }
         footer {
             margin-top: 30px;
             text-align: center;
@@ -70,41 +19,33 @@
             text-decoration: none;
             margin: 0 10px;
         }
-        .warning {
-            color: #d32f2f;
-            font-size: 14px;
-            margin-top: 20px;
-            padding: 10px;
-            background: #ffebee;
-            border-radius: 4px;
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>VideoPop Adult</h1>
-        <div class="warning">
-            ADVERTENCIA: Este servicio es solo para contenido adulto. Al generar un enlace, confirmas que tienes los derechos necesarios sobre el contenido.
-        </div>
+        <h1>VideoPop</h1>
         <div class="form-container">
+            <h2>Generar Enlace de Video</h2>
             <form id="linkForm">
                 <label for="videoUrl">URL del Video (.mp4):</label>
-                <input type="url" id="videoUrl" required placeholder="https://tudominio.com/video-adulto.mp4">
-                
-                <button type="submit">Generar Enlace Adulto</button>
+                <input type="url" id="videoUrl" required placeholder="https://ejemplo.com/video.mp4">
+                <button type="submit">Generar Enlace</button>
             </form>
-            <div id="result">
+            <div id="result" style="margin-top: 20px;">
                 <p id="generatedUrl"></p>
-                <button id="copyButton" style="display: none;">Copiar Enlace</button>
+                <button id="copyButton" style="display: none;">Copiar</button>
             </div>
         </div>
         <footer>
             <a href="terminos.html">Términos y Condiciones</a>
             <a href="privacidad.html">Política de Privacidad</a>
             <a href="mailto:titangameapp@gmail.com">Contacto</a>
-            <p>© 2025 VideoPop Adult - Solo para mayores de 18 años</p>
         </footer>
     </div>
+    <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/index.js"></script>
 </body>
 </html>
