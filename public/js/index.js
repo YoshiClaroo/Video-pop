@@ -20,28 +20,21 @@ function generateShortId() {
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const videoUrl = document.getElementById('videoUrl').value;
-    const smartLink = document.getElementById('smartLink').value || '';
 
-    // Validar URLs
+    // Validar URL
     if (!isValidHttpsUrl(videoUrl)) {
         document.getElementById('generatedUrl').textContent = 'Error: La URL del video debe usar HTTPS.';
-        return;
-    }
-    if (smartLink && !isValidHttpsUrl(smartLink)) {
-        document.getElementById('generatedUrl').textContent = 'Error: El SmartLink debe usar HTTPS.';
         return;
     }
 
     const shortId = generateShortId();
 
     try {
-        console.log('Intentando escribir:', { shortId, videoUrl, smartLink });
         await setDoc(doc(collection(db, 'links'), shortId), {
             videoUrl,
-            smartLink,
             createdAt: serverTimestamp()
         });
-        console.log('Escritura exitosa');
+        
         const result = `https://urly.lat/${shortId}`;
         document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
         document.getElementById('copyButton').style.display = 'inline-block';
@@ -52,7 +45,8 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
                 console.error('Error al copiar:', err);
             });
         };
-        // Eliminar la URL generada y el botón después de 30 segundos
+        
+        // Eliminar la URL generada después de 30 segundos
         setTimeout(() => {
             document.getElementById('generatedUrl').textContent = '';
             document.getElementById('copyButton').style.display = 'none';
