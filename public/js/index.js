@@ -42,7 +42,7 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
             createdAt: serverTimestamp()
         });
         console.log('Escritura exitosa');
-        const result = `https://videopop.netlify.app/${shortId}`;
+        const result = `https://urly.lat/${shortId}`;
         document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
         document.getElementById('copyButton').style.display = 'inline-block';
         document.getElementById('copyButton').onclick = () => {
