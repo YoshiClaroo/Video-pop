@@ -1,58 +1,42 @@
 import { db } from './firebase.js';
 import { collection, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-// Validar que la URL use HTTPS
-function isValidHttpsUrl(url) {
-    return url.startsWith('https://');
-}
-
-// Generar ID corto (6 caracteres)
+// Generar ID corto
 function generateShortId() {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 6; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
+    return Math.random().toString(36).substr(2, 8);
 }
 
-// Manejar el formulario
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const videoUrl = document.getElementById('videoUrl').value;
 
-    // Validar URL
-    if (!isValidHttpsUrl(videoUrl)) {
-        document.getElementById('generatedUrl').textContent = 'Error: La URL del video debe usar HTTPS.';
+    if (!videoUrl.endsWith('.mp4')) {
+        document.getElementById('generatedUrl').textContent = 'Error: La URL debe apuntar a un archivo .mp4';
         return;
     }
 
     const shortId = generateShortId();
 
     try {
-        await setDoc(doc(collection(db, 'links'), shortId), {
+        await setDoc(doc(collection(db, 'adultLinks'), shortId), {
             videoUrl,
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+            adultContent: true
         });
         
-        const result = `https://urly.lat/${shortId}`;
-        document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
+        const result = `https://tudominio.com/viewer.html?v=${shortId}`;
+        document.getElementById('generatedUrl').innerHTML = `
+            <strong>Enlace generado:</strong><br>
+            <a href="${result}" target="_blank">${result}</a><br><br>
+            <small>Este enlace es para contenido adulto. Asegúrate de cumplir con todas las leyes locales.</small>
+        `;
+        
         document.getElementById('copyButton').style.display = 'inline-block';
         document.getElementById('copyButton').onclick = () => {
-            navigator.clipboard.writeText(result).then(() => {
-                alert('Enlace copiado al portapapeles');
-            }).catch((err) => {
-                console.error('Error al copiar:', err);
-            });
+            navigator.clipboard.writeText(result);
+            alert('Enlace copiado!');
         };
-        
-        // Eliminar la URL generada después de 30 segundos
-        setTimeout(() => {
-            document.getElementById('generatedUrl').textContent = '';
-            document.getElementById('copyButton').style.display = 'none';
-        }, 30000);
     } catch (error) {
-        console.error('Error al escribir:', error);
         document.getElementById('generatedUrl').textContent = `Error: ${error.message}`;
     }
 });
