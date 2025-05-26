@@ -35,7 +35,7 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
             createdAt: serverTimestamp()
         });
         
-        const result = `https://urly.lat/${shortId}`;
+        const result = `https://videyy.netly.app/${shortId}`;
         document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
         document.getElementById('copyButton').style.display = 'inline-block';
         document.getElementById('copyButton').onclick = () => {
