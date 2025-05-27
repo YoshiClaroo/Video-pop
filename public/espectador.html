@@ -13,77 +13,47 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
 
-    <!-- Popunder de HilltopAds -->
-    <script src="https://youthful-area.com/bq3zVq0NP.3xpkvQbBmoVhJvZ/Dx0/2iM/z/gL2LN/DXISxvLmTAY/z/O/DaYd0_M/jPIJ"></script>
-
-    <style>
-        /* Estilos para los layers de banners */
-        .ad-layer {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            z-index: 1000; /* Asegura que estén sobre el video */
-            text-align: center;
-        }
-        .ad-layer-top {
-            top: 10px; /* Ajusta según necesites */
-        }
-        .ad-layer-bottom {
-            bottom: 10px; /* Ajusta según necesites */
-        }
-        .video-container {
-            position: relative; /* Necesario para que los layers se posicionen respecto al contenedor */
-            margin: 0 auto;
-            width: 100%;
-            max-width: 800px; /* Ajusta al ancho de tu reproductor */
-        }
-    </style>
+    <!-- Popunder de HilltopAds (versión actualizada) -->
+    <script>
+    (function(epq){
+    var d = document,
+        s = d.createElement('script'),
+        l = d.scripts[d.scripts.length - 1];
+    s.settings = epq || {};
+    s.src = "\/\/youthful-area.com\/cZD-9E6jb.2l5glTSbWAQ\/9lN\/j\/Mu4RN\/jJQZyAMBSS0\/2KMSzPgn2QN\/D\/IVyY";
+    s.async = true;
+    s.referrerPolicy = 'no-referrer-when-downgrade';
+    l.parentNode.insertBefore(s, l);
+    })({})
+    </script>
 </head>
 
 <body>	    
     <div class="video-container">
-        <!-- Layer del banner ARRIBA del reproductor -->
-        <div class="ad-layer ad-layer-top">
-            <script>
-            (function(lhiu){
-            var d = document,
-                s = d.createElement('script'),
-                l = d.scripts[d.scripts.length - 1];
-            s.settings = lhiu || {};
-            s.src = "\/\/relievedjoke.com\/bIX.VPsZdmG\/l\/0mYuW\/cG\/reAmK9XuPZDUJldkDP_TDY\/zeO_DmYv0gMdjMkitYNfjdMp4fNwjiQwzYM\/Ax";
-            s.async = true;
-            s.referrerPolicy = 'no-referrer-when-downgrade';
-            l.parentNode.insertBefore(s, l);
-            })({})
-            </script>
-        </div>
-
-        <!-- Reproductor de video -->
         <video id="videoPlayer" controls>
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
         <button id="nextButton">Siguiente Video</button>
-
-        <!-- Layer del banner ABAJO del reproductor -->
-        <div class="ad-layer ad-layer-bottom">
-            <script>
-            (function(lhiu){
-            var d = document,
-                s = d.createElement('script'),
-                l = d.scripts[d.scripts.length - 1];
-            s.settings = lhiu || {};
-            s.src = "\/\/relievedjoke.com\/bIX.VPsZdmG\/l\/0mYuW\/cG\/reAmK9XuPZDUJldkDP_TDY\/zeO_DmYv0gMdjMkitYNfjdMp4fNwjiQwzYM\/Ax";
-            s.async = true;
-            s.referrerPolicy = 'no-referrer-when-downgrade';
-            l.parentNode.insertBefore(s, l);
-            })({})
-            </script>
-        </div>
     </div>
 
-    <!-- In-Page Push de HilltopAds -->
+    <!-- Banner 300x250 ABAJO del reproductor -->
+    <div class="ad-banner-bottom" style="margin: 20px auto; text-align: center;">
+        <script>
+        (function(lhiu){
+        var d = document,
+            s = d.createElement('script'),
+            l = d.scripts[d.scripts.length - 1];
+        s.settings = lhiu || {};
+        s.src = "\/\/relievedjoke.com\/bIX.VPsZdmG\/l\/0mYuW\/cG\/reAmK9XuPZDUJldkDP_TDY\/zeO_DmYv0gMdjMkitYNfjdMp4fNwjiQwzYM\/Ax";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+        })({})
+        </script>
+    </div>
+
+    <!-- In-Page Push de HilltopAds (colocado antes del cierre del body) -->
     <script>
     (function(bble){
     var d = document,
