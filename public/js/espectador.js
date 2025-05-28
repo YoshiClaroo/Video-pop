@@ -2,7 +2,7 @@ import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
 // SmartLink fijo de Adsterra
-const SMART_LINK = 'https://youthful-area.com/b.3cVk0RPt3QpFvCbAmqVCJtZxDZ0n2-MFzUgf2hNHDVIqxfL/TBY/zvOzD/YI0TM/jPIa';
+const SMART_LINK = 'https://lvd2bre.wonderful-memberflirts.com/myzml9f';
 
 // Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop() || '';
