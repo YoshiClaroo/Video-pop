@@ -14,43 +14,64 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
-
         .adsterra-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-    padding: 15px;
-    width: 100%;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            width: 100%;
+        }
 
-@media (max-width: 768px) {
-    .adsterra-container {
-        padding: 10px;
-    }
-}
+        @media (max-width: 768px) {
+            .adsterra-container {
+                padding: 10px;
+            }
+        }
         
         /* Contenedor principal */
         .video-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 15px;
+            padding-bottom: 80px; /* Espacio para los botones fijos */
         }
         
-        /* Botones Unete laterales */
-        .join-buttons-container {
+        /* Contenedor de botones fijos */
+        .fixed-buttons-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .fixed-buttons-inner {
             display: flex;
             justify-content: space-between;
-            margin: 20px 0;
+            max-width: 800px;
+            width: 100%;
+            padding: 0 15px;
         }
+        
+        /* Botones Unete */
         .join-button {
             background-color: #1877f2;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 25px;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
+            margin: 0 5px;
+            flex: 1;
+            text-align: center;
+            max-width: 200px;
         }
         
         /* Botón Unete a grupo */
@@ -85,13 +106,19 @@
             width: 100%;
             display: block;
         }
+        
+        @media (max-width: 600px) {
+            .join-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 
 <body>
     
     <div class="video-container">
-
        <div class="adsterra-container">
            <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
            <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
@@ -102,15 +129,8 @@
             Tu navegador no soporta el reproductor de video.
         </video>
 
-        <!-- Botones Unete laterales -->
-        <div class="join-buttons-container">
-            <button class="join-button">📢Únete</button>
-            <button class="join-button">📢Únete</button>
-        </div>
-
         <button id="nextButton">Siguiente Video</button>
         
-        <!-- Botón Unete a grupo -->
         <button class="join-group-button">📢Únete a nuestro grupo de Facebook</button>
 
         <!-- Banner Nativo -->
@@ -118,6 +138,14 @@
 
         <!-- Popunder de HilltopAds -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
+    </div>
+
+    <!-- Botones fijos en la parte inferior -->
+    <div class="fixed-buttons-container">
+        <div class="fixed-buttons-inner">
+            <button class="join-button">📢Únete</button>
+            <button class="join-button">📢Únete</button>
+        </div>
     </div>
 
     <!-- Scripts de HilltopAds -->
@@ -131,7 +159,7 @@
         const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
         document.querySelectorAll('.join-button, .join-group-button').forEach(button => {
             button.addEventListener('click', () => {
-                window.location.href = facebookUrl;
+                window.open(facebookUrl, '_blank');
             });
         });
     </script>
