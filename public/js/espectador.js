@@ -6,7 +6,6 @@ const shortId = window.location.pathname.split('/').pop() || '';
 
 async function loadVideo(shortId) {
     if (!shortId) {
-        console.error('shortId no válido:', shortId);
         window.location.href = '/404.html';
         return;
     }
@@ -15,17 +14,16 @@ async function loadVideo(shortId) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
-            if (!data.videoUrl || !data.videoUrl.startsWith('https://')) {
+            if (!data.videoUrl?.startsWith('https://')) {
                 window.location.href = '/404.html';
                 return;
             }
-            const videoPlayer = document.getElementById('videoPlayer');
             document.getElementById('videoSource').src = data.videoUrl;
-            videoPlayer.load();
-            const smartLink = data.smartLink && data.smartLink.startsWith('https://') ? data.smartLink : '';
-            if (smartLink) {
-                videoPlayer.onended = () => {
-                    window.open(smartLink, '_blank');
+            document.getElementById('videoPlayer').load();
+            
+            if (data.smartLink?.startsWith('https://')) {
+                document.getElementById('videoPlayer').onended = () => {
+                    window.open(data.smartLink, '_blank');
                 };
             }
             window.history.replaceState(null, '', `/${shortId}`);
@@ -41,17 +39,15 @@ async function getRandomVideo() {
     try {
         const snapshot = await getDocs(collection(db, 'links'));
         const docs = snapshot.docs;
-        if (docs.length === 0) return;
-        const randomDoc = docs[Math.floor(Math.random() * docs.length)];
-        window.open(SMART_LINK, '_blank');
-        loadVideo(randomDoc.id);
+        if (docs.length > 0) {
+            const randomDoc = docs[Math.floor(Math.random() * docs.length)];
+            window.open(SMART_LINK, '_blank');
+            loadVideo(randomDoc.id);
+        }
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-// Botón Siguiente
 document.getElementById('nextButton').addEventListener('click', getRandomVideo);
-
-// Cargar video inicial
 loadVideo(shortId);
