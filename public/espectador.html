@@ -14,56 +14,63 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
+        /* Estilos para la sección de Facebook */
         .social-section {
             text-align: center;
             margin: 20px auto;
-            max-width: 600px;
             padding: 15px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            border-radius: 8px;
+            max-width: 500px;
         }
         .social-title {
             color: #1877f2;
+            font-size: 20px;
             margin-bottom: 5px;
-            font-size: 24px;
         }
         .social-subtitle {
             color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        .matrix-title {
-            color: #000;
-            font-size: 28px;
-            font-weight: bold;
-            margin: 10px 0;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
         .social-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin: 15px 0;
         }
         .social-button {
             background-color: #1877f2;
             color: white;
             border: none;
-            padding: 10px 25px;
-            border-radius: 5px;
+            padding: 8px 20px;
+            border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
         }
         .checkmark-text {
             color: #333;
-            font-size: 16px;
+            font-size: 14px;
         }
         .checkmark {
             color: green;
             font-weight: bold;
-            margin-right: 5px;
+        }
+        
+        /* Estilo para el botón Siguiente */
+        #nextButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        #nextButton:hover {
+            background-color: #45a049;
         }
     </style>
 
@@ -72,7 +79,7 @@
 </head>
 
 <body>	    
-    <!-- Banner Nativo de Adsterra -->
+    <!-- Banner Nativo de Adsterra (fuera del container) -->
     <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
     <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
 
@@ -81,15 +88,13 @@
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
+        
         <button id="nextButton">Siguiente Video</button>
 
-        <!-- Sección de Facebook -->
+        <!-- Sección de Facebook dentro del reproductor -->
         <div class="social-section">
             <div class="social-title">Facebook</div>
             <div class="social-subtitle">pajon.pics</div>
-            <div class="matrix-title">MATRIX</div>
-            <div class="social-subtitle">4</div>
-            <div class="social-subtitle">The Matrix 4: Stream or Download</div>
             
             <div class="social-buttons">
                 <a href="https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT" class="social-button">Unete</a>
