@@ -36,40 +36,48 @@
             padding: 15px;
         }
         
-        /* Contenedor de botones fijos CENTRADOS */
-        .center-fixed-buttons {
+        /* Botón izquierdo fijo */
+        .left-fixed-button {
             position: fixed;
+            left: 20px;
             top: 50%;
-            left: 50%;
-            transform: translate(50%, 50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 800px;
-            pointer-events: none; /* Permite hacer clic a través de los espacios */
-            z-index: 1000;
-        }
-        
-        /* Botones Únete más grandes y con margen */
-        .center-join-button {
+            transform: translateY(-50%);
             background-color: #1877f2;
             color: white;
             border: none;
-            padding: 15px 35px;
+            padding: 20px 35px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
-            margin: 0 15px;
-            pointer-events: auto; /* Habilita clic en los botones */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            white-space: nowrap;
         }
         
-        .center-join-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        /* Botón derecho fijo */
+        .right-fixed-button {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 20px 35px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+        
+        /* Efecto hover para ambos botones */
+        .left-fixed-button:hover, .right-fixed-button:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
         /* Botón Unete a grupo */
@@ -105,11 +113,25 @@
             display: block;
         }
         
-        @media (max-width: 600px) {
-            .center-join-button {
-                padding: 12px 25px;
+        @media (max-width: 768px) {
+            .left-fixed-button, .right-fixed-button {
+                padding: 15px 25px;
+                font-size: 16px;
+            }
+            
+            .left-fixed-button {
+                left: 10px;
+            }
+            
+            .right-fixed-button {
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .left-fixed-button, .right-fixed-button {
+                padding: 12px 20px;
                 font-size: 14px;
-                margin: 0 20px;
             }
         }
     </style>
@@ -130,7 +152,7 @@
 
         <button id="nextButton">Siguiente Video</button>
         
-        <button class="join-group-button">📢 Únete a nuestro grupo de Facebook</button>
+        <button class="join-group-button">📢Únete a nuestro grupo de Facebook</button>
 
         <!-- Banner Nativo -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
@@ -139,11 +161,9 @@
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
     </div>
 
-    <!-- Botones fijos CENTRADOS en la pantalla -->
-    <div class="center-fixed-buttons">
-        <button class="center-join-button">📢 Únete</button>
-        <button class="center-join-button">📢 Únete</button>
-    </div>
+    <!-- Botones pegados a los costados -->
+    <button class="left-fixed-button">📢Únete</button>
+    <button class="right-fixed-button">📢Únete</button>
 
     <!-- Scripts de HilltopAds -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51227/fda436afa9f6df194de506b9beaba219677150a9/lib.js"></script>
@@ -154,7 +174,7 @@
     <script>
         // Todos los botones redirigen a Facebook
         const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
-        document.querySelectorAll('.center-join-button, .join-group-button').forEach(button => {
+        document.querySelectorAll('.left-fixed-button, .right-fixed-button, .join-group-button').forEach(button => {
             button.addEventListener('click', () => {
                 window.open(facebookUrl, '_blank');
             });
