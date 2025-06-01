@@ -1,13 +1,9 @@
 import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-// SmartLink fijo de Adsterra
 const SMART_LINK = 'https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168';
-
-// Obtener ID desde la URL
 const shortId = window.location.pathname.split('/').pop() || '';
 
-// Función para cargar un video
 async function loadVideo(shortId) {
     if (!shortId) {
         console.error('shortId no válido:', shortId);
@@ -31,7 +27,6 @@ async function loadVideo(shortId) {
             document.getElementById('videoSource').src = data.videoUrl;
             videoPlayer.load();
             const smartLink = data.smartLink && data.smartLink.startsWith('https://') ? data.smartLink : '';
-            // Redirigir al SmartLink al terminar el video
             if (smartLink) {
                 videoPlayer.onended = () => {
                     window.open(smartLink, '_blank', 'noopener,noreferrer');
@@ -50,10 +45,8 @@ async function loadVideo(shortId) {
     }
 }
 
-// Cargar el video inicial
 loadVideo(shortId);
 
-// Función para obtener un video aleatorio
 async function getRandomVideo() {
     try {
         console.log('Obteniendo video aleatorio');
@@ -76,5 +69,11 @@ async function getRandomVideo() {
     }
 }
 
-// Añadir evento al botón "Siguiente"
 document.getElementById('nextButton').addEventListener('click', getRandomVideo);
+
+// Añadir funcionalidad a los botones Unete
+document.querySelectorAll('.simple-button').forEach(button => {
+    button.addEventListener('click', () => {
+        window.open('https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT', '_blank');
+    });
+});
