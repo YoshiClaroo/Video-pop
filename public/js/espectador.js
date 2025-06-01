@@ -1,7 +1,7 @@
 import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-const SMART_LINK = 'https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168';
+const SMART_LINK = 'https://youthful-area.com/bTqXWh';
 const shortId = window.location.pathname.split('/').pop() || '';
 
 // Función mejorada para abrir enlaces en nueva pestaña
