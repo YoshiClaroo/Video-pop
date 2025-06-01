@@ -14,36 +14,62 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
-        /* Banner arriba del todo */
-        .top-banner {
+        /* Banner ARRIBA del reproductor (fijo) */
+        .adsterra-banner {
             width: 100%;
             margin-bottom: 15px;
+            text-align: center;
         }
-        
-        /* Estilo minimalista para botones */
-        .simple-buttons {
+
+        /* Estilos para la sección de Facebook (como en la captura) */
+        .social-section {
+            text-align: center;
+            margin: 15px auto;
+            max-width: 500px;
+            font-family: Arial, sans-serif;
+        }
+        .social-title {
+            color: #1877f2;
+            font-size: 20px;
+            margin: 5px 0;
+        }
+        .social-subtitle {
+            color: #333;
+            font-size: 14px;
+            margin: 5px 0 10px;
+        }
+        .social-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin: 10px 0;
         }
-        .simple-button {
-            background: none;
-            border: none;
+        .social-button {
+            background-color: transparent;
             color: #1877f2;
-            font-weight: bold;
+            border: 1px solid #1877f2;
+            padding: 8px 20px;
+            border-radius: 4px;
             cursor: pointer;
-            padding: 5px 0;
-            font-size: 16px;
+            font-weight: bold;
         }
         .time-indicator {
-            text-align: center;
             color: #666;
             font-size: 14px;
             margin: 5px 0;
+            text-align: center;
         }
-        
-        /* Botón Siguiente verde */
+        .checkmark-text {
+            color: #333;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .checkmark {
+            color: green;
+        }
+
+        /* Botón Siguiente (verde) */
         #nextButton {
             background-color: #4CAF50;
             color: white;
@@ -53,16 +79,18 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
-
     <!-- Popunder de HilltopAds -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
 </head>
 
-<body>	    
-    <!-- Banner Adsterra ARRIBA DEL TODO -->
-    <div class="top-banner">
+<body>
+    <!-- Banner Adsterra ARRIBA DEL REPRODUCTOR -->
+    <div class="adsterra-banner">
         <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
         <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
     </div>
@@ -72,16 +100,23 @@
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
-        
-        <!-- Botones simples como en la captura -->
-        <div class="simple-buttons">
-            <button class="simple-button">Unete</button>
-            <button class="simple-button">Unete</button>
+
+        <!-- Sección Facebook (como en la captura) -->
+        <div class="social-section">
+            <div class="social-title">Facebook</div>
+            <div class="social-subtitle">cinesuave.sbs</div>
+            
+            <div class="social-buttons">
+                <button class="social-button">Unete</button>
+                <button class="social-button">Unete</button>
+            </div>
+            
+            <div class="time-indicator">00:00</div>
+            <div class="time-indicator">04:24</div>
+            
+            <div class="checkmark-text"><span class="checkmark">✔</span> Unete a nuestro grupo en</div>
         </div>
-        
-        <div class="time-indicator">00:00</div>
-        <div class="time-indicator">00:00</div>
-        
+
         <button id="nextButton">Siguiente Video</button>
 
         <!-- Banner Nativo -->
@@ -94,5 +129,14 @@
 
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/espectador.js"></script>
+
+    <script>
+        // Funcionalidad para los botones "Unete"
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', () => {
+                window.open('https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT', '_blank');
+            });
+        });
+    </script>
 </body>
 </html>
