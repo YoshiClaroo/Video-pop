@@ -16,96 +16,6 @@
 
     <!-- Popunder de HilltopAds (versión actualizada) -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
-
-    <!-- Estilos Mejorados para la Barra Social -->
-    <style>
-        .social-bar {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 220px;
-            height: 300px;
-            background: linear-gradient(135deg, #ff4d79 0%, #ff2d55 100%);
-            border-radius: 15px;
-            padding: 15px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            cursor: pointer;
-            border: 2px solid white;
-        }
-
-        .social-bar.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .social-bar h2 {
-            font-size: 18px;
-            margin: 25px 0 5px 0;
-            font-family: 'Arial', sans-serif;
-            font-weight: bold;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .social-bar p {
-            font-size: 14px;
-            margin: 0 0 15px 0;
-            font-family: 'Arial', sans-serif;
-            opacity: 0.9;
-        }
-
-        .social-bar img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-top: 10px;
-            border: 2px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .social-bar:hover img {
-            transform: scale(1.03);
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            color: white;
-            font-size: 16px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
-
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
-            transform: rotate(90deg);
-        }
-
-        .social-bar:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
-        }
-    </style>
 </head>
 
 <body>	    
@@ -120,91 +30,13 @@
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
     </div>
 
-    <!-- Barra Social Mejorada -->
-    <div class="social-bar" id="socialBar">
-        <button class="close-btn" onclick="closeSocialBar()" aria-label="Cerrar">×</button>
-        <h2>🔥 Solteras en tu Área</h2>
-        <p>Conecta ahora y chatea 😈🔥</p>
-        <img id="randomImage" src="" alt="Personas solteras buscando conexión">
-    </div>
-
-    <!-- In-Page Push de HilltopAds -->
-    
+    <!-- In-Page Push de HilltopAds (colocado antes del cierre del body) -->
+    <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51227/fda436afa9f6df194de506b9beaba219677150a9/lib.js"></script>
 
     <!-- Video Slider de HilltopAds -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51229/10596d26ea183c28bdf27b2e3d2b9aea60b15790/lib.js"></script>
 
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/espectador.js"></script>
-
-    <!-- Script de la Barra Social Mejorada -->
-    <script>
-        // Array con todas las imágenes
-        const images = [
-            'https://i.ibb.co/0V6dTkKZ/d3567e21582f4c6a70af7d513e5f28ba.jpg',
-            'https://i.ibb.co/S4r4FYWB/9ba0557f4b757e2a051fac8dbfb82613.jpg',
-            'https://i.ibb.co/LdQX91J8/88629076dc84e39a492af0628d292a71.jpg',
-            'https://i.ibb.co/rKYnrfgL/8368a4e44d4ee7456f0bdd9db93bb39f.jpg',
-            'https://i.ibb.co/V0rVwTb6/b768b76d558e8cf7eaad7e605f29a5c9.jpg',
-            'https://i.ibb.co/gbMpCZtN/0bbd211333d78f1e8983a871b280eb90.png',
-            'https://i.ibb.co/6JFSnJJH/images-5.jpg',
-            'https://i.ibb.co/WWkD8MZg/images-4.jpg',
-            'https://i.ibb.co/p6xL4bHy/images-2.jpg',
-            'https://i.ibb.co/27dnLpbF/images-3.jpg',
-            'https://i.ibb.co/Tx7fszQL/f2e1017558c62756d2fed6f4d64b8e13.jpg',
-            'https://i.ibb.co/N6WSTyVt/images-1.jpg',
-            'https://i.ibb.co/nNQ4cWvH/5772a5399e984be032e27f783be5ac00.jpg',
-            'https://i.ibb.co/zVVVDKZB/0001f118f9fe37e786dca393ca3646fb.jpg'
-        ];
-
-        const socialBar = document.getElementById('socialBar');
-        const randomImage = document.getElementById('randomImage');
-
-        // Precargar imágenes para mejor rendimiento
-        function preloadImages() {
-            images.forEach(img => {
-                new Image().src = img;
-            });
-        }
-
-        function setRandomImage() {
-            const randomIndex = Math.floor(Math.random() * images.length);
-            randomImage.src = images[randomIndex];
-            randomImage.style.opacity = 0;
-            randomImage.onload = () => {
-                randomImage.style.opacity = 1;
-            };
-        }
-
-        function showSocialBar() {
-            setRandomImage();
-            socialBar.classList.add('visible');
-            
-            // Cambiar imagen cada 8 segundos si la barra está visible
-            if (window.socialBarInterval) {
-                clearInterval(window.socialBarInterval);
-            }
-            window.socialBarInterval = setInterval(setRandomImage, 8000);
-        }
-
-        function closeSocialBar() {
-            socialBar.classList.remove('visible');
-            if (window.socialBarInterval) {
-                clearInterval(window.socialBarInterval);
-            }
-            setTimeout(showSocialBar, 15000); // Reaparece después de 15 segundos
-        }
-
-        // Redirigir al hacer clic en la barra
-        socialBar.addEventListener('click', function(event) {
-            if (!event.target.classList.contains('close-btn')) {
-                window.open('https://chicashermosas.netlify.app/', '_blank', 'noopener,noreferrer');
-            }
-        });
-
-        // Precargar imágenes y mostrar la barra después de 3 segundos
-        preloadImages();
-        setTimeout(showSocialBar, 3000);
-    </script>
 </body>
 </html>
