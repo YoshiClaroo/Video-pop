@@ -4,6 +4,17 @@ import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/fireba
 const SMART_LINK = 'https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168';
 const shortId = window.location.pathname.split('/').pop() || '';
 
+// Función mejorada para abrir enlaces en nueva pestaña
+function openInNewTab(url) {
+    setTimeout(() => {
+        const newWindow = window.open(url, '_blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+            // Fallback en caso de bloqueo de popup
+            window.location.href = url;
+        }
+    }, 300);
+}
+
 async function loadVideo(shortId) {
     if (!shortId) {
         window.location.href = '/404.html';
@@ -21,11 +32,15 @@ async function loadVideo(shortId) {
             document.getElementById('videoSource').src = data.videoUrl;
             document.getElementById('videoPlayer').load();
             
-            if (data.smartLink?.startsWith('https://')) {
-                document.getElementById('videoPlayer').onended = () => {
-                    window.open(data.smartLink, '_blank');
-                };
-            }
+            // Configurar redirección al finalizar el video (siempre se ejecutará)
+            document.getElementById('videoPlayer').onended = () => {
+                if (data.smartLink?.startsWith('https://')) {
+                    openInNewTab(data.smartLink);
+                } else {
+                    openInNewTab(SMART_LINK); // Usar el enlace por defecto si no hay smartLink
+                }
+            };
+            
             window.history.replaceState(null, '', `/${shortId}`);
         } else {
             window.location.href = '/404.html';
@@ -41,7 +56,7 @@ async function getRandomVideo() {
         const docs = snapshot.docs;
         if (docs.length > 0) {
             const randomDoc = docs[Math.floor(Math.random() * docs.length)];
-            window.open(SMART_LINK, '_blank');
+            openInNewTab(SMART_LINK); // Abre en nueva pestaña al cambiar de video
             loadVideo(randomDoc.id);
         }
     } catch (error) {
@@ -49,5 +64,8 @@ async function getRandomVideo() {
     }
 }
 
+// Configurar el botón siguiente para abrir en nueva pestaña
 document.getElementById('nextButton').addEventListener('click', getRandomVideo);
+
+// Iniciar carga del video
 loadVideo(shortId);
