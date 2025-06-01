@@ -14,51 +14,36 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
-        /* Estilos para la sección de Facebook */
-        .social-section {
-            text-align: center;
-            margin: 20px auto;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            max-width: 500px;
-        }
-        .social-title {
-            color: #1877f2;
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        .social-subtitle {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        .social-button {
-            background-color: #1877f2;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .checkmark-text {
-            color: #333;
-            font-size: 14px;
-        }
-        .checkmark {
-            color: green;
-            font-weight: bold;
+        /* Banner arriba del todo */
+        .top-banner {
+            width: 100%;
+            margin-bottom: 15px;
         }
         
-        /* Estilo para el botón Siguiente */
+        /* Estilo minimalista para botones */
+        .simple-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .simple-button {
+            background: none;
+            border: none;
+            color: #1877f2;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 0;
+            font-size: 16px;
+        }
+        .time-indicator {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        /* Botón Siguiente verde */
         #nextButton {
             background-color: #4CAF50;
             color: white;
@@ -69,9 +54,6 @@
             font-size: 16px;
             margin-top: 15px;
         }
-        #nextButton:hover {
-            background-color: #45a049;
-        }
     </style>
 
     <!-- Popunder de HilltopAds -->
@@ -79,9 +61,11 @@
 </head>
 
 <body>	    
-    <!-- Banner Nativo de Adsterra (fuera del container) -->
-    <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
-    <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
+    <!-- Banner Adsterra ARRIBA DEL TODO -->
+    <div class="top-banner">
+        <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
+        <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
+    </div>
 
     <div class="video-container">
         <video id="videoPlayer" controls>
@@ -89,29 +73,23 @@
             Tu navegador no soporta el reproductor de video.
         </video>
         
-        <button id="nextButton">Siguiente Video</button>
-
-        <!-- Sección de Facebook dentro del reproductor -->
-        <div class="social-section">
-            <div class="social-title">Facebook</div>
-            <div class="social-subtitle">pajon.pics</div>
-            
-            <div class="social-buttons">
-                <a href="https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT" class="social-button">Unete</a>
-                <a href="https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT" class="social-button">Unete</a>
-            </div>
-            
-            <div class="checkmark-text"><span class="checkmark">✔️</span> Unete a nuestra pagina en Facebook</div>
+        <!-- Botones simples como en la captura -->
+        <div class="simple-buttons">
+            <button class="simple-button">Unete</button>
+            <button class="simple-button">Unete</button>
         </div>
+        
+        <div class="time-indicator">00:00</div>
+        <div class="time-indicator">00:00</div>
+        
+        <button id="nextButton">Siguiente Video</button>
 
         <!-- Banner Nativo -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
     </div>
 
-    <!-- In-Page Push de HilltopAds -->
+    <!-- Scripts de HilltopAds -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51227/fda436afa9f6df194de506b9beaba219677150a9/lib.js"></script>
-
-    <!-- Video Slider de HilltopAds -->
     <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51229/10596d26ea183c28bdf27b2e3d2b9aea60b15790/lib.js"></script>
 
     <script type="module" src="/js/firebase.js"></script>
