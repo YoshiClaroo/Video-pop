@@ -14,62 +14,53 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
-        /* Banner ARRIBA del reproductor (fijo) */
-        .adsterra-banner {
+        /* Banner Adsterra ARRIBA DEL REPRODUCTOR */
+        .top-banner {
             width: 100%;
-            margin-bottom: 15px;
-            text-align: center;
+            margin-bottom: 10px;
         }
-
-        /* Estilos para la sección de Facebook (como en la captura) */
-        .social-section {
+        
+        /* Estilos exactos como la captura */
+        .facebook-section {
             text-align: center;
             margin: 15px auto;
-            max-width: 500px;
             font-family: Arial, sans-serif;
         }
-        .social-title {
+        .facebook-title {
             color: #1877f2;
             font-size: 20px;
-            margin: 5px 0;
+            margin: 0;
         }
-        .social-subtitle {
+        .facebook-url {
             color: #333;
             font-size: 14px;
-            margin: 5px 0 10px;
+            margin: 5px 0 15px;
         }
-        .social-buttons {
+        .join-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 10px 0;
         }
-        .social-button {
-            background-color: transparent;
+        .join-button {
+            background: transparent;
             color: #1877f2;
-            border: 1px solid #1877f2;
-            padding: 8px 20px;
-            border-radius: 4px;
-            cursor: pointer;
+            border: none;
+            padding: 0;
+            font-size: 16px;
             font-weight: bold;
-        }
-        .time-indicator {
-            color: #666;
-            font-size: 14px;
-            margin: 5px 0;
-            text-align: center;
+            cursor: pointer;
+            text-decoration: underline;
         }
         .checkmark-text {
             color: #333;
             font-size: 14px;
-            text-align: center;
             margin-top: 10px;
         }
         .checkmark {
             color: green;
         }
-
-        /* Botón Siguiente (verde) */
+        
+        /* Botón Siguiente */
         #nextButton {
             background-color: #4CAF50;
             color: white;
@@ -78,10 +69,8 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 15px;
+            margin: 15px auto 0;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
     </style>
     <!-- Popunder de HilltopAds -->
@@ -89,8 +78,8 @@
 </head>
 
 <body>
-    <!-- Banner Adsterra ARRIBA DEL REPRODUCTOR -->
-    <div class="adsterra-banner">
+    <!-- Banner Adsterra ARRIBA -->
+    <div class="top-banner">
         <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
         <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
     </div>
@@ -101,18 +90,15 @@
             Tu navegador no soporta el reproductor de video.
         </video>
 
-        <!-- Sección Facebook (como en la captura) -->
-        <div class="social-section">
-            <div class="social-title">Facebook</div>
-            <div class="social-subtitle">cinesuave.sbs</div>
+        <!-- Sección Facebook IDÉNTICA a la captura -->
+        <div class="facebook-section">
+            <div class="facebook-title">Facebook</div>
+            <div class="facebook-url">cinesuave.sbs</div>
             
-            <div class="social-buttons">
-                <button class="social-button">Unete</button>
-                <button class="social-button">Unete</button>
+            <div class="join-buttons">
+                <button class="join-button">Unete</button>
+                <button class="join-button">Unete</button>
             </div>
-            
-            <div class="time-indicator">00:00</div>
-            <div class="time-indicator">04:24</div>
             
             <div class="checkmark-text"><span class="checkmark">✔</span> Unete a nuestro grupo en</div>
         </div>
@@ -131,10 +117,10 @@
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
-        // Funcionalidad para los botones "Unete"
-        document.querySelectorAll('.social-button').forEach(button => {
+        // Todos los botones "Unete" redirigen a Facebook
+        document.querySelectorAll('.join-button').forEach(button => {
             button.addEventListener('click', () => {
-                window.open('https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT', '_blank');
+                window.location.href = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
             });
         });
     </script>
