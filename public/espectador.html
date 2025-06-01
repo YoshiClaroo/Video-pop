@@ -14,62 +14,59 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
-        /* Banner Adsterra ARRIBA DEL REPRODUCTOR */
-        .top-banner {
-            width: 100%;
-            margin-bottom: 10px;
+        /* Contenedor principal */
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
         }
         
-        /* Estilos exactos como la captura */
-        .facebook-section {
-            text-align: center;
-            margin: 15px auto;
-            font-family: Arial, sans-serif;
-        }
-        .facebook-title {
-            color: #1877f2;
-            font-size: 20px;
-            margin: 0;
-        }
-        .facebook-url {
-            color: #333;
-            font-size: 14px;
-            margin: 5px 0 15px;
-        }
-        .join-buttons {
+        /* Botones Unete laterales */
+        .join-buttons-container {
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            justify-content: space-between;
+            margin: 20px 0;
         }
         .join-button {
-            background: transparent;
-            color: #1877f2;
+            background-color: #1877f2;
+            color: white;
             border: none;
-            padding: 0;
-            font-size: 16px;
+            padding: 10px 25px;
+            border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            text-decoration: underline;
         }
-        .checkmark-text {
-            color: #333;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .checkmark {
-            color: green;
+        
+        /* Botón Unete a grupo */
+        .join-group-button {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 25px auto 0;
+            width: fit-content;
         }
         
         /* Botón Siguiente */
         #nextButton {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 15px auto 0;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        /* Video responsive */
+        video {
+            width: 100%;
             display: block;
         }
     </style>
@@ -78,32 +75,22 @@
 </head>
 
 <body>
-    <!-- Banner Adsterra ARRIBA -->
-    <div class="top-banner">
-        <script async="async" data-cfasync="false" src="//pl26747673.profitableratecpm.com/c47f41c21cc193734bfd813ad2903c96/invoke.js"></script>
-        <div id="container-c47f41c21cc193734bfd813ad2903c96"></div>
-    </div>
-
     <div class="video-container">
         <video id="videoPlayer" controls>
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
 
-        <!-- Sección Facebook IDÉNTICA a la captura -->
-        <div class="facebook-section">
-            <div class="facebook-title">Facebook</div>
-            <div class="facebook-url">cinesuave.sbs</div>
-            
-            <div class="join-buttons">
-                <button class="join-button">Unete</button>
-                <button class="join-button">Unete</button>
-            </div>
-            
-            <div class="checkmark-text"><span class="checkmark">✔</span> Unete a nuestro grupo en</div>
+        <!-- Botones Unete laterales -->
+        <div class="join-buttons-container">
+            <button class="join-button">Unete</button>
+            <button class="join-button">Unete</button>
         </div>
 
         <button id="nextButton">Siguiente Video</button>
+        
+        <!-- Botón Unete a grupo -->
+        <button class="join-group-button">Unete a nuestro grupo de Facebook</button>
 
         <!-- Banner Nativo -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
@@ -117,10 +104,11 @@
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
-        // Todos los botones "Unete" redirigen a Facebook
-        document.querySelectorAll('.join-button').forEach(button => {
+        // Todos los botones redirigen a Facebook
+        const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
+        document.querySelectorAll('.join-button, .join-group-button').forEach(button => {
             button.addEventListener('click', () => {
-                window.location.href = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
+                window.location.href = facebookUrl;
             });
         });
     </script>
