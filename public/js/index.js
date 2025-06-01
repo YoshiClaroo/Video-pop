@@ -6,14 +6,14 @@ function isValidHttpsUrl(url) {
     return url.startsWith('https://');
 }
 
-// Generar ID corto (6 caracteres)
+// Generar ID corto con formato: 4 letras/números + "_mp4" (ejemplo: hs63_mp4)
 function generateShortId() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {  // Cambiado de 6 a 4 caracteres aleatorios
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return result;
+    return result + '_mp4';  // Agrega "_mp4" al final
 }
 
 // Manejar el formulario
