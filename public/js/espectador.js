@@ -1,7 +1,7 @@
 import { db } from './firebase.js';
 import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-const SMART_LINK = 'https://official-permit.com/b.3FVl0pP-3Sp/vMbzmDVPJEZKDK0h2PMrzag/2mNvDNIWxkLVTzYtzVO_DLYm0gMFjcIv';
+const SMART_LINK = 'https://www.profitableratecpm.com/hey0gfbfv?key=9549b58290394cb3e76aa6dc80d847fe';
 const shortId = window.location.pathname.split('/').pop() || '';
 
 // Función mejorada para abrir enlaces en nueva pestaña
