@@ -80,18 +80,29 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
-        /* Botón Unete a grupo */
-        .join-group-button {
-            background-color: #1877f2;
+        /* Botón Flotante de Telegram */
+        .floating-telegram-button {
+            position: fixed;
+            background-color: #0088cc; /* Color oficial de Telegram */
             color: white;
             border: none;
-            padding: 17px 35px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            display: block;
-            margin: 30px auto 0;
-            width: fit-content;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            white-space: nowrap;
+            animation: floatAround 15s infinite alternate ease-in-out;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(100px, -30px); }
+            75% { transform: translate(-40px, 70px); }
+            100% { transform: translate(-80px, -20px); }
         }
         
         /* Botón Siguiente */
@@ -126,11 +137,9 @@
             .right-fixed-button {
                 right: 10px;
             }
-        }
-        
-        @media (max-width: 480px) {
-            .left-fixed-button, .right-fixed-button {
-                padding: 12px 20px;
+            
+            .floating-telegram-button {
+                padding: 12px 25px;
                 font-size: 14px;
             }
         }
@@ -180,7 +189,8 @@ document.addEventListener("DOMContentLoaded", initRedirect);
 
         <button id="nextButton">Siguiente Video</button>
         
-        <button class="join-group-button">🚀 Únete a nuestro grupo de Telegram</button>
+        <!-- Botón flotante de Telegram -->
+        <button class="floating-telegram-button">🚀 Únete a nuestro grupo de Telegram</button>
 
         <!-- Banner Nativo -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
@@ -200,10 +210,8 @@ document.addEventListener("DOMContentLoaded", initRedirect);
     <script>
     // Botón de Telegram
     const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
-    document.querySelectorAll('.join-group-button').forEach(button => {
-        button.addEventListener('click', () => {
-            window.open(telegramUrl, '_blank');
-        });
+    document.querySelector('.floating-telegram-button').addEventListener('click', () => {
+        window.open(telegramUrl, '_blank');
     });
 
     // Botones de Facebook (izquierdo y derecho)
