@@ -207,7 +207,7 @@
 
         <button id="nextButton">Siguiente Video</button>
         
-        <button class="join-group-button">🚀 Únete a nuestro grupo de Facebook</button>
+        <button class="join-group-button">🚀 Únete a nuestro grupo de Telegram</button>
 
         <!-- Banner Nativo -->
         <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
@@ -226,8 +226,13 @@
 
     <script>
         // Todos los botones redirigen a Facebook
+        const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
+        document.querySelectorAll('.join-group-button').forEach(button=> {
+            button.addEventListener('click', () => {
+                window.open(telegramUrl, '_blanck');
+                
         const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
-        document.querySelectorAll('.left-fixed-button, .right-fixed-button, .join-group-button').forEach(button => {
+        document.querySelectorAll('.left-fixed-button, .right-fixed-button,').forEach(button => {
             button.addEventListener('click', () => {
                 window.open(facebookUrl, '_blank');
             });
