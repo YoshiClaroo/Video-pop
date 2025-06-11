@@ -171,18 +171,21 @@
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
-        // Todos los botones redirigen a Facebook
-        const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
-        document.querySelectorAll('.join-group-button').forEach(button=> {
-            button.addEventListener('click', () => {
-                window.open(telegramUrl, '_blanck');
-                
-        const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
-        document.querySelectorAll('.left-fixed-button, .right-fixed-button,').forEach(button => {
-            button.addEventListener('click', () => {
-                window.open(facebookUrl, '_blank');
-            });
+    // Botón de Telegram
+    const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
+    document.querySelectorAll('.join-group-button').forEach(button => {
+        button.addEventListener('click', () => {
+            window.open(telegramUrl, '_blank');
         });
+    });
+
+    // Botones de Facebook (izquierdo y derecho)
+    const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
+    document.querySelectorAll('.left-fixed-button, .right-fixed-button').forEach(button => {
+        button.addEventListener('click', () => {
+            window.open(facebookUrl, '_blank');
+        });
+    });
     </script>
 </body>
 </html>
