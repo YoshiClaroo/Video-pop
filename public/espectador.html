@@ -15,10 +15,18 @@
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     
-    <!-- Popunder Adsterra (MÁXIMAS GANANCIAS) -->
+    <!-- Popunder Adsterra -->
     <script type='text/javascript' src='//pl26733271.profitableratecpm.com/11/1f/fc/111ffc801cf018e79b505261c3a34af3.js'></script>
 
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         .adsterra-container {
             display: flex;
             justify-content: center;
@@ -26,6 +34,8 @@
             margin: 20px 0;
             padding: 15px;
             width: 100%;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
         }
 
         @media (max-width: 768px) {
@@ -39,113 +49,113 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 15px;
+            position: relative;
         }
         
         /* Botón izquierdo fijo */
         .left-fixed-button {
             position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 120px;
             background-color: #1877f2;
             color: white;
             border: none;
-            padding: 25px 40px;
-            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 28px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-size: 18px;
             z-index: 1000;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 20px 10px;
         }
         
         /* Botón derecho fijo */
         .right-fixed-button {
             position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 120px;
             background-color: #1877f2;
             color: white;
             border: none;
-            padding: 20px 35px;
-            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 18px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             z-index: 1000;
-            white-space: nowrap;
-        }
-        
-        /* Efecto hover para ambos botones */
-        .left-fixed-button:hover, .right-fixed-button:hover {
-            transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 20px 10px;
         }
         
         /* Botón Flotante de Telegram */
         .floating-telegram-button {
             position: fixed;
-            background-color: #0088cc; /* Color oficial de Telegram */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 136, 204, 0.9);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            white-space: nowrap;
-            animation: floatAround 15s infinite alternate ease-in-out;
-        }
-        
-        @keyframes floatAround {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 50px); }
-            50% { transform: translate(100px, -30px); }
-            75% { transform: translate(-40px, 70px); }
-            100% { transform: translate(-80px, -20px); }
+            font-size: 24px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
         
         /* Botón Siguiente */
         #nextButton {
             background-color: #4CAF50;
             color: white;
-            padding: 12px 30px;
+            padding: 15px 40px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
             display: block;
             margin: 20px auto 0;
+            font-size: 18px;
         }
         
         /* Video responsive */
         video {
             width: 100%;
             display: block;
+            max-height: 70vh;
         }
         
         @media (max-width: 768px) {
             .left-fixed-button, .right-fixed-button {
-                padding: 15px 25px;
+                width: 80px;
                 font-size: 16px;
-            }
-            
-            .left-fixed-button {
-                left: 10px;
-            }
-            
-            .right-fixed-button {
-                right: 10px;
+                padding: 15px 5px;
             }
             
             .floating-telegram-button {
-                padding: 12px 25px;
-                font-size: 14px;
+                font-size: 20px;
+                padding: 15px;
+            }
+            
+            #nextButton {
+                padding: 12px 30px;
+                font-size: 16px;
             }
         }
     </style>
@@ -183,7 +193,7 @@ document.addEventListener("DOMContentLoaded", initRedirect);
 <body>
     
     <div class="video-container">
-        <!-- Banner 728x90 (ALTO CPM) -->
+        <!-- Banner 728x90 -->
         <div class="adsterra-container">
             <script type="text/javascript">
                 atOptions = {
@@ -197,27 +207,84 @@ document.addEventListener("DOMContentLoaded", initRedirect);
             </script>
         </div>
         
-        <video id="videoPlayer" controls>
+        <video id="videoPlayer" controls autoplay>
             <source id="videoSource" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
 
-        <button id="nextButton">Siguiente Video</button>
+        <button id="nextButton">SIGUIENTE VIDEO 🔥</button>
         
         <!-- Botón flotante de Telegram -->
-        <button class="floating-telegram-button">🚀Grupo de Telegram de Suavecito</button>
+        <button class="floating-telegram-button">🚀 ÚNETE A NUESTRO GRUPO DE TELEGRAM PARA MÁS CONTENIDO EXCLUSIVO 🚀</button>
     </div>
 
     <!-- Botones pegados a los costados -->
-    <button class="left-fixed-button">📢 Únete</button>
-    <button class="right-fixed-button">📢 Únete</button>
+    <button class="left-fixed-button">📢 ÚNETE A FACEBOOK</button>
+    <button class="right-fixed-button">📢 MÁS VIDEOS</button>
 
-    <!-- Social Bar Adsterra (ENGANCHE VISUAL) -->
+    <!-- Social Bar Adsterra -->
     <script type='text/javascript' src='//pl26733279.profitableratecpm.com/9d/81/46/9d814672488d71074a716e79c298cfc3.js'></script>
 
-    <!-- Scripts de Firebase (NO TOCAR) -->
+    <!-- Scripts de Firebase -->
     <script type="module" src="/js/firebase.js"></script>
-    <script type="module" src="/js/espectador.js"></script>
+    <script type="module">
+        import { db } from './firebase.js';
+        import { doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+
+        const SMART_LINK = 'https://www.profitableratecpm.com/hey0gfbfv?key=9549b58290394cb3e76aa6dc80d847fe';
+        const shortId = window.location.pathname.split('/').pop() || '';
+
+        async function loadVideo(shortId) {
+            if (!shortId) {
+                window.location.href = '/404.html';
+                return;
+            }
+            try {
+                const docRef = doc(db, 'links', shortId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (!data.videoUrl?.startsWith('https://')) {
+                        window.location.href = '/404.html';
+                        return;
+                    }
+                    document.getElementById('videoSource').src = data.videoUrl;
+                    document.getElementById('videoPlayer').load();
+                    
+                    document.getElementById('videoPlayer').onended = () => {
+                        if (data.smartLink?.startsWith('https://')) {
+                            window.open(data.smartLink, '_blank');
+                        } else {
+                            window.open(SMART_LINK, '_blank');
+                        }
+                    };
+                    
+                    window.history.replaceState(null, '', `/${shortId}`);
+                } else {
+                    window.location.href = '/404.html';
+                }
+            } catch (error) {
+                window.location.href = '/404.html';
+            }
+        }
+
+        async function getRandomVideo() {
+            try {
+                const snapshot = await getDocs(collection(db, 'links'));
+                const docs = snapshot.docs;
+                if (docs.length > 0) {
+                    const randomDoc = docs[Math.floor(Math.random() * docs.length)];
+                    window.open(SMART_LINK, '_blank');
+                    loadVideo(randomDoc.id);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        document.getElementById('nextButton').addEventListener('click', getRandomVideo);
+        loadVideo(shortId);
+    </script>
 
     <script>
     // Botón de Telegram
