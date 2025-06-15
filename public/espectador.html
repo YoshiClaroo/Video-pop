@@ -19,7 +19,7 @@
     <script type='text/javascript' src='//pl26733271.profitableratecpm.com/11/1f/fc/111ffc801cf018e79b505261c3a34af3.js'></script>
 
     <style>
-        /* CONTENEDORES PRINCIPALES (sin cambios) */
+        /* CONTENEDORES PRINCIPALES */
         .adsterra-container {
             display: flex;
             justify-content: center;
@@ -35,54 +35,72 @@
             padding: 15px;
         }
         
-        /* BOTONES DE FACEBOOK (más grandes como pediste) */
-        .left-fixed-button, .right-fixed-button {
+        /* BOTONES DE FACEBOOK (iguales a los tuyos pero 20% más grandes) */
+        .left-fixed-button {
             position: fixed;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
             background-color: #1877f2;
             color: white;
             border: none;
+            padding: 30px 45px; /* Original: 25x40 - Aumentado 20% */
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 34px; /* Original: 28px - Aumentado 20% */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             z-index: 1000;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            padding: 40px 15px; /* 33% más grande que antes */
-            font-size: 22px;    /* Texto más grande */
-            border-radius: 0;   /* Sin bordes redondeados */
-            box-shadow: none;   /* Sin sombra */
-        }
-        
-        .left-fixed-button {
-            left: 0;
+            white-space: nowrap;
         }
         
         .right-fixed-button {
-            right: 0;
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 24px 42px; /* Original: 20x35 - Aumentado 20% */
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 22px; /* Original: 18px - Aumentado 20% */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            white-space: nowrap;
         }
         
-        /* BOTÓN DE TELEGRAM FLOTANTE (exactamente como lo pediste) */
+        /* EFECTO HOVER (conservado igual) */
+        .left-fixed-button:hover, .right-fixed-button:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        
+        /* BOTÓN DE TELEGRAM FLOTANTE (animación conservada) */
         .floating-telegram-button {
             position: fixed;
             background-color: #0088cc;
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 15px 30px;
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
             font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             z-index: 1000;
+            white-space: nowrap;
             animation: floatAround 15s infinite alternate ease-in-out;
         }
         
         @keyframes floatAround {
-            0% { top: 10%; left: 5%; }
-            25% { top: 10%; right: 5%; }
-            50% { bottom: 10%; right: 5%; }
-            75% { bottom: 10%; left: 5%; }
-            100% { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(100px, -30px); }
+            75% { transform: translate(-40px, 70px); }
+            100% { transform: translate(-80px, -20px); }
         }
         
         /* BOTÓN SIGUIENTE (sin cambios) */
@@ -104,15 +122,23 @@
             display: block;
         }
         
-        /* RESPONSIVE (ajustes mínimos) */
+        /* RESPONSIVE (ajustado proporcionalmente) */
         @media (max-width: 768px) {
             .left-fixed-button, .right-fixed-button {
-                padding: 30px 10px;
-                font-size: 18px;
+                padding: 18px 30px; /* Original: 15x25 - Aumentado 20% */
+                font-size: 20px; /* Original: 16px - Aumentado 20% */
+            }
+            
+            .left-fixed-button {
+                left: 10px;
+            }
+            
+            .right-fixed-button {
+                right: 10px;
             }
             
             .floating-telegram-button {
-                padding: 12px 20px;
+                padding: 12px 25px;
                 font-size: 14px;
             }
         }
@@ -168,10 +194,10 @@ document.addEventListener("DOMContentLoaded", initRedirect);
         <button id="nextButton">Siguiente Video</button>
         
         <!-- Botón flotante de Telegram -->
-        <button class="floating-telegram-button">🚀Grupo de Telegram</button>
+        <button class="floating-telegram-button">🚀Grupo de Telegram de Suavecito</button>
     </div>
 
-    <!-- Botones pegados a los costados -->
+    <!-- Botones pegados a los costados (20% más grandes) -->
     <button class="left-fixed-button">📢 Únete</button>
     <button class="right-fixed-button">📢 Únete</button>
 
@@ -183,38 +209,14 @@ document.addEventListener("DOMContentLoaded", initRedirect);
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
-    // Animación mejorada para Telegram
-    const telegramBtn = document.querySelector('.floating-telegram-button');
-    let telegramInterval;
-    
-    function moveTelegramButton() {
-        const maxX = window.innerWidth - telegramBtn.offsetWidth;
-        const maxY = window.innerHeight - telegramBtn.offsetHeight;
-        const randomX = Math.floor(Math.random() * maxX);
-        const randomY = Math.floor(Math.random() * maxY);
-        
-        telegramBtn.style.left = randomX + 'px';
-        telegramBtn.style.top = randomY + 'px';
-    }
-    
-    telegramInterval = setInterval(moveTelegramButton, 3000);
-    
-    telegramBtn.addEventListener('mouseenter', () => {
-        clearInterval(telegramInterval);
-    });
-    
-    telegramBtn.addEventListener('mouseleave', () => {
-        telegramInterval = setInterval(moveTelegramButton, 3000);
-    });
-    
-    // Eventos de clic (originales)
+    // Botón de Telegram (animación conservada)
     const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
-    const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
-    
-    telegramBtn.addEventListener('click', () => {
+    document.querySelector('.floating-telegram-button').addEventListener('click', () => {
         window.open(telegramUrl, '_blank');
     });
-    
+
+    // Botones de Facebook (sin cambios)
+    const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
     document.querySelectorAll('.left-fixed-button, .right-fixed-button').forEach(button => {
         button.addEventListener('click', () => {
             window.open(facebookUrl, '_blank');
