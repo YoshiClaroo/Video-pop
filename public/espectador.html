@@ -228,13 +228,14 @@ document.addEventListener("DOMContentLoaded", initRedirect);
 
     <script>
     // Botón de WhatsAp
-    const whatsappUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
-    document.querySelector('.whatButton').addEventListener('click', () => {
-        window.open(whatsappUrl, '_blank');
+    const whatsappUrl = 'https://whatsapp.com/channel/0029VbAxDFW7tkj2E7OLEn0O';
+    document.querySelectorAll('.whatButton').forEach(button => {
+        button.addEventListener('click', () => {
+            window.open(whatsappUrl, '_blank');
     });
         
     // Botón de Telegram (animación conservada)
-    const telegramUrl = 'https://whatsapp.com/channel/0029VbAxDFW7tkj2E7OLEn0O';
+    const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
     document.querySelector('.floating-telegram-button').addEventListener('click', () => {
         window.open(telegramUrl, '_blank');
     });
