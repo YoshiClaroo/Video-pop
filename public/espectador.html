@@ -227,11 +227,10 @@ document.addEventListener("DOMContentLoaded", initRedirect);
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
-    // Botón de WhatsAp
+    // Botón de WhatsApp
     const whatsappUrl = 'https://whatsapp.com/channel/0029VbAxDFW7tkj2E7OLEn0O';
-    document.querySelectorAll('.whatButton').forEach(button => {
-        button.addEventListener('click', () => {
-            window.open(whatsappUrl, '_blank');
+    document.getElementById('whatButton').addEventListener('click', () => {
+        window.open(whatsappUrl, '_blank');
     });
         
     // Botón de Telegram (animación conservada)
@@ -240,7 +239,7 @@ document.addEventListener("DOMContentLoaded", initRedirect);
         window.open(telegramUrl, '_blank');
     });
 
-    // Botones de Facebook (sin cambios)
+    // Botones de Facebook
     const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
     document.querySelectorAll('.left-fixed-button, .right-fixed-button').forEach(button => {
         button.addEventListener('click', () => {
