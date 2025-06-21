@@ -114,6 +114,21 @@
             font-weight: bold;
             display: block;
             margin: 20px auto 0;
+
+        {
+        /* boton WhatsApp*/
+        #whatButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto 0;  
+        }
+            
         }
         
         /* VIDEO (sin cambios) */
@@ -188,6 +203,7 @@ document.addEventListener("DOMContentLoaded", initRedirect);
         </video>
 
         <button id="nextButton">Siguiente Video</button>
+        <button id="whatButton">Grupo de WhatsApp</button>
         
         <!-- Botón flotante de Telegram -->
         <button class="floating-telegram-button">🚀Grupo de Telegram de Suavecito</button>
@@ -211,8 +227,14 @@ document.addEventListener("DOMContentLoaded", initRedirect);
     <script type="module" src="/js/espectador.js"></script>
 
     <script>
+    // Botón de WhatsAp
+    const whatsappUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
+    document.querySelector('.whatButton').addEventListener('click', () => {
+        window.open(whatsappUrl, '_blank');
+    });
+        
     // Botón de Telegram (animación conservada)
-    const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
+    const telegramUrl = 'https://whatsapp.com/channel/0029VbAxDFW7tkj2E7OLEn0O';
     document.querySelector('.floating-telegram-button').addEventListener('click', () => {
         window.open(telegramUrl, '_blank');
     });
