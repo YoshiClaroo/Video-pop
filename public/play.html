@@ -237,6 +237,42 @@
             }
         }
     </style>
+
+    <script>
+  // Tus Smartlinks para rotar
+  const smartlinks = [
+    "https://uncomfortablevacation.com/Fzk5GN",
+    "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c"
+  ];
+
+  // Función para elegir Smartlink de forma alterna
+  function getNextSmartlink() {
+    let current = sessionStorage.getItem('smartlinkIndex') || 0;
+    current = parseInt(current);
+    const nextURL = smartlinks[current % smartlinks.length];
+    sessionStorage.setItem('smartlinkIndex', (current + 1) % smartlinks.length);
+    return nextURL;
+  }
+
+  // Contador de clics en sesión
+  let clickCount = 0;
+  let triggered = false;
+
+  function handleClick() {
+    clickCount++;
+
+    if (!triggered || clickCount % 3 === 0) {
+      const url = getNextSmartlink();
+      window.open(url, '_blank');
+      triggered = true;
+    }
+  }
+
+  // Detectar tanto clics de PC como toques de móvil
+  document.addEventListener('click', handleClick, { passive: true });
+  document.addEventListener('touchstart', handleClick, { passive: true });
+    </script>
+    
 </head>
 <body>
     <header>
