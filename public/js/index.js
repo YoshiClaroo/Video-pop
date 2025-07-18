@@ -1,58 +1,117 @@
 import { db } from './firebase.js';
 import { collection, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-// Validar que la URL use HTTPS
+// Configuración
+const CONFIG = {
+    DOMAIN: 'vzy.lat',
+    TIMEOUT: 30000, // 30 segundos
+    ID_LENGTH: 4, // Longitud del ID corto
+    ID_SUFFIX: '_mp4' // Sufijo para los IDs
+};
+
+// Validar URL HTTPS mejorado
 function isValidHttpsUrl(url) {
-    return url.startsWith('https://');
+    try {
+        const urlObj = new URL(url);
+        return urlObj.protocol === 'https:';
+    } catch {
+        return false;
+    }
 }
 
-// Generar ID corto con formato: 4 letras/números + "_mp4" (ejemplo: hs63_mp4)
+// Generar ID corto mejorado
 function generateShortId() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
-    for (let i = 0; i < 4; i++) {  // Cambiado de 6 a 4 caracteres aleatorios
+    
+    for (let i = 0; i < CONFIG.ID_LENGTH; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return result + '_mp4';  // Agrega "_mp4" al final
+    
+    return result + CONFIG.ID_SUFFIX;
+}
+
+// Mostrar mensaje de error
+function showError(message) {
+    const resultElement = document.getElementById('result');
+    resultElement.style.display = 'block';
+    resultElement.style.background = '#fee';
+    resultElement.style.borderLeftColor = '#f44336';
+    document.getElementById('generatedUrl').textContent = message;
+    document.getElementById('copyButton').style.display = 'none';
+}
+
+// Mostrar resultado exitoso
+function showSuccess(generatedUrl) {
+    const resultElement = document.getElementById('result');
+    resultElement.style.display = 'block';
+    resultElement.style.background = '#e9f7ef';
+    resultElement.style.borderLeftColor = '#28a745';
+    
+    document.getElementById('generatedUrl').innerHTML = 
+        `✅ Enlace generado:<br><a href="${generatedUrl}" target="_blank">${generatedUrl}</a>`;
+    document.getElementById('copyButton').style.display = 'inline-block';
 }
 
 // Manejar el formulario
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const videoUrl = document.getElementById('videoUrl').value;
-
-    // Validar URL
-    if (!isValidHttpsUrl(videoUrl)) {
-        document.getElementById('generatedUrl').textContent = 'Error: La URL del video debe usar HTTPS.';
+    
+    const videoUrl = document.getElementById('videoUrl').value.trim();
+    const smartLink = document.getElementById('smartLink').value.trim();
+    
+    // Validar URL del video
+    if (!videoUrl) {
+        showError('⚠️ Por favor, ingresa una URL de video');
         return;
     }
-
+    
+    if (!isValidHttpsUrl(videoUrl)) {
+        showError('❌ La URL debe usar HTTPS y ser válida');
+        return;
+    }
+    
+    // Verificar si es un archivo MP4 (validación básica)
+    if (!videoUrl.toLowerCase().endsWith('.mp4')) {
+        showError('⚠️ Asegúrate que la URL termine con .mp4');
+        return;
+    }
+    
     const shortId = generateShortId();
-
+    
     try {
+        // Guardar en Firestore incluyendo el smartLink si existe
         await setDoc(doc(collection(db, 'links'), shortId), {
             videoUrl,
-            createdAt: serverTimestamp()
+            smartLink: smartLink || null,
+            createdAt: serverTimestamp(),
+            clicks: 0
         });
         
-        const result = `https://videyy.netlify.app/${shortId}`;
-        document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
-        document.getElementById('copyButton').style.display = 'inline-block';
+        const generatedUrl = `https://${CONFIG.DOMAIN}/${shortId}`;
+        showSuccess(generatedUrl);
+        
+        // Configurar botón de copiar
         document.getElementById('copyButton').onclick = () => {
-            navigator.clipboard.writeText(result).then(() => {
-                alert('Enlace copiado al portapapeles');
+            navigator.clipboard.writeText(generatedUrl).then(() => {
+                const copyBtn = document.getElementById('copyButton');
+                copyBtn.textContent = '✔️ Copiado!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copiar';
+                }, 2000);
             }).catch((err) => {
                 console.error('Error al copiar:', err);
+                showError('Error al copiar al portapapeles');
             });
         };
         
-        // Eliminar la URL generada después de 30 segundos
+        // Ocultar después del timeout
         setTimeout(() => {
-            document.getElementById('generatedUrl').textContent = '';
-            document.getElementById('copyButton').style.display = 'none';
-        }, 30000);
+            document.getElementById('result').style.display = 'none';
+        }, CONFIG.TIMEOUT);
+        
     } catch (error) {
-        console.error('Error al escribir:', error);
-        document.getElementById('generatedUrl').textContent = `Error: ${error.message}`;
+        console.error('Error al guardar en Firestore:', error);
+        showError('🔥 Error al generar el enlace. Intenta nuevamente.');
     }
 });
