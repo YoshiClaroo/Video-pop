@@ -67,11 +67,21 @@
             margin-bottom: 0.5rem;
         }
         
+        /* Banner debajo del título */
+        .header-banner {
+            margin: -1rem 0 2rem 0;
+            min-height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
         .video-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
         }
         
         .video-item {
@@ -186,6 +196,30 @@
             transform: scale(1.1);
         }
         
+        /* Banner cada 5 videos */
+        .mid-banner {
+            grid-column: 1 / -1;
+            margin: 10px 0;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        /* Banner al final */
+        .footer-banner {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
         /* Paginación */
         .pagination {
             display: none;
@@ -217,7 +251,6 @@
             background: #252525;
         }
         
-        /* Footer */
         footer {
             text-align: center;
             margin-top: 2rem;
@@ -247,18 +280,6 @@
             font-size: 0.9rem;
         }
         
-        /* Banner Container */
-        .banner-container {
-            grid-column: 1 / -1;
-            margin: 20px 0;
-            min-height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-        
         @media (max-width: 768px) {
             .video-gallery {
                 grid-template-columns: 1fr;
@@ -285,9 +306,15 @@
         <p>Haz clic en el ícono de play para reproducir</p>
     </header>
     
+    <!-- Banner 1: Debajo del título -->
+    <div class="header-banner" id="headerBanner"></div>
+    
     <div class="video-gallery" id="videoGallery">
         <!-- Los videos y banners se cargarán aquí dinámicamente -->
     </div>
+    
+    <!-- Banner 3: Al final de la página (antes del footer) -->
+    <div class="footer-banner" id="footerBanner"></div>
     
     <!-- Paginación -->
     <div class="pagination" id="pagination">
@@ -330,7 +357,24 @@
         const videosPerPage = 10;
         let currentPage = 1;
 
-        // Función para renderizar videos con banners
+        // Función para cargar banners
+        function loadBanners() {
+            // Banner 1: Debajo del título
+            DicloSDK.showBanner({
+                containerId: 'headerBanner',
+                bannerType: 'BANNER',
+                onError: (error) => console.log('Error en headerBanner:', error)
+            });
+            
+            // Banner 3: Al final de la página
+            DicloSDK.showBanner({
+                containerId: 'footerBanner',
+                bannerType: 'BANNER',
+                onError: (error) => console.log('Error en footerBanner:', error)
+            });
+        }
+
+        // Función para renderizar videos con banners intermedios
         function renderVideosWithBanners() {
             const gallery = document.getElementById('videoGallery');
             gallery.innerHTML = '';
@@ -339,30 +383,30 @@
             const endIndex = startIndex + videosPerPage;
             const videosToShow = allVideos.slice(startIndex, endIndex);
             
+            // Contador para banners cada 5 videos
+            let videoCounter = 0;
+            
             videosToShow.forEach((video, index) => {
-                // Insertar banner cada 5 videos (empezando después del primer video)
-                if (index > 0 && index % 5 === 0) {
+                videoCounter++;
+                
+                // Insertar banner cada 5 videos (solo si hay suficientes videos)
+                if (videoCounter === 5 && (videosToShow.length - index - 1) >= 0) {
                     const bannerContainer = document.createElement('div');
-                    bannerContainer.className = 'banner-container';
-                    bannerContainer.id = `banner-container-${index}`;
+                    bannerContainer.className = 'mid-banner';
+                    bannerContainer.id = `mid-banner-${index}`;
                     gallery.appendChild(bannerContainer);
                     
-                    // Cargar el banner dinámicamente
-                    setTimeout(() => {
-                        try {
-                            DicloSDK.showBanner({
-                                containerId: `banner-container-${index}`,
-                                bannerType: 'BANNER',
-                                onError: function(error) {
-                                    console.log('Error loading banner:', error);
-                                    bannerContainer.innerHTML = '<p>Publicidad</p>';
-                                }
-                            });
-                        } catch (error) {
-                            console.log('DicloSDK not loaded yet:', error);
+                    // Cargar banner intermedio
+                    DicloSDK.showBanner({
+                        containerId: `mid-banner-${index}`,
+                        bannerType: 'BANNER',
+                        onError: (error) => {
+                            console.log('Error en mid-banner:', error);
                             bannerContainer.innerHTML = '<p>Publicidad</p>';
                         }
-                    }, 100);
+                    });
+                    
+                    videoCounter = 0; // Reiniciar contador
                 }
                 
                 // Agregar video
@@ -493,6 +537,7 @@
         
         // Inicializar la galería
         window.addEventListener('DOMContentLoaded', () => {
+            loadBanners();
             renderVideosWithBanners();
             setupPagination();
         });
