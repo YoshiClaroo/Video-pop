@@ -89,7 +89,7 @@
         
         .video-thumbnail {
             position: relative;
-            padding-top: 56.25%;
+            padding-top: 56.25%; /* Mantenemos relación de aspecto 16:9 */
             cursor: pointer;
             background: #000;
         }
@@ -135,20 +135,26 @@
             display: none;
             width: 100%;
             background: #000;
+            position: relative;
+            padding-top: 56.25%; /* Forzamos relación de aspecto 16:9 */
         }
         
-        /* AÑADIDO: Estilos para mostrar el reproductor cuando está activo */
+        /* Añadido: Estilos para el video dentro del contenedor */
+        .video-player video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Cambiado a 'contain' para evitar recorte */
+        }
+        
         .video-item.active .video-player {
             display: block;
         }
         
         .video-item.active .video-thumbnail {
             display: none;
-        }
-        
-        .video-player video {
-            width: 100%;
-            display: block;
         }
         
         .video-info {
@@ -174,6 +180,11 @@
             gap: 10px;
             padding: 10px;
             background: #252525;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
         }
         
         .control-btn {
@@ -259,13 +270,21 @@
         /* Banner Container */
         .banner-container {
             grid-column: 1 / -1;
-            margin: 20px 0;
             min-height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .top-banner {
+            margin-bottom: 20px;
+        }
+        
+        .bottom-banner {
+            margin-top: 20px;
         }
         
         @media (max-width: 768px) {
@@ -294,8 +313,18 @@
         <p>Haz clic en el ícono de play para reproducir</p>
     </header>
     
+    <!-- Banner superior -->
+    <div class="banner-container top-banner" id="top-banner">
+        <!-- Banner se cargará aquí dinámicamente -->
+    </div>
+    
     <div class="video-gallery" id="videoGallery">
-        <!-- Los videos y banners se cargarán aquí dinámicamente -->
+        <!-- Los videos se cargarán aquí dinámicamente -->
+    </div>
+    
+    <!-- Banner inferior -->
+    <div class="banner-container bottom-banner" id="bottom-banner">
+        <!-- Banner se cargará aquí dinámicamente -->
     </div>
     
     <!-- Paginación -->
@@ -329,6 +358,39 @@
         const videosPerPage = 10;
         let currentPage = 1;
 
+        // Función para cargar banners
+        function loadBanners() {
+            // Cargar banner superior
+            try {
+                DicloSDK.showBanner({
+                    containerId: 'top-banner',
+                    bannerType: 'BANNER',
+                    onError: function(error) {
+                        console.log('Error loading top banner:', error);
+                        document.getElementById('top-banner').innerHTML = '<p>Publicidad</p>';
+                    }
+                });
+            } catch (error) {
+                console.log('DicloSDK not loaded yet:', error);
+                document.getElementById('top-banner').innerHTML = '<p>Publicidad</p>';
+            }
+
+            // Cargar banner inferior
+            try {
+                DicloSDK.showBanner({
+                    containerId: 'bottom-banner',
+                    bannerType: 'BANNER',
+                    onError: function(error) {
+                        console.log('Error loading bottom banner:', error);
+                        document.getElementById('bottom-banner').innerHTML = '<p>Publicidad</p>';
+                    }
+                });
+            } catch (error) {
+                console.log('DicloSDK not loaded yet:', error);
+                document.getElementById('bottom-banner').innerHTML = '<p>Publicidad</p>';
+            }
+        }
+
         // Función para renderizar videos con banners
         function renderVideosWithBanners() {
             const gallery = document.getElementById('videoGallery');
@@ -338,22 +400,23 @@
             const endIndex = startIndex + videosPerPage;
             const videosToShow = allVideos.slice(startIndex, endIndex);
             
+            // Mostrar banner después del 5to video si hay suficientes videos
             videosToShow.forEach((video, index) => {
-                // Insertar banner cada 5 videos (empezando después del primer video)
-                if (index > 0 && index % 5 === 0) {
+                // Insertar banner después del 5to video (índice 4 ya que empieza en 0)
+                if (index === 4 && videosToShow.length > 5) {
                     const bannerContainer = document.createElement('div');
                     bannerContainer.className = 'banner-container';
-                    bannerContainer.id = `banner-container-${index}`;
+                    bannerContainer.id = 'mid-banner';
                     gallery.appendChild(bannerContainer);
                     
                     // Cargar el banner dinámicamente
                     setTimeout(() => {
                         try {
                             DicloSDK.showBanner({
-                                containerId: `banner-container-${index}`,
+                                containerId: 'mid-banner',
                                 bannerType: 'BANNER',
                                 onError: function(error) {
-                                    console.log('Error loading banner:', error);
+                                    console.log('Error loading mid banner:', error);
                                     bannerContainer.innerHTML = '<p>Publicidad</p>';
                                 }
                             });
@@ -471,6 +534,7 @@
             if (!document.fullscreenElement) {
                 videoPlayer.requestFullscreen().catch(err => {
                     alert(`Error al entrar en pantalla completa: ${err.message}`);
+         });
                 });
             } else {
                 document.exitFullscreen();
@@ -494,6 +558,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderVideosWithBanners();
             setupPagination();
+            loadBanners();
         });
     </script>
 </body>
