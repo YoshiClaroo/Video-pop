@@ -9,75 +9,113 @@
     <meta name="referrer" content="no-referrer-when-downgrade" />
     <meta name="site-verification" content="c25d4a160784836e4bb45daad9017024"/>
     <script src="/volrmszurfxd.php"></script>
-    <title>VZY - Generador de Enlaces</title>
+    <title>VZY - Generador de Enlaces Profesional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6c63ff;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --error: #dc3545;
+            --primary: #6C63FF;
+            --primary-dark: #4D44DB;
+            --dark: #1E1E2C;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --success: #28A745;
+            --error: #DC3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: #f5f7ff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #F5F7FF;
+            color: var(--dark);
             min-height: 100vh;
-            color: #333;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
+            max-width: 800px;
             width: 100%;
-            max-width: 600px;
-            margin: 20px;
+            margin: 2rem auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            flex: 1;
         }
         
         .header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 25px;
+            padding: 2rem;
             text-align: center;
+            position: relative;
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .see-more-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .see-more-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
         
         .form-container {
-            padding: 30px;
+            padding: 2rem;
         }
         
         h2 {
-            color: var(--primary);
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 1.5rem;
+            color: var(--primary-dark);
             text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
         }
         
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
             color: var(--dark);
         }
         
         input[type="url"] {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
+            padding: 0.8rem 1rem;
+            border: 2px solid #E0E0E0;
             border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s;
@@ -89,65 +127,74 @@
             box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
         }
         
-        button {
-            background-color: var(--primary);
+        .btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 14px 20px;
+            padding: 0.8rem;
             font-size: 1rem;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         
-        button:hover {
-            background-color: #5a52d6;
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
         
         #result {
-            margin-top: 25px;
-            padding: 15px;
+            margin-top: 1.5rem;
+            padding: 1rem;
             border-radius: 8px;
             display: none;
         }
         
         .success {
-            background-color: #e8f5e9;
+            background: #E8F5E9;
             border-left: 4px solid var(--success);
         }
         
         .error {
-            background-color: #ffebee;
+            background: #FFEBEE;
             border-left: 4px solid var(--error);
         }
         
         #generatedUrl {
             word-break: break-all;
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
         
         #copyButton {
-            background-color: #4a43c7;
-            margin-top: 10px;
+            background: var(--primary-dark);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
             .container {
-                margin: 15px;
+                margin: 1rem;
+                border-radius: 12px;
             }
             
             .header {
-                padding: 20px;
+                padding: 1.5rem 1rem;
             }
             
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+                padding-right: 80px;
             }
             
             .form-container {
-                padding: 20px;
+                padding: 1.5rem;
             }
         }
     </style>
@@ -155,27 +202,39 @@
 <body>
     <div class="container">
         <div class="header">
+            <button class="see-more-btn" onclick="window.location.href='play.html'">
+                <i class="fas fa-plus-circle"></i> Ver más
+            </button>
             <h1>VZY</h1>
+            <p>Generador profesional de enlaces para videos</p>
         </div>
         
         <div class="form-container">
             <h2>Generar Enlace de Video</h2>
             <form id="linkForm">
-                <label for="videoUrl">URL del Video (.mp4):</label>
-                <input type="url" id="videoUrl" required>
+                <div class="form-group">
+                    <label for="videoUrl">URL del Video (.mp4):</label>
+                    <input type="url" id="videoUrl" required>
+                </div>
                 
-                <label for="smartLink">SmartLink de Redirección (opcional):</label>
-                <input type="url" id="smartLink">
+                <div class="form-group">
+                    <label for="smartLink">SmartLink de Redirección (opcional):</label>
+                    <input type="url" id="smartLink">
+                </div>
                 
-                <button type="submit">Generar Enlace</button>
+                <button type="submit" class="btn">Generar Enlace</button>
             </form>
             
             <div id="result">
                 <p id="generatedUrl"></p>
-                <button id="copyButton" style="display: none;">Copiar</button>
+                <button id="copyButton" class="btn" style="display: none;">Copiar</button>
             </div>
         </div>
     </div>
+    
+    <footer>
+        &copy; 2025 VZY.lat - Todos los derechos reservados
+    </footer>
     
     <script type="module" src="/js/firebase.js"></script>
     <script type="module" src="/js/index.js"></script>
