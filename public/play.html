@@ -89,7 +89,7 @@
         
         .video-thumbnail {
             position: relative;
-            padding-top: 56.25%; /* 16:9 aspect ratio */
+            padding-top: 56.25%;
             cursor: pointer;
             background: #000;
         }
@@ -247,6 +247,18 @@
             font-size: 0.9rem;
         }
         
+        /* Banner Container */
+        .banner-container {
+            grid-column: 1 / -1;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
         @media (max-width: 768px) {
             .video-gallery {
                 grid-template-columns: 1fr;
@@ -274,7 +286,7 @@
     </header>
     
     <div class="video-gallery" id="videoGallery">
-        <!-- Los videos se cargarán aquí dinámicamente -->
+        <!-- Los videos y banners se cargarán aquí dinámicamente -->
     </div>
     
     <!-- Paginación -->
@@ -293,9 +305,12 @@
             VZY. Todos los derechos reservados
         </div>
     </footer>
+
+    <!-- Script del banner -->
+    <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
     
     <script>
-        // Datos de ejemplo (reemplaza con tus videos)
+        // Datos de ejemplo (reemplaza con tus videos reales)
         const allVideos = [
             { id: 1, title: "Video 1", duration: "10:25", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+1" },
             { id: 2, title: "Video 2", duration: "15:42", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+2" },
@@ -315,14 +330,8 @@
         const videosPerPage = 10;
         let currentPage = 1;
 
-        // Inicializar la galería
-        function initGallery() {
-            renderVideos();
-            setupPagination();
-        }
-
-        // Renderizar videos para la página actual
-        function renderVideos() {
+        // Función para renderizar videos con banners
+        function renderVideosWithBanners() {
             const gallery = document.getElementById('videoGallery');
             gallery.innerHTML = '';
             
@@ -330,7 +339,33 @@
             const endIndex = startIndex + videosPerPage;
             const videosToShow = allVideos.slice(startIndex, endIndex);
             
-            videosToShow.forEach(video => {
+            videosToShow.forEach((video, index) => {
+                // Insertar banner cada 5 videos (empezando después del primer video)
+                if (index > 0 && index % 5 === 0) {
+                    const bannerContainer = document.createElement('div');
+                    bannerContainer.className = 'banner-container';
+                    bannerContainer.id = `banner-container-${index}`;
+                    gallery.appendChild(bannerContainer);
+                    
+                    // Cargar el banner dinámicamente
+                    setTimeout(() => {
+                        try {
+                            DicloSDK.showBanner({
+                                containerId: `banner-container-${index}`,
+                                bannerType: 'BANNER',
+                                onError: function(error) {
+                                    console.log('Error loading banner:', error);
+                                    bannerContainer.innerHTML = '<p>Publicidad</p>';
+                                }
+                            });
+                        } catch (error) {
+                            console.log('DicloSDK not loaded yet:', error);
+                            bannerContainer.innerHTML = '<p>Publicidad</p>';
+                        }
+                    }, 100);
+                }
+                
+                // Agregar video
                 const videoItem = document.createElement('div');
                 videoItem.className = 'video-item';
                 videoItem.setAttribute('data-video-id', video.id);
@@ -341,6 +376,11 @@
                             <i class="fas fa-play"></i>
                         </div>
                         <img src="${video.thumbnail}" alt="${video.title}">
+                    </div>
+                    
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <span class="video-duration">${video.duration}</span>
                     </div>
                     
                     <div class="video-player">
@@ -359,11 +399,6 @@
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
-                    </div>
-                    
-                    <div class="video-info">
-                        <h3 class="video-title">${video.title}</h3>
-                        <span class="video-duration">${video.duration}</span>
                     </div>
                 `;
                 
@@ -394,7 +429,7 @@
         // Cambiar de página
         function changePage(page) {
             currentPage = page;
-            renderVideos();
+            renderVideosWithBanners();
             setupPagination();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -456,8 +491,11 @@
                 '<i class="fas fa-volume-up"></i>';
         }
         
-        // Inicializar la galería cuando la página cargue
-        window.addEventListener('DOMContentLoaded', initGallery);
+        // Inicializar la galería
+        window.addEventListener('DOMContentLoaded', () => {
+            renderVideosWithBanners();
+            setupPagination();
+        });
     </script>
 </body>
 </html>
