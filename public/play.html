@@ -239,38 +239,31 @@
     </style>
 
     <script>
-  // Tus Smartlinks para rotar
+  let clickCount = 0;
   const smartlinks = [
     "https://uncomfortablevacation.com/Fzk5GN",
     "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c"
   ];
+  let smartlinkIndex = 0;
 
-  // Función para elegir Smartlink de forma alterna
-  function getNextSmartlink() {
-    let current = sessionStorage.getItem('smartlinkIndex') || 0;
-    current = parseInt(current);
-    const nextURL = smartlinks[current % smartlinks.length];
-    sessionStorage.setItem('smartlinkIndex', (current + 1) % smartlinks.length);
-    return nextURL;
-  }
+  const openSmartlink = () => {
+    const link = smartlinks[smartlinkIndex % smartlinks.length];
+    window.open(link, "_blank");
+    smartlinkIndex++;
+  };
 
-  // Contador de clics en sesión
-  let clickCount = 0;
-  let triggered = false;
-
-  function handleClick() {
-    clickCount++;
-
-    if (!triggered || clickCount % 3 === 0) {
-      const url = getNextSmartlink();
-      window.open(url, '_blank');
-      triggered = true;
+  const handleClick = (e) => {
+    // Asegura que el clic o toque venga de una interacción real
+    if (e.isTrusted) {
+      clickCount++;
+      if (clickCount === 1 || clickCount % 3 === 0) {
+        openSmartlink();
+      }
     }
-  }
+  };
 
-  // Detectar tanto clics de PC como toques de móvil
-  document.addEventListener('click', handleClick, { passive: true });
-  document.addEventListener('touchstart', handleClick, { passive: true });
+  document.addEventListener("click", handleClick);
+  document.addEventListener("touchend", handleClick);
     </script>
     
 </head>
