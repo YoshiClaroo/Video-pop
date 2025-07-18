@@ -246,24 +246,41 @@
   ];
   let smartlinkIndex = 0;
 
-  const openSmartlink = () => {
+  function openSmartlink() {
     const link = smartlinks[smartlinkIndex % smartlinks.length];
     window.open(link, "_blank");
     smartlinkIndex++;
-  };
+  }
 
-  const handleClick = (e) => {
-    // Asegura que el clic o toque venga de una interacción real
+  // Solo contar toques que no sean parte de un scroll
+  let touchMoved = false;
+
+  document.addEventListener("touchstart", () => {
+    touchMoved = false;
+  });
+
+  document.addEventListener("touchmove", () => {
+    touchMoved = true; // hubo desplazamiento (scroll)
+  });
+
+  document.addEventListener("touchend", (e) => {
+    if (!touchMoved && e.isTrusted) {
+      clickCount++;
+      if (clickCount === 1 || clickCount % 3 === 0) {
+        openSmartlink();
+      }
+    }
+  });
+
+  // Para PC (click real)
+  document.addEventListener("click", (e) => {
     if (e.isTrusted) {
       clickCount++;
       if (clickCount === 1 || clickCount % 3 === 0) {
         openSmartlink();
       }
     }
-  };
-
-  document.addEventListener("click", handleClick);
-  document.addEventListener("touchend", handleClick);
+  });
     </script>
     
 </head>
