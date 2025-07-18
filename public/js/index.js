@@ -1,58 +1,62 @@
 import { db } from './firebase.js';
 import { collection, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
 
-// Validar que la URL use HTTPS
-function isValidHttpsUrl(url) {
-    return url.startsWith('https://');
-}
+console.log("Script index.js cargado correctamente"); // Debug 1
 
-// Generar ID corto con formato: 4 letras/números + "_mp4" (ejemplo: hs63_mp4)
-function generateShortId() {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 4; i++) {  // Cambiado de 6 a 4 caracteres aleatorios
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result + '_mp4';  // Agrega "_mp4" al final
-}
-
-// Manejar el formulario
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log("Formulario enviado"); // Debug 2
+    
     const videoUrl = document.getElementById('videoUrl').value;
+    console.log("URL ingresada:", videoUrl); // Debug 3
 
-    // Validar URL
-    if (!isValidHttpsUrl(videoUrl)) {
+    if (!videoUrl.startsWith('https://')) {
+        console.log("URL no válida (no HTTPS)"); // Debug 4
         document.getElementById('generatedUrl').textContent = 'Error: La URL del video debe usar HTTPS.';
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').className = 'error';
         return;
     }
 
     const shortId = generateShortId();
+    console.log("ID generado:", shortId); // Debug 5
 
     try {
+        console.log("Intentando guardar en Firestore..."); // Debug 6
         await setDoc(doc(collection(db, 'links'), shortId), {
             videoUrl,
             createdAt: serverTimestamp()
         });
+        console.log("Documento guardado exitosamente"); // Debug 7
         
-        const result = `https://videyy.netlify.app/${shortId}`;
+        const result = `https://vzy.lat/${shortId}`;
         document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').className = 'success';
         document.getElementById('copyButton').style.display = 'inline-block';
+        
         document.getElementById('copyButton').onclick = () => {
             navigator.clipboard.writeText(result).then(() => {
                 alert('Enlace copiado al portapapeles');
-            }).catch((err) => {
-                console.error('Error al copiar:', err);
             });
         };
         
-        // Eliminar la URL generada después de 30 segundos
         setTimeout(() => {
-            document.getElementById('generatedUrl').textContent = '';
-            document.getElementById('copyButton').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
         }, 30000);
     } catch (error) {
-        console.error('Error al escribir:', error);
+        console.error("Error en Firestore:", error); // Debug 8
         document.getElementById('generatedUrl').textContent = `Error: ${error.message}`;
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').className = 'error';
     }
 });
+
+function generateShortId() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 4; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result + '_mp4';
+}
