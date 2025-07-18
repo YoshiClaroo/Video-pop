@@ -29,7 +29,7 @@ document.getElementById('linkForm').addEventListener('submit', async (e) => {
         });
         console.log("Documento guardado exitosamente"); // Debug 7
         
-        const result = `https://vzy.lat/${shortId}`;
+        const result = `https://videyy.netlify.app/${shortId}`;
         document.getElementById('generatedUrl').innerHTML = `Enlace generado: <a href="${result}" target="_blank">${result}</a>`;
         document.getElementById('result').style.display = 'block';
         document.getElementById('result').className = 'success';
