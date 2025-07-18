@@ -137,6 +137,15 @@
             background: #000;
         }
         
+        /* AÑADIDO: Estilos para mostrar el reproductor cuando está activo */
+        .video-item.active .video-player {
+            display: block;
+        }
+        
+        .video-item.active .video-thumbnail {
+            display: none;
+        }
+        
         .video-player video {
             width: 100%;
             display: block;
@@ -427,7 +436,7 @@
         // Función para activar un video
         function activateVideo(videoId) {
             // Pausar todos los videos primero
-            document.querySelectorAll('.video-item').forEach(item => {
+            document.querySelectorAll('.video-item.active').forEach(item => {
                 const player = item.querySelector('video');
                 if (player) {
                     player.pause();
