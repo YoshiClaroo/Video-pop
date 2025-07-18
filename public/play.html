@@ -200,6 +200,37 @@
             margin-top: 20px;
         }
         
+        /* Paginación */
+        .pagination {
+            display: none;
+            justify-content: center;
+            margin: 2rem 0;
+            gap: 10px;
+        }
+        
+        .page-btn {
+            background: var(--card-bg);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+        }
+        
+        .page-btn:hover:not(.active) {
+            background: #252525;
+        }
+        
         @media (max-width: 768px) {
             .video-gallery {
                 grid-template-columns: 1fr;
@@ -215,6 +246,7 @@
     
     <div class="banner-container top-banner">
         <!-- Espacio para banner superior -->
+        <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
     </div>
     
     <div class="video-gallery" id="videoGallery">
@@ -223,25 +255,45 @@
     
     <div class="banner-container bottom-banner">
         <!-- Espacio para banner inferior -->
+        <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/52676/db796bc56700550780d4cdae883e162af586eb65/lib.js"></script>
+    </div>
+    
+    <!-- Paginación -->
+    <div class="pagination" id="pagination">
+        <!-- Los botones de página se generarán automáticamente -->
     </div>
     
     <script>
-        // Datos de ejemplo
+        // Datos de ejemplo (más de 10 videos para probar la paginación)
         const allVideos = [
-            { id: 1, title: "La hermosa jennifer en cines😨🙈", duration: "03:43", url: "https://videeys.com/wp-content/uploads/2025/07/Dominicana-Jasmin-Jimenez-Follando-duro.mp4", thumbnail: "https://i.postimg.cc/85pJ2NqJ/FB-IMG-1752847005460.jpg" },
-            { id: 2, title: "Video 2", duration: "15:42", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+2" },
-            { id: 3, title: "Video 3", duration: "8:15", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+3" },
-            { id: 4, title: "Video 4", duration: "5:30", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+4" },
-            { id: 5, title: "Video 5", duration: "12:18", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+5" },
-            { id: 6, title: "Video 6", duration: "7:45", url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+6" }
+            { id: 1, title: "Video 1", duration: "03:43", url: "https://example.com/video1.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+1" },
+            { id: 2, title: "Video 2", duration: "15:42", url: "https://example.com/video2.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+2" },
+            { id: 3, title: "Video 3", duration: "8:15", url: "https://example.com/video3.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+3" },
+            { id: 4, title: "Video 4", duration: "5:30", url: "https://example.com/video4.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+4" },
+            { id: 5, title: "Video 5", duration: "12:18", url: "https://example.com/video5.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+5" },
+            { id: 6, title: "Video 6", duration: "7:45", url: "https://example.com/video6.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+6" },
+            { id: 7, title: "Video 7", duration: "9:22", url: "https://example.com/video7.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+7" },
+            { id: 8, title: "Video 8", duration: "14:10", url: "https://example.com/video8.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+8" },
+            { id: 9, title: "Video 9", duration: "6:50", url: "https://example.com/video9.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+9" },
+            { id: 10, title: "Video 10", duration: "11:35", url: "https://example.com/video10.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+10" },
+            { id: 11, title: "Video 11", duration: "13:20", url: "https://example.com/video11.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+11" },
+            { id: 12, title: "Video 12", duration: "8:45", url: "https://example.com/video12.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+12" }
         ];
+
+        // Configuración
+        const videosPerPage = 10;
+        let currentPage = 1;
 
         // Función para renderizar videos
         function renderVideos() {
             const gallery = document.getElementById('videoGallery');
             gallery.innerHTML = '';
             
-            allVideos.forEach(video => {
+            const startIndex = (currentPage - 1) * videosPerPage;
+            const endIndex = startIndex + videosPerPage;
+            const videosToShow = allVideos.slice(startIndex, endIndex);
+            
+            videosToShow.forEach(video => {
                 const videoItem = document.createElement('div');
                 videoItem.className = 'video-item';
                 videoItem.setAttribute('data-video-id', video.id);
@@ -280,6 +332,36 @@
                 
                 gallery.appendChild(videoItem);
             });
+            
+            setupPagination();
+        }
+
+        // Configurar paginación automática
+        function setupPagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(allVideos.length / videosPerPage);
+            
+            if (totalPages > 1) {
+                pagination.style.display = 'flex';
+                pagination.innerHTML = '';
+                
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => changePage(i);
+                    pagination.appendChild(pageBtn);
+                }
+            } else {
+                pagination.style.display = 'none';
+            }
+        }
+
+        // Cambiar de página
+        function changePage(page) {
+            currentPage = page;
+            renderVideos();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Función para activar un video
