@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VZY - Video Blocks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #4D44DB;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --gray: #6C757D;
+            --dark-bg: #121212;
+            --card-bg: #1E1E1E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.05);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+        
+        /* Estilos para el reproductor principal */
+        .video-player {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        #mainVideo {
+            width: 100%;
+            display: block;
+            background: black;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .video-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--gray);
+        }
+        
+        /* Estilos para la lista de videos */
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 992px) {
+            .video-list {
+                display: block;
+            }
+        }
+        
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            padding-top: 56.25%; /* Relación 16:9 */
+            background: #252525;
+        }
+        
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+        
+        .video-card:hover .play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-card-info {
+            padding: 1rem;
+        }
+        
+        .video-card-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .video-card-duration {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Estilos para el sidebar en desktop */
+        @media (min-width: 992px) {
+            .sidebar {
+                position: sticky;
+                top: 1.5rem;
+                height: fit-content;
+            }
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        /* Estilos para los controles del reproductor */
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #252525;
+        }
+        
+        .control-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        /* Estilos para móviles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+                padding-right: 60px;
+            }
+            
+            .back-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+        <h1>VZY Video Blocks</h1>
+        <p>Reproductor profesional con lista de videos</p>
+    </header>
+    
+    <div class="container">
+        <main>
+            <!-- Reproductor principal -->
+            <div class="video-player">
+                <video id="mainVideo" controls>
+                    Tu navegador no soporta videos HTML5.
+                </video>
+                
+                <div class="video-controls">
+                    <button class="control-btn" onclick="document.getElementById('mainVideo').play()">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="control-btn" onclick="document.getElementById('mainVideo').pause()">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleMute()">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                
+                <div class="video-info">
+                    <h2 class="video-title" id="videoTitle">Selecciona un video</h2>
+                    <div class="video-meta">
+                        <span id="videoDuration">Duración: --:--</span>
+                        <span id="videoQuality">Calidad: HD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lista de videos -->
+            <h2 class="section-title" style="margin-top: 2rem;">Todos los Videos</h2>
+            <div class="video-list" id="videoList">
+                <!-- Los videos se agregarán aquí manualmente -->
+                
+                <!-- Ejemplo de video (puedes duplicar este bloque) -->
+                <div class="video-card" onclick="playVideo('https://ejemplo.com/video1.mp4', 'Video Ejemplo 1')">
+                    <div class="video-thumbnail">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-card-info">
+                        <h3 class="video-card-title">Video Ejemplo 1</h3>
+                        <span class="video-card-duration">10:25</span>
+                    </div>
+                </div>
+                
+                <!-- Segundo video de ejemplo -->
+                <div class="video-card" onclick="playVideo('https://ejemplo.com/video2.mp4', 'Video Ejemplo 2')">
+                    <div class="video-thumbnail">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-card-info">
+                        <h3 class="video-card-title">Video Ejemplo 2</h3>
+                        <span class="video-card-duration">15:42</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Sidebar para desktop -->
+        <aside class="sidebar">
+            <h2 class="section-title">Top Videos</h2>
+            <div id="topVideos">
+                <!-- Videos destacados irán aquí -->
+            </div>
+            
+            <h2 class="section-title" style="margin-top: 2rem;">Categorías</h2>
+            <div class="categories">
+                <button class="category-btn">Todos</button>
+                <button class="category-btn">Más vistos</button>
+                <button class="category-btn">Recientes</button>
+                <!-- Agrega más categorías según necesites -->
+            </div>
+        </aside>
+    </div>
+    
+    <script>
+        // Función para reproducir un video
+        function playVideo(videoUrl, videoTitle) {
+            const videoPlayer = document.getElementById('mainVideo');
+            videoPlayer.src = videoUrl;
+            document.getElementById('videoTitle').textContent = videoTitle;
+            
+            // Cuando el video está listo para reproducir
+            videoPlayer.onloadedmetadata = function() {
+                // Calcular duración
+                const duration = formatTime(videoPlayer.duration);
+                document.getElementById('videoDuration').textContent = `Duración: ${duration}`;
+                
+                // Reproducir automáticamente (puede no funcionar en algunos navegadores)
+                videoPlayer.play().catch(e => console.log("Autoplay no permitido:", e));
+            };
+        }
+        
+        // Formatear tiempo (segundos a MM:SS)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // Funciones de control
+        function toggleFullscreen() {
+            const video = document.getElementById('mainVideo');
+            if (!document.fullscreenElement) {
+                video.requestFullscreen().catch(err => {
+                    alert(`Error al entrar en pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        function toggleMute() {
+            const video = document.getElementById('mainVideo');
+            video.muted = !video.muted;
+            
+            // Cambiar icono
+            const btn = document.querySelector('.control-btn:nth-child(4)');
+            btn.innerHTML = video.muted ? 
+                '<i class="fas fa-volume-mute"></i>' : 
+                '<i class="fas fa-volume-up"></i>';
+        }
+        
+        // Cargar un video por defecto al iniciar (opcional)
+        window.addEventListener('DOMContentLoaded', () => {
+            // playVideo('https://ejemplo.com/video1.mp4', 'Video de Bienvenida');
+        });
+    </script>
+</body>
+</html>
