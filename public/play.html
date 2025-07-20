@@ -3,471 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZY - Video Gallery</title>
+    <title>Reproductor VIP con Anuncios</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6C63FF;
-            --primary-dark: #4D44DB;
-            --dark: #1A1A2E;
-            --light: #F8F9FA;
-            --gray: #6C757D;
-            --dark-bg: #121212;
-            --card-bg: #1E1E1E;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #1a1a2e;
+            --light: #f1f1f1;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        
         body {
-            background-color: var(--dark-bg);
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
             padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
         }
-        
         h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
         }
-        
-        .video-gallery {
+        .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
-        
-        .video-item {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-        }
-        
-        .video-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .video-thumbnail {
-            position: relative;
-            padding-top: 56.25%;
-            cursor: pointer;
-            background: #000;
-        }
-        
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(108, 99, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-        
-        .video-thumbnail:hover .play-btn {
-            background: rgba(108, 99, 255, 1);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        .video-thumbnail img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .video-thumbnail:hover img {
-            opacity: 0.5;
-        }
-        
-        .video-player {
-            display: none;
-            width: 100%;
-            background: #000;
-            position: relative;
-            padding-top: 56.25%;
-        }
-        
-        .video-player video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .video-item.active .video-player {
-            display: block;
-        }
-        
-        .video-item.active .video-thumbnail {
-            display: none;
-        }
-        
-        .video-info {
-            padding: 1rem;
-        }
-        
-        .video-title {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .video-duration {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .video-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px;
-            background: #252525;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-        
-        .control-btn {
-            background: var(--primary);
+        .video-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .control-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.1);
-        }
-        
-        .banner-container {
-            grid-column: 1 / -1;
-            min-height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-            margin: 10px 0;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .top-banner {
-            margin-bottom: 20px;
+        .video-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.6);
         }
-        
-        .bottom-banner {
+        .video-btn i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 20px;
         }
-        
-        /* Paginación */
-        .pagination {
-            display: none;
-            justify-content: center;
-            margin: 2rem 0;
-            gap: 10px;
-        }
-        
         .page-btn {
-            background: var(--card-bg);
-            color: white;
-            border: none;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
             width: 40px;
             height: 40px;
             border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: bold;
             transition: all 0.3s;
-            font-weight: 600;
         }
-        
         .page-btn.active {
             background: var(--primary);
+            color: white;
         }
-        
         .page-btn:hover:not(.active) {
-            background: #252525;
+            background: #f0f0f0;
         }
-        
-        @media (max-width: 768px) {
-            .video-gallery {
-                grid-template-columns: 1fr;
-            }
+        /* 🎌 Estilos para el BANNER (después del video 5) */
+        .ad-banner {
+            grid-column: 1 / -1; /* Ocupa todo el ancho */
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+        .ad-banner h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        .ad-banner a {
+            display: inline-block;
+            background: white;
+            color: #ff416c;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .credits {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--dark);
+            opacity: 0.8;
         }
     </style>
-
-    <script>
-  let clickCount = 0;
-  const smartlinks = [
-    "https://uncomfortablevacation.com/Fzk5GN",
-    "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c"
-  ];
-  let smartlinkIndex = 0;
-
-  function openSmartlink() {
-    const link = smartlinks[smartlinkIndex % smartlinks.length];
-    window.open(link, "_blank");
-    smartlinkIndex++;
-  }
-
-  // Detectar si es móvil
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    // Para móviles: evitar scroll falsos
-    let touchMoved = false;
-
-    document.addEventListener("touchstart", () => {
-      touchMoved = false;
-    });
-
-    document.addEventListener("touchmove", () => {
-      touchMoved = true;
-    });
-
-    document.addEventListener("touchend", (e) => {
-      if (!touchMoved && e.isTrusted) {
-        clickCount++;
-        if (clickCount === 1 || clickCount % 3 === 0) {
-          openSmartlink();
-        }
-      }
-    });
-  } else {
-    // Para PC: solo contar clicks reales
-    document.addEventListener("click", (e) => {
-      if (e.isTrusted) {
-        clickCount++;
-        if (clickCount === 1 || clickCount % 3 === 0) {
-          openSmartlink();
-        }
-      }
-    });
-  }
-    </script>
-    
 </head>
 <body>
-    <header>
-        <h1>VZY Video Gallery</h1>
-        <p>Haz clic en el ícono de play para reproducir</p>
-    </header>
-    
-    <div class="banner-container top-banner">
-        <!-- Espacio para banner superior -->
-        <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
+    <div class="container">
+        <h1><i class="fas fa-play-circle"></i> Mis Videos Premium</h1>
+        
+        <div class="video-grid" id="videoGrid"></div>
+        
+        <div class="pagination" id="pagination"></div>
+        
+        <p class="credits">© Creado para ti, amigo Manuel</p>
     </div>
-    
-    <div class="video-gallery" id="videoGallery">
-        <!-- Los videos se cargarán aquí dinámicamente -->
-    </div>
-    
-    <div class="banner-container bottom-banner">
-        <!-- Espacio para banner inferior -->
-        <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/52676/db796bc56700550780d4cdae883e162af586eb65/lib.js"></script>
-    </div>
-    
-    <!-- Paginación -->
-    <div class="pagination" id="pagination">
-        <!-- Los botones de página se generarán automáticamente -->
-    </div>
-    
+
     <script>
-        // Datos de ejemplo (más de 10 videos para probar la paginación)
-        const allVideos = [
-            { id: 1, title: "Mira como le gusta 🤤", duration: "06:03", url: "https://cdn.videy.co/zRVkto4h1.mp4", thumbnail: "https://i.postimg.cc/85pJ2NqJ/FB-IMG-1752847005460.jpg" },
-            { id: 2, title: "Que buena vista 😍", duration: "01:10", url: "https://ww2.sicotee.cc/videos/6879ae8677ac3_9fa7b564796da6d5edda98db3cabdc1643eef050ab806190f5dbc88b17e48947.mp4", thumbnail: "https://i.postimg.cc/Nf6Q2MbW/FB-IMG-1752851999311.jpg" },
-            { id: 3, title: "Video 3", duration: "8:15", url: "https://example.com/video3.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+3" },
-            { id: 4, title: "Video 4", duration: "5:30", url: "https://example.com/video4.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+4" },
-            { id: 5, title: "Video 5", duration: "12:18", url: "https://example.com/video5.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+5" },
-            { id: 6, title: "Video 6", duration: "7:45", url: "https://example.com/video6.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+6" },
-            { id: 7, title: "Video 7", duration: "9:22", url: "https://example.com/video7.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+7" },
-            { id: 8, title: "Video 8", duration: "14:10", url: "https://example.com/video8.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+8" },
-            { id: 9, title: "Video 9", duration: "6:50", url: "https://example.com/video9.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+9" },
-            { id: 10, title: "Video 10", duration: "11:35", url: "https://example.com/video10.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+10" },
-            { id: 11, title: "Video 11", duration: "13:20", url: "https://example.com/video11.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+11" },
-            { id: 12, title: "Video 12", duration: "8:45", url: "https://example.com/video12.mp4", thumbnail: "https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+12" }
+        // 📌 Configuración (EDITA AQUÍ)
+        const VIDEOS_POR_PAGINA = 10; // Videos por página
+        const POSICION_ANUNCIO = 5;   // Mostrar anuncio después del video 5
+
+        // 📌 Lista de videos (¡Edita estas URLs!)
+        const videos = [
+            { title: "Video 2", url: "https://ejemplo.com/video2.mp4" },
+            { title: "Video 2", url: "https://ejemplo.com/video2.mp4" },
+            { title: "Video 2", url: "https://ejemplo.com/video2.mp4" },
+            { title: "Video 1", url: "https://ejemplo.com/video1.mp4" },
+            { title: "Video 2", url: "https://ejemplo.com/video2.mp4" },
+            // ... Agrega TODOS tus videos aquí (pueden ser 50+)
+            { title: "Video 50", url: "https://ejemplo.com/video50.mp4" }
         ];
 
-        // Configuración
-        const videosPerPage = 10;
-        let currentPage = 1;
+        // 🛠️ Variables del sistema
+        let paginaActual = 1;
+        const videoGrid = document.getElementById('videoGrid');
+        const pagination = document.getElementById('pagination');
 
-        // Función para renderizar videos
-        function renderVideos() {
-            const gallery = document.getElementById('videoGallery');
-            gallery.innerHTML = '';
-            
-            const startIndex = (currentPage - 1) * videosPerPage;
-            const endIndex = startIndex + videosPerPage;
-            const videosToShow = allVideos.slice(startIndex, endIndex);
-            
-            videosToShow.forEach(video => {
-                const videoItem = document.createElement('div');
-                videoItem.className = 'video-item';
-                videoItem.setAttribute('data-video-id', video.id);
-                
-                videoItem.innerHTML = `
-                    <div class="video-thumbnail" onclick="activateVideo('${video.id}')">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <img src="${video.thumbnail}" alt="${video.title}">
-                    </div>
-                    
-                    <div class="video-info">
-                        <h3 class="video-title">${video.title}</h3>
-                        <span class="video-duration">${video.duration}</span>
-                    </div>
-                    
-                    <div class="video-player">
-                        <video controls>
-                            <source src="${video.url}" type="video/mp4">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
-                        <div class="video-controls">
-                            <button class="control-btn" onclick="toggleFullscreen('${video.id}')">
-                                <i class="fas fa-expand"></i>
-                            </button>
-                            <button class="control-btn" onclick="toggleMute('${video.id}')">
-                                <i class="fas fa-volume-up"></i>
-                            </button>
-                            <button class="control-btn" onclick="closeVideo('${video.id}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
+        // 🎬 Función para mostrar videos (CON ANUNCIO)
+        function mostrarVideos(pagina) {
+            videoGrid.innerHTML = '';
+            const inicio = (pagina - 1) * VIDEOS_POR_PAGINA;
+            const fin = inicio + VIDEOS_POR_PAGINA;
+            const videosPagina = videos.slice(inicio, fin);
+
+            videosPagina.forEach((video, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'video-btn';
+                btn.innerHTML = `
+                    <i class="fas fa-play"></i>
+                    <span>${video.title}</span>
                 `;
-                
-                gallery.appendChild(videoItem);
-            });
-            
-            setupPagination();
-        }
+                btn.onclick = () => window.open(video.url, '_blank');
+                videoGrid.appendChild(btn);
 
-        // Configurar paginación automática
-        function setupPagination() {
-            const pagination = document.getElementById('pagination');
-            const totalPages = Math.ceil(allVideos.length / videosPerPage);
-            
-            if (totalPages > 1) {
-                pagination.style.display = 'flex';
-                pagination.innerHTML = '';
-                
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageBtn = document.createElement('button');
-                    pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-                    pageBtn.textContent = i;
-                    pageBtn.onclick = () => changePage(i);
-                    pagination.appendChild(pageBtn);
-                }
-            } else {
-                pagination.style.display = 'none';
-            }
-        }
-
-        // Cambiar de página
-        function changePage(page) {
-            currentPage = page;
-            renderVideos();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Función para activar un video
-        function activateVideo(videoId) {
-            document.querySelectorAll('.video-item.active').forEach(item => {
-                const player = item.querySelector('video');
-                if (player) {
-                    player.pause();
-                    item.classList.remove('active');
+                // 🔥 Insertar ANUNCIO después del video 5
+                if (index === POSICION_ANUNCIO - 1) {
+                    const banner = document.createElement('div');
+                    banner.className = 'ad-banner';
+                    banner.innerHTML = `
+                        <h3>¡Patrocinador Oficial!</h3>
+                        <p>Descubre nuestros productos exclusivos</p>
+                        <a href="https://tupatrocinador.com" target="_blank">Ver Oferta</a>
+                    `;
+                    videoGrid.appendChild(banner);
                 }
             });
-            
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            if (videoItem) {
-                videoItem.classList.add('active');
-                const videoPlayer = videoItem.querySelector('video');
-                videoPlayer.play().catch(e => console.log("Autoplay no permitido:", e));
+        }
+
+        // 🔢 Función para actualizar paginación (igual que antes)
+        function actualizarPaginacion() {
+            pagination.innerHTML = '';
+            const totalPaginas = Math.ceil(videos.length / VIDEOS_POR_PAGINA);
+
+            // Botón "Anterior"
+            if (paginaActual > 1) {
+                const btnAnterior = document.createElement('button');
+                btnAnterior.className = 'page-btn';
+                btnAnterior.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                btnAnterior.onclick = () => {
+                    paginaActual--;
+                    mostrarVideos(paginaActual);
+                    actualizarPaginacion();
+                };
+                pagination.appendChild(btnAnterior);
+            }
+
+            // Botones de páginas
+            for (let i = 1; i <= totalPaginas; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === paginaActual ? 'active' : ''}`;
+                btn.textContent = i;
+                btn.onclick = () => {
+                    paginaActual = i;
+                    mostrarVideos(paginaActual);
+                    actualizarPaginacion();
+                };
+                pagination.appendChild(btn);
+            }
+
+            // Botón "Siguiente"
+            if (paginaActual < totalPaginas) {
+                const btnSiguiente = document.createElement('button');
+                btnSiguiente.className = 'page-btn';
+                btnSiguiente.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                btnSiguiente.onclick = () => {
+                    paginaActual++;
+                    mostrarVideos(paginaActual);
+                    actualizarPaginacion();
+                };
+                pagination.appendChild(btnSiguiente);
             }
         }
-        
-        function closeVideo(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            if (videoItem) {
-                videoItem.classList.remove('active');
-                const videoPlayer = videoItem.querySelector('video');
-                videoPlayer.pause();
-            }
-        }
-        
-        function toggleFullscreen(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            const videoPlayer = videoItem.querySelector('video');
-            
-            if (!document.fullscreenElement) {
-                videoPlayer.requestFullscreen().catch(err => {
-                    alert(`Error al entrar en pantalla completa: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
-        
-        function toggleMute(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            const videoPlayer = videoItem.querySelector('video');
-            videoPlayer.muted = !videoPlayer.muted;
-            
-            const btn = videoItem.querySelector('.control-btn:nth-child(2)');
-            btn.innerHTML = videoPlayer.muted ? 
-                '<i class="fas fa-volume-mute"></i>' : 
-                '<i class="fas fa-volume-up"></i>';
-        }
-        
-        // Inicializar la galería
-        window.addEventListener('DOMContentLoaded', renderVideos);
+
+        // 🚀 Iniciar
+        mostrarVideos(paginaActual);
+        actualizarPaginacion();
     </script>
 </body>
 </html>
