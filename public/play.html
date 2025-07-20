@@ -43,7 +43,6 @@
             text-align: center;
             margin-bottom: 25px;
             border: 1px dashed #6a11cb;
-            min-height: 90px; /* Altura mínima para que el banner sea visible */
         }
         .ad-fixed-top p {
             color: #666;
@@ -78,7 +77,7 @@
             font-size: 2rem;
             margin-bottom: 10px;
         }
-        /* 🎌 Estilos para el BANNER DINÁMICO (después del video 6) */
+        /* 🎌 Estilos para el BANNER DINÁMICO (después del video 5) */
         .ad-banner {
             grid-column: 1 / -1;
             background: linear-gradient(to right, #ff416c, #ff4b2b);
@@ -144,8 +143,6 @@
         <div class="ad-fixed-top">
             <p>Publicidad</p>
             <div id="diclotrans-banner"></div>
-            <!-- Si el script no carga, muestra un mensaje -->
-            <noscript>Active JavaScript para ver el anuncio.</noscript>
         </div>
         
         <div class="video-grid" id="videoGrid"></div>
@@ -158,13 +155,10 @@
     <script>
         // 📌 Configuración
         const VIDEOS_POR_PAGINA = 10;
-        const POSICION_ANUNCIO = 6; // Ahora después del video 6
+        const POSICION_ANUNCIO = 5;
 
         // 📌 Lista de videos (¡Edita estas URLs!)
         const videos = [
-            { title: "Video 1", url: "https://ejemplo.com/video1.mp4" },
-            { title: "Video 1", url: "https://ejemplo.com/video1.mp4" },
-            { title: "Video 1", url: "https://ejemplo.com/video1.mp4" },
             { title: "Video 1", url: "https://ejemplo.com/video1.mp4" },
             // ... Agrega todos tus videos aquí
             { title: "Video 50", url: "https://ejemplo.com/video50.mp4" }
@@ -192,21 +186,21 @@
                 btn.onclick = () => window.open(video.url, '_blank');
                 videoGrid.appendChild(btn);
 
-                // 🔥 Insertar ANUNCIO después del video 6 (no del 5)
+                // 🔥 Insertar ANUNCIO después del video 5
                 if (index === POSICION_ANUNCIO - 1) {
                     const banner = document.createElement('div');
                     banner.className = 'ad-banner';
                     banner.innerHTML = `
-                        <h3>¡Oferta Especial!</h3>
-                        <p>No te pierdas esta promoción exclusiva</p>
-                        <a href="https://tupatrocinador.com" target="_blank">Ver Ahora</a>
+                        <h3>¡Si precionas aquí, me ayudas mucho!</h3>
+                        <p>Aydame para traer mas vidoes como como ese</p>
+                        <a href="https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168" target="_blank">Ver Ahora</a>
                     `;
                     videoGrid.appendChild(banner);
                 }
             });
         }
 
-        // 🔢 Función para actualizar paginación
+        // 🔢 Función para actualizar paginación (igual que antes)
         function actualizarPaginacion() {
             pagination.innerHTML = '';
             const totalPaginas = Math.ceil(videos.length / VIDEOS_POR_PAGINA);
@@ -255,12 +249,10 @@
         mostrarVideos(paginaActual);
         actualizarPaginacion();
 
-        // 🔥 Verificar si el banner de DicloTrans se cargó
+        // 🔥 Inicializar el banner de DicloTrans (si necesita configuración adicional)
         window.addEventListener('load', function() {
-            const dicloBanner = document.getElementById('diclotrans-banner');
-            if (dicloBanner.innerHTML.trim() === '') {
-                dicloBanner.innerHTML = '<p style="color:red;">Si no ves el anuncio, verifica tu bloqueador de publicidad.</p>';
-            }
+            // Aquí puedes agregar configuraciones específicas del SDK si las tiene
+            console.log("Banner DicloTrans cargado");
         });
     </script>
 </body>
