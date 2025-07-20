@@ -277,57 +277,6 @@
             // Aquí puedes agregar configuraciones específicas del SDK si las tiene
             console.log("Banner DicloTrans cargado");
         });
-    </script>
-
-    <script>
-  let clickCount = 0;
-  const smartlinks = [
-    "https://uncomfortablevacation.com/Fzk5GN",
-    "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c"
-  ];
-  let smartlinkIndex = 0;
-
-  function openSmartlink() {
-    const link = smartlinks[smartlinkIndex % smartlinks.length];
-    window.open(link, "_blank");
-    smartlinkIndex++;
-  }
-
-  // Detectar si es móvil
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    // Para móviles: evitar scroll falsos
-    let touchMoved = false;
-
-    document.addEventListener("touchstart", () => {
-      touchMoved = false;
-    });
-
-    document.addEventListener("touchmove", () => {
-      touchMoved = true;
-    });
-
-    document.addEventListener("touchend", (e) => {
-      if (!touchMoved && e.isTrusted) {
-        clickCount++;
-        if (clickCount === 1 || clickCount % 3 === 0) {
-          openSmartlink();
-        }
-      }
-    });
-  } else {
-    // Para PC: solo contar clicks reales
-    document.addEventListener("click", (e) => {
-      if (e.isTrusted) {
-        clickCount++;
-        if (clickCount === 1 || clickCount % 3 === 0) {
-          openSmartlink();
-        }
-      }
-    });
-  }
-    </script>
-
+    </script>                           
 </body>
 </html>
