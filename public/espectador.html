@@ -64,21 +64,18 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js';
-        import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
-
-        // Asumimos que firebase.js ya inicializa la app
-        const db = getDatabase();
+        import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+        import { db } from './firebase.js';
 
         // Obtener el ID de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id');
 
         if (videoId) {
-            const videoRef = ref(db, `urls/${videoId}`);
-            get(videoRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
+            const videoRef = doc(db, 'urls', videoId);
+            getDoc(videoRef).then((docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
                     const videoPlayer = document.getElementById('video-player');
                     const videoSource = document.getElementById('video-source');
                     const loadingDiv = document.getElementById('loading');
