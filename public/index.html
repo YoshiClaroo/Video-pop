@@ -116,23 +116,20 @@
 
     <!-- Firebase SDK y nanoid -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js';
-        import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+        import { doc, setDoc, getDoc, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+        import { db } from './firebase.js';
         import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js';
-
-        // Asumimos que firebase.js ya inicializa la app
-        const db = getDatabase();
 
         // Verificar si hay un ID en la URL y redirigir
         const path = window.location.pathname;
         if (path && path !== '/') {
             const videoId = path.substring(1); // Quita el "/"
-            const videoRef = ref(db, `urls/${videoId}`);
+            const videoRef = doc(db, 'urls', videoId);
             document.getElementById('form-container').style.display = 'none';
             document.getElementById('loading').style.display = 'block';
 
-            get(videoRef).then((snapshot) => {
-                if (snapshot.exists()) {
+            getDoc(videoRef).then((docSnap) => {
+                if (docSnap.exists()) {
                     // Redirigir a viewer.html en 1 segundo
                     setTimeout(() => {
                         window.location.href = `/viewer.html?id=${videoId}`;
@@ -152,7 +149,7 @@
         }
 
         // Generar y guardar URL
-        window.generateAndSaveUrl = function() {
+        window.generateAndSaveUrl = async function() {
             const videoUrl = document.getElementById('video-url').value;
             const smartlink = document.getElementById('smartlink').value;
             const outputDiv = document.getElementById('output');
@@ -190,21 +187,19 @@
             shortUrlOutput.textContent = shortUrl;
             outputDiv.style.display = 'block';
 
-            // Guardar en Firebase
-            const videoRef = ref(db, `urls/${videoId}`);
-            set(videoRef, {
-                videoUrl: videoUrl,
-                smartlink: generatedSmartlink,
-                timestamp: Date.now()
-            })
-            .then(() => {
-                console.log('URLs guardadas en Firebase con éxito');
-                alert('¡URLs guardadas en Firebase! URL corta: ' + shortUrl);
-            })
-            .catch((error) => {
-                errorDiv.textContent = 'Error al guardar en Firebase: ' + error.message;
+            // Guardar en Firestore
+            try {
+                await setDoc(doc(db, 'urls', videoId), {
+                    videoUrl: videoUrl,
+                    smartlink: generatedSmartlink,
+                    timestamp: Date.now()
+                });
+                console.log('URLs guardadas en Firestore con éxito');
+                alert('¡URLs guardadas en Firestore! URL corta: ' + shortUrl);
+            } catch (error) {
+                errorDiv.textContent = 'Error al guardar en Firestore: ' + error.message;
                 errorDiv.style.display = 'block';
-            });
+            }
         };
     </script>
 </body>
