@@ -3,499 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZY - Video Gallery</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Generador de URL de Video - Videyy</title>
     <style>
-        :root {
-            --primary: #6C63FF;
-            --primary-dark: #4D44DB;
-            --dark: #1A1A2E;
-            --light: #F8F9FA;
-            --gray: #6C757D;
-            --dark-bg: #121212;
-            --card-bg: #1E1E1E;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        
         body {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
         }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 1.5rem;
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
             text-align: center;
-            margin-bottom: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
         h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .video-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .video-item {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-        }
-        
-        .video-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .video-thumbnail {
-            position: relative;
-            padding-top: 56.25%;
-            cursor: pointer;
-            background: #000;
-        }
-        
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(108, 99, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-        
-        .video-thumbnail:hover .play-btn {
-            background: rgba(108, 99, 255, 1);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        .video-thumbnail img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .video-thumbnail:hover img {
-            opacity: 0.5;
-        }
-        
-        .video-player {
-            display: none;
-            width: 100%;
-            background: #000;
-            position: relative;
-            padding-top: 56.25%;
-        }
-        
-        .video-player video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .video-item.active .video-player {
-            display: block;
-        }
-        
-        .video-item.active .video-thumbnail {
-            display: none;
-        }
-        
-        .video-info {
-            padding: 1rem;
-        }
-        
-        .video-title {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .video-duration {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .video-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px;
-            background: #252525;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-        
-        .control-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .control-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.1);
-        }
-        
-        /* Paginación mejorada */
-        .pagination {
-            display: none;
-            justify-content: center;
-            margin: 2rem 0;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        
-        .page-btn {
-            background: var(--card-bg);
-            color: white;
-            border: none;
-            min-width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            padding: 0 10px;
         }
-        
-        .page-btn.active {
-            background: var(--primary);
+        .input-group {
+            margin-bottom: 1.5rem;
         }
-        
-        .page-btn:hover:not(.active) {
-            background: #252525;
+        label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
-        
-        .page-btn i {
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1e3a8a;
+        }
+        .output {
+            margin-top: 1.5rem;
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 8px;
+            color: #333;
+            word-break: break-all;
+        }
+        .output p {
+            margin: 0.5rem 0;
+        }
+        .error {
+            color: #dc2626;
             font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
-        
-        .pagination-dots {
-            display: flex;
-            align-items: center;
-            padding: 0 5px;
-            color: var(--gray);
-        }
-        
-        @media (max-width: 768px) {
-            .video-gallery {
-                grid-template-columns: 1fr;
-            }
+        .loading {
+            color: #333;
+            font-size: 1rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>VZY Video Gallery</h1>
-        <p>Haz clic en el ícono de play para reproducir</p>
-    </header>
-    
-    <div class="video-gallery" id="videoGallery">
-        <!-- Los videos se cargarán aquí dinámicamente -->
+    <div class="container">
+        <h1>Generador de URL de Video - Videyy</h1>
+        <div id="loading" class="loading" style="display: none;">Cargando video...</div>
+        <div id="form-container">
+            <div class="input-group">
+                <label for="video-url">URL del Video (.mp4)</label>
+                <input type="url" id="video-url" placeholder="Ej: https://ejemplo.com/video.mp4">
+            </div>
+            <div class="input-group">
+                <label for="smartlink">Smartlink</label>
+                <input type="url" id="smartlink" placeholder="Ej: https://smartlink.com/redir">
+            </div>
+            <button onclick="generateAndSaveUrl()">Generar y Guardar URL</button>
+            <div class="output" id="output" style="display: none;">
+                <p><strong>URL del Video:</strong> <span id="video-output"></span></p>
+                <p><strong>Smartlink Generado:</strong> <span id="smartlink-output"></span></p>
+                <p><strong>URL Corta:</strong> <span id="short-url-output"></span></p>
+            </div>
+            <div class="error" id="error" style="display: none;"></div>
+        </div>
     </div>
-    
-    <!-- Paginación mejorada -->
-    <div class="pagination" id="pagination"></div>
-    
-    <script>
-        // Datos de ejemplo CON IMÁGENES QUE SÍ FUNCIONAN
-        const allVideos = [
-            { 
-                id: 1, 
-                title: "Video de ejemplo 1", 
-                duration: "03:43", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg" 
-            },
-            { 
-                id: 2, 
-                title: "Video de ejemplo 2", 
-                duration: "15:42", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg" 
-            },
-            { 
-                id: 3, 
-                title: "Video de ejemplo 3", 
-                duration: "8:15", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg" 
-            },
-            { 
-                id: 4, 
-                title: "Video de ejemplo 4", 
-                duration: "5:30", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg" 
-            },
-            { 
-                id: 5, 
-                title: "Video de ejemplo 5", 
-                duration: "12:18", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg" 
-            },
-            { 
-                id: 6, 
-                title: "Video de ejemplo 6", 
-                duration: "7:45", 
-                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4", 
-                thumbnail: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg" 
-            }
-        ];
 
-        // Configuración
-        const videosPerPage = 4; // Menos videos por página para ver mejor la paginación
-        let currentPage = 1;
-        const maxVisiblePages = 5;
+    <!-- Firebase SDK y nanoid -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+        import { getDatabase, ref, set, get } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
+        import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js';
 
-        // Función para renderizar videos
-        function renderVideos() {
-            const gallery = document.getElementById('videoGallery');
-            gallery.innerHTML = '';
-            
-            const startIndex = (currentPage - 1) * videosPerPage;
-            const endIndex = startIndex + videosPerPage;
-            const videosToShow = allVideos.slice(startIndex, endIndex);
-            
-            if(videosToShow.length === 0) {
-                gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;">No hay videos disponibles</p>';
-                return;
-            }
-            
-            videosToShow.forEach(video => {
-                const videoItem = document.createElement('div');
-                videoItem.className = 'video-item';
-                videoItem.setAttribute('data-video-id', video.id);
-                
-                videoItem.innerHTML = `
-                    <div class="video-thumbnail" onclick="activateVideo('${video.id}')">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://via.placeholder.com/300x169/1E1E1E/6C63FF?text=Video+Thumbnail'">
-                    </div>
-                    
-                    <div class="video-info">
-                        <h3 class="video-title">${video.title}</h3>
-                        <span class="video-duration">${video.duration}</span>
-                    </div>
-                    
-                    <div class="video-player">
-                        <video controls>
-                            <source src="${video.url}" type="video/mp4">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
-                        <div class="video-controls">
-                            <button class="control-btn" onclick="toggleFullscreen('${video.id}')">
-                                <i class="fas fa-expand"></i>
-                            </button>
-                            <button class="control-btn" onclick="toggleMute('${video.id}')">
-                                <i class="fas fa-volume-up"></i>
-                            </button>
-                            <button class="control-btn" onclick="closeVideo('${video.id}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                gallery.appendChild(videoItem);
+        // Asumimos que firebase.js ya inicializa la app
+        const db = getDatabase();
+
+        // Verificar si hay un ID en la URL y redirigir
+        const path = window.location.pathname;
+        if (path && path !== '/') {
+            const videoId = path.substring(1); // Quita el "/"
+            const videoRef = ref(db, `urls/${videoId}`);
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            get(videoRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    // Redirigir a viewer.html en 1 segundo
+                    setTimeout(() => {
+                        window.location.href = `/viewer.html?id=${videoId}`;
+                    }, 1000);
+                } else {
+                    document.getElementById('error').textContent = 'Video no encontrado';
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('form-container').style.display = 'block';
+                }
+            }).catch((error) => {
+                document.getElementById('error').textContent = 'Error al verificar el video: ' + error.message;
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('form-container').style.display = 'block';
             });
-            
-            setupPagination();
         }
 
-        // Configurar paginación inteligente
-        function setupPagination() {
-            const pagination = document.getElementById('pagination');
-            const totalPages = Math.ceil(allVideos.length / videosPerPage);
-            
-            if (totalPages <= 1) {
-                pagination.style.display = 'none';
+        // Generar y guardar URL
+        window.generateAndSaveUrl = function() {
+            const videoUrl = document.getElementById('video-url').value;
+            const smartlink = document.getElementById('smartlink').value;
+            const outputDiv = document.getElementById('output');
+            const errorDiv = document.getElementById('error');
+            const videoOutput = document.getElementById('video-output');
+            const smartlinkOutput = document.getElementById('smartlink-output');
+            const shortUrlOutput = document.getElementById('short-url-output');
+
+            // Resetear mensajes
+            errorDiv.style.display = 'none';
+            outputDiv.style.display = 'none';
+
+            // Validar URL del video
+            if (!videoUrl || !videoUrl.endsWith('.mp4')) {
+                errorDiv.textContent = 'Por favor, ingresa una URL válida que termine en .mp4';
+                errorDiv.style.display = 'block';
                 return;
             }
 
-            pagination.style.display = 'flex';
-            pagination.innerHTML = '';
-
-            // Botón Anterior
-            if (currentPage > 1) {
-                const prevBtn = document.createElement('button');
-                prevBtn.className = 'page-btn';
-                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                prevBtn.onclick = () => changePage(currentPage - 1);
-                pagination.appendChild(prevBtn);
+            // Validar Smartlink
+            if (!smartlink) {
+                errorDiv.textContent = 'Por favor, ingresa un Smartlink válido';
+                errorDiv.style.display = 'block';
+                return;
             }
 
-            // Primera página
-            if (currentPage > Math.floor(maxVisiblePages/2)) {
-                const firstBtn = document.createElement('button');
-                firstBtn.className = `page-btn ${1 === currentPage ? 'active' : ''}`;
-                firstBtn.textContent = '1';
-                firstBtn.onclick = () => changePage(1);
-                pagination.appendChild(firstBtn);
+            // Generar ID corto
+            const videoId = nanoid(5); // ID de 5 caracteres, ej: h6b6f
+            const generatedSmartlink = `${smartlink}?video=${encodeURIComponent(videoUrl)}`;
+            const shortUrl = `https://videyy.netlify.app/${videoId}`;
 
-                if (currentPage > Math.floor(maxVisiblePages/2) + 1) {
-                    const dots = document.createElement('span');
-                    dots.className = 'pagination-dots';
-                    dots.textContent = '...';
-                    pagination.appendChild(dots);
-                }
-            }
+            // Mostrar URLs generadas
+            videoOutput.textContent = videoUrl;
+            smartlinkOutput.textContent = generatedSmartlink;
+            shortUrlOutput.textContent = shortUrl;
+            outputDiv.style.display = 'block';
 
-            // Páginas centrales
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages/2));
-            let endPage = Math.min(totalPages, currentPage + Math.floor(maxVisiblePages/2));
-
-            if (currentPage <= Math.floor(maxVisiblePages/2)) {
-                endPage = Math.min(maxVisiblePages, totalPages);
-            } else if (currentPage >= totalPages - Math.floor(maxVisiblePages/2)) {
-                startPage = totalPages - (maxVisiblePages - 1);
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-                const pageBtn = document.createElement('button');
-                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-                pageBtn.textContent = i;
-                pageBtn.onclick = () => changePage(i);
-                pagination.appendChild(pageBtn);
-            }
-
-            // Última página
-            if (currentPage < totalPages - Math.floor(maxVisiblePages/2)) {
-                if (currentPage < totalPages - Math.floor(maxVisiblePages/2) - 1) {
-                    const dots = document.createElement('span');
-                    dots.className = 'pagination-dots';
-                    dots.textContent = '...';
-                    pagination.appendChild(dots);
-                }
-
-                const lastBtn = document.createElement('button');
-                lastBtn.className = `page-btn ${totalPages === currentPage ? 'active' : ''}`;
-                lastBtn.textContent = totalPages;
-                lastBtn.onclick = () => changePage(totalPages);
-                pagination.appendChild(lastBtn);
-            }
-
-            // Botón Siguiente
-            if (currentPage < totalPages) {
-                const nextBtn = document.createElement('button');
-                nextBtn.className = 'page-btn';
-                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                nextBtn.onclick = () => changePage(currentPage + 1);
-                pagination.appendChild(nextBtn);
-            }
-        }
-
-        // Cambiar de página
-        function changePage(page) {
-            currentPage = page;
-            renderVideos();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Función para activar un video
-        function activateVideo(videoId) {
-            document.querySelectorAll('.video-item.active').forEach(item => {
-                const player = item.querySelector('video');
-                if (player) {
-                    player.pause();
-                    item.classList.remove('active');
-                }
+            // Guardar en Firebase
+            const videoRef = ref(db, `urls/${videoId}`);
+            set(videoRef, {
+                videoUrl: videoUrl,
+                smartlink: generatedSmartlink,
+                timestamp: Date.now()
+            })
+            .then(() => {
+                console.log('URLs guardadas en Firebase con éxito');
+                alert('¡URLs guardadas en Firebase! URL corta: ' + shortUrl);
+            })
+            .catch((error) => {
+                errorDiv.textContent = 'Error al guardar en Firebase: ' + error.message;
+                errorDiv.style.display = 'block';
             });
-            
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            if (videoItem) {
-                videoItem.classList.add('active');
-                const videoPlayer = videoItem.querySelector('video');
-                videoPlayer.play().catch(e => console.log("Autoplay no permitido:", e));
-            }
-        }
-        
-        function closeVideo(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            if (videoItem) {
-                videoItem.classList.remove('active');
-                const videoPlayer = videoItem.querySelector('video');
-                videoPlayer.pause();
-            }
-        }
-        
-        function toggleFullscreen(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            const videoPlayer = videoItem.querySelector('video');
-            
-            if (!document.fullscreenElement) {
-                videoPlayer.requestFullscreen().catch(err => {
-                    alert(`Error al entrar en pantalla completa: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
-        
-        function toggleMute(videoId) {
-            const videoItem = document.querySelector(`.video-item[data-video-id="${videoId}"]`);
-            const videoPlayer = videoItem.querySelector('video');
-            videoPlayer.muted = !videoPlayer.muted;
-            
-            const btn = videoItem.querySelector('.control-btn:nth-child(2)');
-            btn.innerHTML = videoPlayer.muted ? 
-                '<i class="fas fa-volume-mute"></i>' : 
-                '<i class="fas fa-volume-up"></i>';
-        }
-        
-        // Inicializar la galería
-        window.addEventListener('DOMContentLoaded', renderVideos);
+        };
     </script>
 </body>
 </html>
