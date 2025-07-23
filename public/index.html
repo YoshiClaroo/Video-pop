@@ -84,71 +84,33 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
         }
-        .loading {
-            color: #333;
-            font-size: 1rem;
-            margin-top: 1rem;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Generador de URL de Video - Videyy</h1>
-        <div id="loading" class="loading" style="display: none;">Cargando video...</div>
-        <div id="form-container">
-            <div class="input-group">
-                <label for="video-url">URL del Video (.mp4)</label>
-                <input type="url" id="video-url" placeholder="Ej: https://ejemplo.com/video.mp4">
-            </div>
-            <div class="input-group">
-                <label for="smartlink">Smartlink</label>
-                <input type="url" id="smartlink" placeholder="Ej: https://smartlink.com/redir">
-            </div>
-            <button onclick="generateAndSaveUrl()">Generar y Guardar URL</button>
-            <div class="output" id="output" style="display: none;">
-                <p><strong>URL del Video:</strong> <span id="video-output"></span></p>
-                <p><strong>Smartlink Generado:</strong> <span id="smartlink-output"></span></p>
-                <p><strong>URL Corta:</strong> <span id="short-url-output"></span></p>
-            </div>
-            <div class="error" id="error" style="display: none;"></div>
+        <div class="input-group">
+            <label for="video-url">URL del Video (.mp4)</label>
+            <input type="url" id="video-url" placeholder="Ej: https://ejemplo.com/video.mp4">
         </div>
+        <div class="input-group">
+            <label for="smartlink">Smartlink</label>
+            <input type="url" id="smartlink" placeholder="Ej: https://smartlink.com/redir">
+        </div>
+        <button onclick="generateAndSaveUrl()">Generar y Guardar URL</button>
+        <div class="output" id="output" style="display: none;">
+            <p><strong>URL del Video:</strong> <span id="video-output"></span></p>
+            <p><strong>Smartlink Generado:</strong> <span id="smartlink-output"></span></p>
+            <p><strong>URL Corta:</strong> <span id="short-url-output"></span></p>
+        </div>
+        <div class="error" id="error" style="display: none;"></div>
     </div>
 
-    <!-- Firebase SDK y nanoid -->
+    <!-- Firebase SDK -->
     <script type="module">
-        import { doc, setDoc, getDoc, collection } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+        import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
         import { db } from './firebase.js';
-        import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js';
 
-        // Verificar si hay un ID en la URL y redirigir
-        const path = window.location.pathname;
-        if (path && path !== '/') {
-            const videoId = path.substring(1); // Quita el "/"
-            const videoRef = doc(db, 'urls', videoId);
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
-
-            getDoc(videoRef).then((docSnap) => {
-                if (docSnap.exists()) {
-                    // Redirigir a viewer.html en 1 segundo
-                    setTimeout(() => {
-                        window.location.href = `/viewer.html?id=${videoId}`;
-                    }, 1000);
-                } else {
-                    document.getElementById('error').textContent = 'Video no encontrado';
-                    document.getElementById('error').style.display = 'block';
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('form-container').style.display = 'block';
-                }
-            }).catch((error) => {
-                document.getElementById('error').textContent = 'Error al verificar el video: ' + error.message;
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('form-container').style.display = 'block';
-            });
-        }
-
-        // Generar y guardar URL
         window.generateAndSaveUrl = async function() {
             const videoUrl = document.getElementById('video-url').value;
             const smartlink = document.getElementById('smartlink').value;
@@ -162,26 +124,24 @@
             errorDiv.style.display = 'none';
             outputDiv.style.display = 'none';
 
-            // Validar URL del video
+            // Validar inputs
             if (!videoUrl || !videoUrl.endsWith('.mp4')) {
                 errorDiv.textContent = 'Por favor, ingresa una URL válida que termine en .mp4';
                 errorDiv.style.display = 'block';
                 return;
             }
-
-            // Validar Smartlink
             if (!smartlink) {
                 errorDiv.textContent = 'Por favor, ingresa un Smartlink válido';
                 errorDiv.style.display = 'block';
                 return;
             }
 
-            // Generar ID corto
-            const videoId = nanoid(5); // ID de 5 caracteres, ej: h6b6f
+            // Generar ID simple (para pruebas, sin nanoid)
+            const videoId = Math.random().toString(36).substring(2, 7); // ID de 5 caracteres
             const generatedSmartlink = `${smartlink}?video=${encodeURIComponent(videoUrl)}`;
             const shortUrl = `https://videyy.netlify.app/${videoId}`;
 
-            // Mostrar URLs generadas
+            // Mostrar resultados
             videoOutput.textContent = videoUrl;
             smartlinkOutput.textContent = generatedSmartlink;
             shortUrlOutput.textContent = shortUrl;
@@ -194,10 +154,9 @@
                     smartlink: generatedSmartlink,
                     timestamp: Date.now()
                 });
-                console.log('URLs guardadas en Firestore con éxito');
-                alert('¡URLs guardadas en Firestore! URL corta: ' + shortUrl);
+                alert('¡Guardado en Firestore! URL corta: ' + shortUrl);
             } catch (error) {
-                errorDiv.textContent = 'Error al guardar en Firestore: ' + error.message;
+                errorDiv.textContent = 'Error al guardar: ' + error.message;
                 errorDiv.style.display = 'block';
             }
         };
