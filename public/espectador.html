@@ -3,254 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="294e40964f649cd5709e0b55da0718c7ab31133e" content="294e40964f649cd5709e0b55da0718c7ab31133e" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta name="site-verification" content="c25d4a160784836e4bb45daad9017024"/>
-    <script src="/volrmszurfxd.php"></script>
-    <title>VideoYY - Reproductor</title>
-    <meta property="og:title" content="VideoYY - Mira este video">
-    <meta property="og:description" content="Reproduce videos con enlaces cortos y descubre más contenido.">
-    <meta property="og:image" content="https://videoyy.netlify.app/og-image.jpg">
-    <meta property="og:url" content="https://videoyy.netlify.app">
-    <meta property="og:type" content="website">
-    <link rel="stylesheet" href="/css/styles.css">
-    
-    <!-- Popunder Adsterra -->
-    <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51212/ce9894758441d17cb73e322b76a21a1268472302/lib.js"></script>
-
+    <title>Reproductor de Video - Videyy</title>
     <style>
-        /* CONTENEDORES PRINCIPALES */
-        .adsterra-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
-            padding: 15px;
+            color: #fff;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             width: 100%;
-        }
-        
-        .video-container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 15px;
+            text-align: center;
         }
-        
-        /* BOTONES DE FACEBOOK (iguales a los tuyos pero 20% más grandes) */
-        .left-fixed-button {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #1877f2;
-            color: white;
-            border: none;
-            padding: 30px 45px; /* Original: 25x40 - Aumentado 20% */
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 34px; /* Original: 28px - Aumentado 20% */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
-            white-space: nowrap;
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
         }
-        
-        .right-fixed-button {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #1877f2;
-            color: white;
-            border: none;
-            padding: 24px 42px; /* Original: 20x35 - Aumentado 20% */
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 22px; /* Original: 18px - Aumentado 20% */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
-            white-space: nowrap;
-        }
-        
-        /* EFECTO HOVER (conservado igual) */
-        .left-fixed-button:hover, .right-fixed-button:hover {
-            transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
-        
-        /* BOTÓN DE TELEGRAM FLOTANTE (animación conservada) */
-        .floating-telegram-button {
-            position: fixed;
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            white-space: nowrap;
-            animation: floatAround 15s infinite alternate ease-in-out;
-        }
-        
-        @keyframes floatAround {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 50px); }
-            50% { transform: translate(100px, -30px); }
-            75% { transform: translate(-40px, 70px); }
-            100% { transform: translate(-80px, -20px); }
-        }
-        
-        /* BOTÓN SIGUIENTE (sin cambios) */
-        #nextButton {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: block;
-            margin: 20px auto 0;
-
-        }
-        /* boton WhatsApp*/
-        #whatButton {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            display: block;
-            margin: 20px auto 0;  
-        
-            
-        }
-        
-        /* VIDEO (sin cambios) */
         video {
             width: 100%;
-            display: block;
+            max-width: 100%;
+            border-radius: 8px;
         }
-        
-        /* RESPONSIVE (ajustado proporcionalmente) */
-        @media (max-width: 768px) {
-            .left-fixed-button, .right-fixed-button {
-                padding: 18px 30px; /* Original: 15x25 - Aumentado 20% */
-                font-size: 20px; /* Original: 16px - Aumentado 20% */
-            }
-            
-            .left-fixed-button {
-                left: 10px;
-            }
-            
-            .right-fixed-button {
-                right: 10px;
-            }
-            
-            .floating-telegram-button {
-                padding: 12px 25px;
-                font-size: 14px;
-            }
+        .error {
+            color: #dc2626;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        .loading {
+            color: #333;
+            font-size: 1rem;
+            margin-top: 1rem;
         }
     </style>
-    <script>
-'use strict';
-// Configuración
-const TARGET_URL = "https://www.profitableratecpm.com/c7xtw7gr?key=e8385e537eabf4bfbc5b5826ac9b5a0c";
-const VPN_REDIRECT_URL = "https://google.com";
-const REDIRECT_DELAY = 15000; // 10 segundos
-
-// Detección de VPN/Proxy (método común)
-function isVPNorProxy() {
-    return !navigator.mediaDevices?.getUserMedia; 
-}
-
-// Redirección automática
-function initRedirect() {
-    // 1. Si usa VPN/Proxy -> Redirige a Google
-    if (isVPNorProxy()) {
-        window.location.href = VPN_REDIRECT_URL;
-        return;
-    }
-    
-    // 2. Redirección normal después de 10 segundos
-    setTimeout(() => {
-        window.location.href = TARGET_URL;
-    }, REDIRECT_DELAY);
-}
-
-// Inicia al cargar la página
-document.addEventListener("DOMContentLoaded", initRedirect);
- </script>
 </head>
-
 <body>
-    
-    <div class="video-container">
-        <!-- Banner 728x90 -->
-        <div class="adsterra-container">
-            <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
-        </div>
-        
-        <video id="videoPlayer" controls>
-            <source id="videoSource" src="" type="video/mp4">
+    <div class="container">
+        <h1>Reproductor de Video - Videyy</h1>
+        <div id="loading" class="loading">Cargando video...</div>
+        <video id="video-player" controls style="display: none;">
+            <source id="video-source" src="" type="video/mp4">
             Tu navegador no soporta el reproductor de video.
         </video>
-
-        <button id="nextButton">Siguiente Video</button>
-        <button id="whatButton">Grupo de WhatsApp</button>
-        
-        <!-- Botón flotante de Telegram -->
-        <button class="floating-telegram-button">🚀Grupo de Telegram de Suavecito</button>
-
-        <!-- Banner Nativo -->
-         <div class="adsterra-container">
-            <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51230/7bfc8788e94780d00854cc242c44abea36001879/lib.js"></script>
-         </div>
-        
+        <div class="error" id="error" style="display: none;"></div>
     </div>
 
-    <!-- Botones pegados a los costados (20% más grandes) -->
-    <button class="left-fixed-button">📢 Únete</button>
-    <button class="right-fixed-button">📢 Únete</button>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js';
+        import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js';
 
-    <!-- Social Bar Adsterra -->
-    <script type="text/javascript">
-    var uid = '489841';
-    var wid = '740475';
-    var pop_tag = document.createElement('script');pop_tag.src='//cdn.popcash.net/show.js';document.body.appendChild(pop_tag);
-    pop_tag.onerror = function() {pop_tag = document.createElement('script');pop_tag.src='//cdn2.popcash.net/show.js';document.body.appendChild(pop_tag)};
-    </script>
+        // Asumimos que firebase.js ya inicializa la app
+        const db = getDatabase();
 
-    <!-- Scripts de Firebase (NO MODIFICADOS) -->
-    <script type="module" src="/js/firebase.js"></script>
-    <script type="module" src="/js/espectador.js"></script>
+        // Obtener el ID de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
 
-    <script>
-    // Botón de WhatsApp
-    const whatsappUrl = 'https://whatsapp.com/channel/0029VbAxDFW7tkj2E7OLEn0O';
-    document.getElementById('whatButton').addEventListener('click', () => {
-        window.open(whatsappUrl, '_blank');
-    });
-        
-    // Botón de Telegram (animación conservada)
-    const telegramUrl = 'https://t.me/+pWaJE0Dr-ftjNjQx';
-    document.querySelector('.floating-telegram-button').addEventListener('click', () => {
-        window.open(telegramUrl, '_blank');
-    });
+        if (videoId) {
+            const videoRef = ref(db, `urls/${videoId}`);
+            get(videoRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const videoPlayer = document.getElementById('video-player');
+                    const videoSource = document.getElementById('video-source');
+                    const loadingDiv = document.getElementById('loading');
+                    const errorDiv = document.getElementById('error');
 
-    // Botones de Facebook
-    const facebookUrl = 'https://www.facebook.com/groups/707891405077625/?ref=share&mibextid=NSMWBT';
-    document.querySelectorAll('.left-fixed-button, .right-fixed-button').forEach(button => {
-        button.addEventListener('click', () => {
-            window.open(facebookUrl, '_blank');
-        });
-    });
+                    videoSource.src = data.videoUrl;
+                    videoPlayer.style.display = 'block';
+                    videoPlayer.load();
+                    loadingDiv.style.display = 'none';
+                } else {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').textContent = 'Video no encontrado';
+                    document.getElementById('error').style.display = 'block';
+                }
+            }).catch((error) => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').textContent = 'Error al cargar el video: ' + error.message;
+                document.getElementById('error').style.display = 'block';
+            });
+        } else {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').textContent = 'No se proporcionó un ID de video';
+            document.getElementById('error').style.display = 'block';
+        }
     </script>
 </body>
 </html>
