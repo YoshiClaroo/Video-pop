@@ -4,20 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de URLs - VideoPop</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #1877f2;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #166fe5;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+        .url-box {
+            display: flex;
+            gap: 10px;
+        }
+        .url-box input {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
-    <div class="generator-container">
+    <div class="container">
         <h1>🔗 Generador de URLs</h1>
-        <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="Pega la URL del video (ej: https://tuserver.com/video.mp4)" required>
-            <button id="generateBtn">Generar Enlace</button>
-        </div>
-        <div class="result" id="result">
-            <p class="placeholder">Tu URL aparecerá aquí...</p>
+        <input type="text" id="videoUrl" placeholder="Pega la URL del video (ej: https://ejemplo.com/video.mp4)">
+        <button onclick="generateUrl()">Generar Enlace</button>
+        <div id="result">
+            <p>La URL generada aparecerá aquí</p>
         </div>
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script>
+        function generateUrl() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!videoUrl) {
+                resultDiv.innerHTML = '<p style="color:red;">⚠️ Por favor, ingresa una URL válida</p>';
+                return;
+            }
+
+            // Codifica la URL para parámetros
+            const encodedUrl = encodeURIComponent(videoUrl);
+            
+            // Usa el dominio actual (funciona en Netlify y localhost)
+            const domain = window.location.protocol + '//' + window.location.host;
+            
+            const generatedUrl = `${domain}/index.html?id=${encodedUrl}`;
+            
+            resultDiv.innerHTML = `
+                <p><strong>URL generada:</strong></p>
+                <div class="url-box">
+                    <input type="text" id="generatedUrl" value="${generatedUrl}" readonly>
+                    <button onclick="copyUrl()">Copiar</button>
+                </div>
+            `;
+        }
+
+        function copyUrl() {
+            const urlInput = document.getElementById('generatedUrl');
+            urlInput.select();
+            document.execCommand('copy');
+            alert('¡URL copiada al portapapeles!');
+        }
+    </script>
 </body>
 </html>
