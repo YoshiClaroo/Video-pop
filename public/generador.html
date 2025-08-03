@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de URLs - VideoPop</title>
+    <title>Generador de URLs - Videyy</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -22,15 +22,16 @@
             padding: 25px;
             width: 100%;
             max-width: 500px;
+            text-align: center;
         }
         h1 {
             color: #1877f2;
-            text-align: center;
+            margin-bottom: 20px;
         }
         input {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
@@ -44,7 +45,7 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 10px;
+            transition: background 0.3s;
         }
         button:hover {
             background: #166fe5;
@@ -52,16 +53,24 @@
         #result {
             margin-top: 20px;
             padding: 15px;
-            background: #f7f7f7;
+            background: #e8f4fd;
             border-radius: 5px;
             word-break: break-all;
         }
         .url-box {
             display: flex;
             gap: 10px;
+            margin-top: 10px;
         }
         .url-box input {
             flex: 1;
+            background: #f9f9f9;
+        }
+        .error {
+            color: #ff3333;
+        }
+        .success {
+            color: #4caf50;
         }
     </style>
 </head>
@@ -71,7 +80,7 @@
         <input type="text" id="videoUrl" placeholder="Pega la URL del video (ej: https://ejemplo.com/video.mp4)">
         <button onclick="generateUrl()">Generar Enlace</button>
         <div id="result">
-            <p>La URL generada aparecerá aquí</p>
+            <p>Ingresa una URL de video para generar el enlace.</p>
         </div>
     </div>
 
@@ -81,20 +90,18 @@
             const resultDiv = document.getElementById('result');
             
             if (!videoUrl) {
-                resultDiv.innerHTML = '<p style="color:red;">⚠️ Por favor, ingresa una URL válida</p>';
+                resultDiv.innerHTML = '<p class="error">⚠️ ¡Ingresa una URL válida!</p>';
                 return;
             }
 
             // Codifica la URL para parámetros
             const encodedUrl = encodeURIComponent(videoUrl);
             
-            // Usa el dominio actual (funciona en Netlify y localhost)
-            const domain = window.location.protocol + '//' + window.location.host;
-            
-            const generatedUrl = `${domain}/index.html?id=${encodedUrl}`;
+            // Usa TU DOMINIO FIJO (videyy.netlify.app)
+            const generatedUrl = `https://videyy.netlify.app/index.html?id=${encodedUrl}`;
             
             resultDiv.innerHTML = `
-                <p><strong>URL generada:</strong></p>
+                <p class="success">✅ ¡Enlace generado con éxito!</p>
                 <div class="url-box">
                     <input type="text" id="generatedUrl" value="${generatedUrl}" readonly>
                     <button onclick="copyUrl()">Copiar</button>
