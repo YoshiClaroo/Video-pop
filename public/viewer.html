@@ -3,52 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor - VideoPop</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+    <title>Generador de URLs - VideoPop</title>
+    <style>
+        /* Estilos Generales */
+        :root {
+            --fb-blue: #1877f2;
+            --fb-dark-blue: #0a58ca;
+            --error: #ff3333;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Contenedor Principal */
+        .generator-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--fb-blue);
+            margin-bottom: 20px;
+        }
+
+        /* Grupo de Input */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px;
+            background: var(--fb-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: var(--fb-dark-blue);
+        }
+
+        /* Resultado */
+        .result {
+            margin-top: 20px;
+        }
+
+        .url-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .url-box input {
+            flex: 1;
+        }
+
+        .error {
+            color: var(--error);
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 600px) {
+            .generator-container {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="player-container">
-        <!-- Banner Superior -->
-        <div class="banner top-banner">
-            <img src="assets/img/banner-top.webp" alt="Publicidad Top">
+    <div class="generator-container">
+        <h1>🔗 Generador de URLs</h1>
+        <div class="input-group">
+            <input type="text" id="videoUrl" placeholder="Pega la URL del video (ej: https://tuserver.com/video.mp4)" required>
+            <button id="generateBtn">Generar Enlace</button>
         </div>
-
-        <!-- Reproductor -->
-        <div class="video-wrapper">
-            <video id="video-player">
-                <source src="" type="video/mp4">
-            </video>
-        </div>
-
-        <!-- Banner Inferior -->
-        <div class="banner bottom-banner">
-            <img src="assets/img/banner-bottom.webp" alt="Publicidad Bottom">
+        <div class="result" id="result">
+            <p class="placeholder">Tu URL aparecerá aquí...</p>
         </div>
     </div>
 
     <script>
-        // Obtiene la URL del video
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = decodeURIComponent(urlParams.get('id'));
-        
-        // Configura Fluid Player
-        if (videoUrl) {
-            document.getElementById('video-player').src = videoUrl;
-            var myFP = fluidPlayer('video-player', {
-                layoutControls: {
-                    fillToContainer: true,
-                    autoPlay: true,
-                    mute: false,
-                    allowTheatre: true,
-                    controlBar: {
-                        autoHide: true,
-                        animated: true
-                    }
-                }
-            });
-        } else {
-            document.querySelector('.video-wrapper').innerHTML = '<p class="error">⚠️ No se encontró el video</p>';
+        // Función para generar la URL
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!videoUrl) {
+                resultDiv.innerHTML = '<p class="error">⚠️ ¡Debes pegar una URL válida!</p>';
+                return;
+            }
+
+            // Codifica la URL para parámetros
+            const encodedUrl = encodeURIComponent(videoUrl);
+            const domain = window.location.hostname === 'localhost' ? 
+                'http://localhost:5500' : 
+                'https://videopop.netlify.app';
+            const generatedUrl = `${domain}/index.html?id=${encodedUrl}`;
+            
+            resultDiv.innerHTML = `
+                <p class="success">✅ URL generada con éxito!</p>
+                <div class="url-box">
+                    <input type="text" value="${generatedUrl}" id="generatedUrl" readonly>
+                    <button onclick="copyToClipboard()">📋 Copiar</button>
+                </div>
+            `;
+        });
+
+        // Función para copiar al portapapeles
+        function copyToClipboard() {
+            const urlInput = document.getElementById('generatedUrl');
+            urlInput.select();
+            document.execCommand('copy');
+            alert('URL copiada al portapapeles!');
         }
     </script>
 </body>
