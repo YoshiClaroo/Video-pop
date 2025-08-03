@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor - VideoPop</title>
+    <title>Reproductor Videyy</title>
     <style>
         body {
             margin: 0;
@@ -18,70 +18,60 @@
             text-align: center;
         }
         .banner img {
-            max-width: 100%;
+            max-width: 90%;
             height: auto;
+            border-radius: 5px;
         }
-        .top-banner { border-bottom: 3px solid #e74c3c; }
-        .bottom-banner { border-top: 3px solid #e74c3c; }
-        .video-wrapper {
+        .video-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
         #video-player {
             width: 100%;
-            height: auto;
             border-radius: 8px;
-        }
-        .error {
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        @media (max-width: 600px) {
-            .video-wrapper { padding: 10px; }
         }
     </style>
     <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 </head>
 <body>
     <!-- Banner Superior -->
-    <div class="banner top-banner">
-        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Superior" alt="Publicidad Top">
+    <div class="banner">
+        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Superior" alt="Publicidad">
     </div>
 
     <!-- Reproductor -->
-    <div class="video-wrapper">
+    <div class="video-container">
         <video id="video-player">
             <source src="" type="video/mp4">
         </video>
     </div>
 
     <!-- Banner Inferior -->
-    <div class="banner bottom-banner">
-        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Inferior" alt="Publicidad Bottom">
+    <div class="banner">
+        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Inferior" alt="Publicidad">
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = decodeURIComponent(urlParams.get('id'));
+        const videoUrl = decodeURIComponent(urlParams.get('src'));
         
         if (videoUrl) {
             document.getElementById('video-player').src = videoUrl;
-            var myFP = fluidPlayer('video-player', {
+            fluidPlayer('video-player', {
                 layoutControls: {
                     fillToContainer: true,
                     autoPlay: true,
-                    mute: false,
-                    allowTheatre: true,
-                    controlBar: {
-                        autoHide: true,
-                        animated: true
-                    }
+                    mute: false
                 }
             });
         } else {
-            document.querySelector('.video-wrapper').innerHTML = '<p class="error">⚠️ No se encontró el video</p>';
+            document.body.innerHTML = `
+                <div style="color:white; text-align:center; padding:50px;">
+                    <h2>❌ Error: Video no encontrado</h2>
+                    <p>Usa el generador para crear un enlace válido</p>
+                </div>
+            `;
         }
     </script>
 </body>
