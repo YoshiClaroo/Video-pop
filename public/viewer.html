@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Video exclusivo! - Videyy</title>
     <style>
+      .adsterra-container {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           margin: 20px 0;
+           padding: 15px;
+           width: 100%;
+           flex-direction: column;
+       }
         body {
             margin: 0;
             padding: 0;
@@ -15,30 +24,12 @@
             align-items: center;
             min-height: 100vh;
         }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .adsterra-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-            padding: 15px;
-            width: 100%;
-            flex-direction: column;
-        }
         .player-container {
             width: 100%;
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
         .video-title {
             color: #FF5722;
@@ -59,32 +50,30 @@
     <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="adsterra-container">
-          <div style="font-size: 16px; font-weight: bold; color: #ff4444; margin-bottom: 8px;">
-            🔞 ¿Querés más contenido como este? Mirá lo que ofrecen estos anuncios 👇
-          </div>
-          <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
-          <div style="font-size: 12px; color: #aaa; margin-top: 6px;">
-            Publicidad adaptada a tus intereses.
-          </div>
-        </div>
-
-        <div class="player-container">
-            <video id="video-player">
-                <source src="" type="video/mp4">
-            </video>
-        </div>
-
-        <div class="adsterra-container">
-          <div style="font-size: 16px; font-weight: bold; color: #ff4444; margin-bottom: 8px;">
-            🔞 ¿Querés más contenido como este? Mirá lo que ofrecen estos anuncios 👇
-          </div>
-          <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/52676/db796bc56700550780d4cdae883e162af586eb65/lib.js"></script>
-          <div style="font-size: 12px; color: #aaa; margin-top: 6px;">
-            Publicidad adaptada a tus intereses.
-          </div>
-        </div>
+    <div class="adsterra-container">
+      <div style="font-size: 16px; font-weight: bold; color: #ff4444; margin-bottom: 8px;">
+        🔞 ¿Querés más contenido como este? Mirá lo que ofrecen estos anuncios 👇
+      </div>
+      <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/51596/f26cd003d92311e071773eb3568b4f94c194d6ef/lib.js"></script>
+      <div style="font-size: 12px; color: #aaa; margin-top: 6px;">
+        Publicidad adaptada a tus intereses.
+      </div>
+      </div>
+    </div>
+    <div class="player-container">
+        <video id="video-player">
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+    <div class="adsterra-container">
+      <div style="font-size: 16px; font-weight: bold; color: #ff4444; margin-bottom: 8px;">
+        🔞 ¿Querés más contenido como este? Mirá lo que ofrecen estos anuncios 👇
+      </div>
+      <script type="text/javascript" src="https://cdn.diclotrans.com/sdk/v1/52676/db796bc56700550780d4cdae883e162af586eb65/lib.js"></script>
+      <div style="font-size: 12px; color: #aaa; margin-top: 6px;">
+        Publicidad adaptada a tus intereses.
+      </div>
+     </div>
     </div>
 
     <script>
@@ -103,7 +92,7 @@
             const player = fluidPlayer('video-player', {
                 layoutControls: {
                     fillToContainer: true,
-                    autoPlay: false,  // Cambiado a false para que no inicie automáticamente
+                    autoPlay: false, // Cambiado a false para que no inicie automáticamente
                     mute: false
                 }
             });
