@@ -3,73 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor Videyy</title>
+    <title>¡Video exclusivo! - Videyy</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             background: #000;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        .banner {
+        .player-container {
             width: 100%;
-            padding: 10px 0;
-            background: #2c3e50;
-            text-align: center;
-        }
-        .banner img {
-            max-width: 90%;
-            height: auto;
-            border-radius: 5px;
-        }
-        .video-container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 20px auto;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        .video-title {
+            color: #FF5722;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         #video-player {
             width: 100%;
             border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 600px) {
+            .video-title { font-size: 20px; }
         }
     </style>
     <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 </head>
 <body>
-    <!-- Banner Superior -->
-    <div class="banner">
-        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Superior" alt="Publicidad">
-    </div>
-
-    <!-- Reproductor -->
-    <div class="video-container">
+    <div class="player-container">
+        <h1 class="video-title">¡No te pierdas este contenido exclusivo!</h1>
         <video id="video-player">
             <source src="" type="video/mp4">
         </video>
     </div>
 
-    <!-- Banner Inferior -->
-    <div class="banner">
-        <img src="https://via.placeholder.com/728x90/2c3e50/ffffff?text=Banner+Inferior" alt="Publicidad">
-    </div>
-
     <script>
+        // Configuración del SmartLink
+        const SMARTLINK_URL = "https://diclotrans.com/redirect?id=51228&auth=bd95c00167af1fda747b24a4947c250f90bf6168";
+        let smartlinkOpened = false;
+
+        // Carga el video
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = decodeURIComponent(urlParams.get('src'));
-        
+        const videoPlayer = document.getElementById('video-player');
+
         if (videoUrl) {
-            document.getElementById('video-player').src = videoUrl;
-            fluidPlayer('video-player', {
+            videoPlayer.src = videoUrl;
+            
+            const player = fluidPlayer('video-player', {
                 layoutControls: {
                     fillToContainer: true,
                     autoPlay: true,
                     mute: false
                 }
             });
+
+            // Detecta cuando el video está listo
+            videoPlayer.addEventListener('loadedmetadata', function() {
+                const videoDuration = videoPlayer.duration;
+                const isLongVideo = videoDuration > 90; // Más de 1:30 minutos
+                
+                // Evento para tiempo transcurrido
+                videoPlayer.addEventListener('timeupdate', function() {
+                    const currentTime = videoPlayer.currentTime;
+                    const seventyPercent = videoDuration * 0.7;
+
+                    // Abre SmartLink al 70% (solo si es video largo y no se ha abierto antes)
+                    if (isLongVideo && currentTime >= seventyPercent && !smartlinkOpened) {
+                        window.open(SMARTLINK_URL, '_blank');
+                        smartlinkOpened = true;
+                    }
+                });
+
+                // Evento al finalizar el video
+                videoPlayer.addEventListener('ended', function() {
+                    if (!smartlinkOpened) { // Si no se abrió al 70%
+                        window.open(SMARTLINK_URL, '_blank');
+                    }
+                });
+            });
+
         } else {
             document.body.innerHTML = `
                 <div style="color:white; text-align:center; padding:50px;">
                     <h2>❌ Error: Video no encontrado</h2>
-                    <p>Usa el generador para crear un enlace válido</p>
                 </div>
             `;
         }
