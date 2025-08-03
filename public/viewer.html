@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>VideoPop - Reproductor</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+</head>
+<body>
+    <!-- Banner Superior -->
+    <div class="banner top-banner">
+        <img src="assets/img/banner-top.png" alt="Publicidad">
+    </div>
+
+    <!-- Reproductor -->
+    <div class="video-container">
+        <video id="video-player">
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Banner Inferior -->
+    <div class="banner bottom-banner">
+        <img src="assets/img/banner-bottom.png" alt="Publicidad">
+    </div>
+
+    <script>
+        // Obtiene la URL del video desde el parámetro ?id=
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = decodeURIComponent(urlParams.get('id'));
+        
+        // Configura el reproductor
+        document.getElementById('video-player').src = videoUrl;
+        
+        var myFP = fluidPlayer('video-player', {
+            layoutControls: {
+                controlBar: {
+                    autoHideTimeout: 3,
+                    animated: true,
+                    autoHide: true
+                },
+                autoPlay: true,
+                mute: false,
+                allowTheatre: true,
+                fillToContainer: true,
+                posterImage: ""
+            },
+            vastOptions: {
+                adList: [],
+                adCTAText: false
+            }
+        });
+    </script>
+</body>
+</html>
