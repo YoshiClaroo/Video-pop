@@ -21,10 +21,10 @@
             padding: 25px;
             width: 90%;
             max-width: 500px;
-            text-align: center;
         }
         h1 {
             color: #1877f2;
+            text-align: center;
             margin-bottom: 20px;
         }
         input {
@@ -52,6 +52,10 @@
         }
         #result {
             margin-top: 20px;
+            border: 1px dashed #1877f2;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f8faff;
         }
         .url-box {
             display: flex;
@@ -59,17 +63,20 @@
             margin-top: 10px;
         }
         .url-box input {
-            background: #f9f9f9;
             flex: 1;
+            background: #fff;
+            border: 1px solid #ccc;
         }
-        .success {
+        .success-msg {
             color: #4caf50;
             font-weight: bold;
+            margin-bottom: 10px;
         }
         .test-link {
-            display: inline-block;
+            display: block;
             margin-top: 15px;
             color: #1877f2;
+            text-align: center;
             text-decoration: none;
         }
         .test-link:hover {
@@ -80,10 +87,17 @@
 <body>
     <div class="container">
         <h1>🔗 Generador Videyy</h1>
-        <input type="text" id="videoUrl" placeholder="Pega URL del video (ej: https://ejemplo.com/video.mp4)">
+        <input type="text" id="videoUrl" placeholder="Ej: https://ejemplo.com/video.mp4">
         <button onclick="generateUrl()">Generar Enlace</button>
-        <div id="result">
-            <!-- Aquí aparecerá el resultado -->
+        
+        <!-- Contenedor del RESULTADO (ahora visible) -->
+        <div id="result" style="display: none;">
+            <p class="success-msg">✅ ¡Enlace generado con éxito!</p>
+            <div class="url-box">
+                <input type="text" id="generatedUrl" readonly>
+                <button onclick="copyUrl()">Copiar</button>
+            </div>
+            <a href="#" id="testLink" class="test-link" target="_blank">🔍 Probar enlace</a>
         </div>
     </div>
 
@@ -92,35 +106,30 @@
             const videoUrl = document.getElementById('videoUrl').value.trim();
             const resultDiv = document.getElementById('result');
             
-            // Validación
             if (!videoUrl || !videoUrl.startsWith('http')) {
-                resultDiv.innerHTML = '<p style="color:red;">⚠️ ¡La URL debe comenzar con http:// o https://!</p>';
+                resultDiv.innerHTML = '<p style="color:red;">⚠️ ¡URL debe comenzar con http:// o https://!</p>';
+                resultDiv.style.display = 'block';
                 return;
             }
 
-            // Generar ID único
+            // Genera ID único + codifica URL
             const randomId = "vid_" + Math.random().toString(36).substring(2, 8);
-            
-            // Codificar SOLO la URL del video (no el dominio completo)
             const encodedUrl = encodeURIComponent(videoUrl);
-            const generatedUrl = `https://videyy.netlify.app/index.html?id=${randomId}&src=${encodedUrl}`;
+            const generatedUrl = `https://videyy.netlify.app/index-loader.html?id=${randomId}&src=${encodedUrl}`;
             
-            // Mostrar resultado (CORRECTO)
-            resultDiv.innerHTML = `
-                <p class="success">✅ ¡Enlace generado con éxito!</p>
-                <div class="url-box">
-                    <input type="text" value="${generatedUrl}" id="generatedUrl" readonly>
-                    <button onclick="copyUrl()">Copiar</button>
-                </div>
-                <a href="${generatedUrl}" class="test-link" target="_blank">🔍 Probar enlace</a>
-            `;
+            // Muestra el contenedor oculto
+            resultDiv.style.display = 'block';
+            
+            // Inserta los datos
+            document.getElementById('generatedUrl').value = generatedUrl;
+            document.getElementById('testLink').href = generatedUrl;
         }
 
         function copyUrl() {
             const urlInput = document.getElementById('generatedUrl');
             urlInput.select();
             document.execCommand('copy');
-            alert('¡URL copiada al portapapeles!');
+            alert('¡URL copiada!');
         }
     </script>
 </body>
