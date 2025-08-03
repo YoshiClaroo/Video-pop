@@ -1,33 +1,50 @@
-/* Estilos generales */
+/* Estilos Generales */
+:root {
+    --fb-blue: #1877f2;
+    --fb-dark-blue: #0a58ca;
+    --error: #ff3333;
+    --success: #4caf50;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color: white;
-}
-
-/* Loader estilo Facebook */
-.loader-container {
+    background: #f0f2f5;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
-.loader {
+/* Loader Facebook */
+.fb-loader {
+    text-align: center;
+    padding: 20px;
+}
+
+.fb-logo {
+    margin-bottom: 30px;
+}
+
+.logo-f {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.loader-dots {
     display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 10px;
 }
 
 .dot {
     width: 12px;
     height: 12px;
-    background: #1877f2; /* Azul Facebook */
+    background: var(--fb-blue);
     border-radius: 50%;
-    animation: bounce 1.5s infinite ease-in-out;
+    animation: bounce 1.4s infinite ease-in-out;
 }
 
 .dot:nth-child(2) {
@@ -43,67 +60,75 @@ body {
     50% { transform: translateY(-15px); }
 }
 
-/* Reproductor */
-.video-container {
-    max-width: 800px;
+/* Generador de URLs */
+.generator-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    width: 90%;
+    max-width: 600px;
     margin: 20px auto;
 }
 
-/* Banners */
-.banner {
-    width: 100%;
-    padding: 10px;
-    background: #2c3e50;
-    text-align: center;
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.banner img {
-    max-width: 100%;
-    height: auto;
-}
-
-.top-banner {
-    border-bottom: 3px solid #e74c3c;
-}
-
-.bottom-banner {
-    border-top: 3px solid #e74c3c;
-}
-
-/* Generador */
-.generator-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-}
-
-input, button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
+input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 16px;
 }
 
 button {
-    background: #e74c3c;
+    padding: 12px;
+    background: var(--fb-blue);
     color: white;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
     transition: background 0.3s;
 }
 
 button:hover {
-    background: #c0392b;
+    background: var(--fb-dark-blue);
 }
 
-.result {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    word-break: break-all;
+.url-box {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.url-box input {
+    flex: 1;
+}
+
+.error {
+    color: var(--error);
+}
+
+.success {
+    color: var(--success);
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+    .generator-container {
+        padding: 15px;
+    }
+    
+    .fb-logo {
+        margin-bottom: 20px;
+    }
+    
+    .logo-f {
+        width: 60px;
+        height: 60px;
+    }
 }
