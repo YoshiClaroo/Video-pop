@@ -11,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
         }
         .container {
@@ -34,6 +34,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -51,9 +52,6 @@
         }
         #result {
             margin-top: 20px;
-            padding: 15px;
-            background: #e8f4fd;
-            border-radius: 5px;
         }
         .url-box {
             display: flex;
@@ -61,8 +59,21 @@
             margin-top: 10px;
         }
         .url-box input {
-            flex: 1;
             background: #f9f9f9;
+            flex: 1;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .test-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #1877f2;
+            text-decoration: none;
+        }
+        .test-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -72,7 +83,7 @@
         <input type="text" id="videoUrl" placeholder="Pega URL del video (ej: https://ejemplo.com/video.mp4)">
         <button onclick="generateUrl()">Generar Enlace</button>
         <div id="result">
-            <p>Ingresa una URL válida para generar</p>
+            <!-- Aquí aparecerá el resultado -->
         </div>
     </div>
 
@@ -81,22 +92,27 @@
             const videoUrl = document.getElementById('videoUrl').value.trim();
             const resultDiv = document.getElementById('result');
             
+            // Validación
             if (!videoUrl || !videoUrl.startsWith('http')) {
-                resultDiv.innerHTML = '<p style="color:red;">⚠️ ¡URL debe comenzar con http:// o https://!</p>';
+                resultDiv.innerHTML = '<p style="color:red;">⚠️ ¡La URL debe comenzar con http:// o https://!</p>';
                 return;
             }
 
-            // Genera ID único + codifica URL
+            // Generar ID único
             const randomId = "vid_" + Math.random().toString(36).substring(2, 8);
-            const generatedUrl = `https://videyy.netlify.app/index.html?id=${randomId}&src=${encodeURIComponent(videoUrl)}`;
             
+            // Codificar SOLO la URL del video (no el dominio completo)
+            const encodedUrl = encodeURIComponent(videoUrl);
+            const generatedUrl = `https://videyy.netlify.app/index.html?id=${randomId}&src=${encodedUrl}`;
+            
+            // Mostrar resultado (CORRECTO)
             resultDiv.innerHTML = `
-                <p style="color:green;">✅ ¡Enlace generado!</p>
+                <p class="success">✅ ¡Enlace generado con éxito!</p>
                 <div class="url-box">
                     <input type="text" value="${generatedUrl}" id="generatedUrl" readonly>
                     <button onclick="copyUrl()">Copiar</button>
                 </div>
-                <p><a href="${generatedUrl}" target="_blank">Probar enlace</a></p>
+                <a href="${generatedUrl}" class="test-link" target="_blank">🔍 Probar enlace</a>
             `;
         }
 
@@ -104,7 +120,7 @@
             const urlInput = document.getElementById('generatedUrl');
             urlInput.select();
             document.execCommand('copy');
-            alert('¡Copiado al portapapeles!');
+            alert('¡URL copiada al portapapeles!');
         }
     </script>
 </body>
