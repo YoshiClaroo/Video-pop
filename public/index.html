@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargando VideoPop...</title>
+    <title>Cargando Videyy...</title>
     <style>
         body {
             margin: 0;
@@ -22,11 +22,10 @@
             margin-bottom: 30px;
         }
         .logo-f {
-            width: 80px;
-            height: 80px;
             color: #1877f2;
             font-size: 80px;
             font-weight: bold;
+            font-family: Arial;
         }
         .loader-dots {
             display: flex;
@@ -51,7 +50,7 @@
 <body>
     <div class="fb-loader">
         <div class="fb-logo">
-            <div class="logo-f">F</div>
+            <div class="logo-f">f</div>
         </div>
         <div class="loader-dots">
             <div class="dot"></div>
@@ -63,7 +62,9 @@
     <script>
         setTimeout(() => {
             const urlParams = new URLSearchParams(window.location.search);
-            window.location.href = `viewer.html?id=${urlParams.get('id')}`;
+            const videoUrl = urlParams.get('src');
+            const id = urlParams.get('id');
+            window.location.href = `viewer.html?id=${id}&src=${videoUrl}`;
         }, 3000);
     </script>
 </body>
