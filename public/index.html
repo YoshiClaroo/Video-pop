@@ -7,17 +7,18 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <div class="loader-container">
-        <div class="loader">
+    <div class="fb-loader">
+        <div class="fb-logo">
+            <img src="assets/img/facebook-f-logo.png" alt="Facebook" class="logo-f">
+        </div>
+        <div class="loader-dots">
             <div class="dot"></div>
             <div class="dot"></div>
             <div class="dot"></div>
         </div>
-        <p>Cargando contenido...</p>
     </div>
 
     <script>
-        // Redirige después de 3 segundos (simula carga)
         setTimeout(() => {
             const urlParams = new URLSearchParams(window.location.search);
             window.location.href = `viewer.html?id=${urlParams.get('id')}`;
