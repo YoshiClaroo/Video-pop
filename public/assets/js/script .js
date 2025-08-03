@@ -1,26 +1,28 @@
-function generateUrl() {
+document.getElementById('generateBtn').addEventListener('click', function() {
     const videoUrl = document.getElementById('videoUrl').value.trim();
+    const resultDiv = document.getElementById('result');
     
     if (!videoUrl) {
-        alert("¡Debes pegar una URL válida!");
+        resultDiv.innerHTML = '<p class="error">⚠️ ¡Debes pegar una URL válida!</p>';
         return;
     }
 
-    // Codifica la URL para pasarla como parámetro
+    // Codifica la URL para parámetros
     const encodedUrl = encodeURIComponent(videoUrl);
-    const generatedUrl = `https://videopop.netlify.app/index.html?id=${encodedUrl}`;
+    const generatedUrl = `${window.location.origin}/index.html?id=${encodedUrl}`;
     
-    // Muestra el resultado
-    document.getElementById('result').innerHTML = `
-        <h3>URL Generada:</h3>
-        <input type="text" value="${generatedUrl}" readonly>
-        <button onclick="copyUrl()">Copiar URL</button>
+    resultDiv.innerHTML = `
+        <p class="success">✅ URL generada con éxito!</p>
+        <div class="url-box">
+            <input type="text" value="${generatedUrl}" id="generatedUrl" readonly>
+            <button onclick="copyToClipboard()">📋 Copiar</button>
+        </div>
     `;
-}
+});
 
-function copyUrl() {
-    const urlInput = document.querySelector('#result input');
+function copyToClipboard() {
+    const urlInput = document.getElementById('generatedUrl');
     urlInput.select();
     document.execCommand('copy');
-    alert("¡URL copiada al portapapeles!");
+    alert('URL copiada al portapapeles!');
 }
