@@ -41,7 +41,7 @@
         #video-player {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta el video sin deformar */
+            object-fit: contain; /* Cambiado a 'contain' para mostrar todo el video */
         }
         .video-title {
             color: #FF5722;
@@ -52,6 +52,28 @@
         }
         @media (max-width: 600px) {
             .video-title { font-size: 20px; }
+        }
+        
+        /* Nuevos estilos para pantalla completa */
+        .video-wrapper:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+        }
+        .video-wrapper:-moz-full-screen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+        }
+        .video-wrapper:-ms-fullscreen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+        }
+        .video-wrapper:fullscreen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
         }
     </style>
     <!-- HillTopAds Push Notification -->
@@ -94,7 +116,7 @@
 
     <!-- Reproductor con wrapper forzado a horizontal -->
     <div class="player-container">
-        <div class="video-wrapper">
+        <div class="video-wrapper" id="video-wrapper">
             <video id="video-player">
                 <source src="" type="video/mp4">
             </video>
@@ -116,25 +138,80 @@
         const urlParams = new URLSearchParams(window.location.search);
         const videoUrl = decodeURIComponent(urlParams.get('src'));
         const videoPlayer = document.getElementById('video-player');
+        const videoWrapper = document.getElementById('video-wrapper');
 
         if (videoUrl) {
             videoPlayer.src = videoUrl;
             
             const player = fluidPlayer('video-player', {
                 layoutControls: {
-                    fillToContainer: true,
+                    fillToContainer: false, // Cambiado a false para mejor control
                     autoPlay: false,
                     mute: false,
                     controlBar: {
                         autoHide: true
+                    },
+                    allowTheatre: true,
+                    allowFullscreen: true,
+                    primaryColor: "#FF5722"
+                }
+            });
+
+            // Función para manejar pantalla completa
+            function toggleFullScreen() {
+                if (!document.fullscreenElement) {
+                    if (videoWrapper.requestFullscreen) {
+                        videoWrapper.requestFullscreen();
+                    } else if (videoWrapper.webkitRequestFullscreen) {
+                        videoWrapper.webkitRequestFullscreen();
+                    } else if (videoWrapper.msRequestFullscreen) {
+                        videoWrapper.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
                     }
                 }
+            }
+
+            // Añadir botón de pantalla completa personalizado si es necesario
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const fullscreenBtn = document.querySelector('.fp-fullscreen');
+                    if (fullscreenBtn) {
+                        fullscreenBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            toggleFullScreen();
+                        });
+                    }
+                }, 1000);
             });
 
             videoPlayer.addEventListener('loadedmetadata', function() {
                 const videoDuration = videoPlayer.duration;
                 const isLongVideo = videoDuration > 90;
                 
+                // Ajustar el video para mantener relación de aspecto
+                const videoRatio = videoPlayer.videoWidth / videoPlayer.videoHeight;
+                const containerRatio = 16/9;
+                
+                if (videoRatio < containerRatio) {
+                    // Video es más vertical que el contenedor
+                    videoPlayer.style.objectFit = 'contain';
+                    videoPlayer.style.width = 'auto';
+                    videoPlayer.style.height = '100%';
+                    videoPlayer.style.margin = '0 auto';
+                } else {
+                    // Video es más horizontal que el contenedor
+                    videoPlayer.style.objectFit = 'cover';
+                    videoPlayer.style.width = '100%';
+                    videoPlayer.style.height = '100%';
+                }
+
                 videoPlayer.addEventListener('timeupdate', function() {
                     const currentTime = videoPlayer.currentTime;
                     const seventyPercent = videoDuration * 0.7;
@@ -175,5 +252,15 @@
     })({})
     </script>
 
+    <!-- Adsterra Interstitial (opcional para EE.UU./Europa) -->
+    <script>
+        // Detecta país (ejemplo: puedes usar una API real como ipinfo.io)
+        const userCountry = "AR"; // Cambia según geolocalización
+        if (["US", "CA", "DE", "FR", "UK"].includes(userCountry)) {
+            const interstitialScript = document.createElement('script');
+            interstitialScript.src = "https://cdn.diclotrans.com/sdk/v1/51227/fda436afa9f6df194de506b9beaba219677150a9/lib.js";
+            document.body.appendChild(interstitialScript);
+        }
+    </script>
 </body>
 </html>
