@@ -31,17 +31,22 @@
             padding: 0 15px;
             box-sizing: border-box;
         }
+        /* Contenedor del video con relación 16:9 */
         .video-wrapper {
             width: 100%;
-            aspect-ratio: 16/9; /* Fuerza relación horizontal */
+            aspect-ratio: 16/9;
             background: #000;
             position: relative;
             overflow: hidden;
         }
+        /* Ajustes para Fluid Player en pantalla completa */
         #video-player {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta el video sin deformar */
+        }
+        /* Fuerza el contenedor a adaptarse en pantalla completa */
+        #video-player:-webkit-full-screen .fp-engine {
+            object-fit: contain !important; /* Muestra el video completo */
         }
         .video-title {
             color: #FF5722;
@@ -126,8 +131,31 @@
                     autoPlay: false,
                     mute: false,
                     controlBar: {
-                        autoHide: true
+                        autoHide: true,
+                        time: true,
+                        volume: true,
+                        fullscreen: true // Asegura que el botón de pantalla completa esté activo
+                    },
+                    // Permite pantalla completa nativa
+                    allowTheatre: false,
+                    htmlOnPauseBlock: {
+                        html: null,
+                        height: null,
+                        width: null
                     }
+                },
+                // Fuerza el modo teatro para pantalla completa
+                theatreSettings: {
+                    width: '100%',
+                    height: '100%'
+                }
+            });
+
+            // Evento para pantalla completa personalizada (opcional)
+            videoPlayer.addEventListener('fullscreenchange', function() {
+                if (document.fullscreenElement) {
+                    // Ajustes adicionales si entras en pantalla completa
+                    videoPlayer.style.objectFit = 'contain'; // Muestra el video completo
                 }
             });
 
@@ -174,6 +202,5 @@
         l.parentNode.insertBefore(s, l);
     })({})
     </script>
-
 </body>
 </html>
